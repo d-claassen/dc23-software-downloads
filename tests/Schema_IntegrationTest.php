@@ -60,7 +60,7 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$this->go_to( \get_permalink( $post_id ) );
 
-		$schema_output = $this->get_schema_output();
+		$schema_output = $this->get_yoast_schema_output();
 
 		$this->assertJson( $schema_output );
 
@@ -89,7 +89,7 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$this->go_to( \get_permalink( $post_id ) );
 
-		$schema_output = $this->get_schema_output();
+		$schema_output = $this->get_yoast_schema_output();
 
 		$this->assertJson( $schema_output );
 
@@ -97,7 +97,7 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$webpage_piece = $this->get_piece_by_type( $schema_data['@graph'], 'WebPage' );
 
-        $this->markTestIncomplete('Figure out assertions ');
+		$this->markTestIncomplete('Figure out assertions ');
         
         
 		$this->assertArrayNotHasKey( 'timeRequired', $webpage_piece, 'timeRequired should not exist for WebPage' );
