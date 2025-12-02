@@ -136,8 +136,9 @@ namespace DC23 {
 	 * Manually load the plugin being tested.
 	 */
 	function _manually_load_plugin() {
-		require dirname( __DIR__ ) . '/../wordpress-seo/wp-seo.php';
-		require dirname( __DIR__ ) . '/dc23-reading-time.php';
+		require dirname( __DIR__ ) . '/../easy-digital-downloads/easy-digital-downloads.php';
+				require dirname( __DIR__ ) . '/../wordpress-seo/wp-seo.php';
+		require dirname( __DIR__ ) . '/dc23-software-downloads.php';
 	}
 
 	// Add plugin to active mu-plugins - to make sure it gets loaded.
