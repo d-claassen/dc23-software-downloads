@@ -112,6 +112,10 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 		return this->get_schema_output();
 	}
 
+	private function get_edd_schema_output(): string {
+		return this->get_schema_output();
+	}
+
 	private function get_schema_output( bool $debug_wpseo_head = false ): string {
 
 		ob_start();
