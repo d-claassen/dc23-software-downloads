@@ -11,7 +11,7 @@ final class Schema_Integration {
 	/**
 	 * Filter the EDD product schema
 	 *
-	 * @param $schema array The product schema piece.
+	 * @param array<string, string|array> $schema The product schema piece.
 	 *
 	 * @return array The product schema piece.
 	 */
