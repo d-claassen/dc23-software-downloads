@@ -107,6 +107,10 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 			'No Article on Page page'
 		);
 	}
+	
+	private function get_yoast_schema_output(): string {
+		return this->get_schema_output();
+	}
 
 	private function get_schema_output( bool $debug_wpseo_head = false ): string {
 
