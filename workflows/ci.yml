@@ -1,0 +1,94 @@
+name: 'CI'
+
+on:
+  push:
+    branches:
+      - main
+  pull_request: null
+
+# Cancels all previous workflow runs for the same branch that have not yet completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    runs-on: ubuntu-latest
+    name: 'Quality Control'
+
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v6
+
+      - name: 'Setup Node and node_modules cache'
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: 'Setup PHP'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.3'
+          coverage: xdebug
+
+      - name: 'Validate composer.json and composer.lock'
+        run: 'composer validate --no-check-publish'
+
+      - name: 'NPM install'
+        run: npm install
+
+      - name: 'Composer install'
+        run: 'composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader'
+
+# not yet ready for phpunit 10
+#      - name: 'Composer install pt 2'
+#        run: 'composer require yoast/wp-test-utils --dev'
+
+      - name: 'Check engines'
+        run: 'npm run-script check-engines'
+
+      - name: 'Check licenses'
+        run: 'npm run-script check-licenses'
+
+      - name: 'Lint package.json'
+        run: 'npm run-script lint:pkg-json'
+
+      - name: 'Lint Markdown'
+        run: 'npm run-script lint:md:docs'
+
+      - name: 'Lint JS'
+        continue-on-error: true
+        run: 'npm run-script lint:js'
+
+      - name: 'Lint CSS'
+        run: 'npm run-script lint:css -- --allow-empty-input'
+
+      - name: 'Lint PHP'
+        run: 'composer lint'
+
+      - name: 'PHP code style'
+        continue-on-error: true
+        run: 'composer cs'
+
+      - name: 'Static analysis PHP'
+        run: './vendor/bin/phpstan analyze src'
+        continue-on-error: true
+
+      - name: 'Test JS units'
+        run: 'npm run-script test:unit -- --coverage --passWithNoTests'
+
+      - name: 'build the plugin'
+        run: 'npm run-script build'
+
+      - name: 'Ditch dev dependencies'
+        run: 'composer install --no-dev --prefer-dist --no-progress --no-suggest --optimize-autoloader'
+
+      - name: 'Zip it'
+        run: 'npm run-script plugin-zip'
+
+      - name: 'Archive plugin zip artifact'
+        uses: actions/upload-artifact@v5
+        with:
+          name: 'dc23-software-downloads'
+          path: 'dc23-software-downloads.zip'
