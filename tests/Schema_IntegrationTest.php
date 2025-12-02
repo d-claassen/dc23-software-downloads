@@ -69,6 +69,7 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 		$edd_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
 		$webpage_piece = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'WebPage' );
+		$product_piece = $this->get_piece_by_type( $edd_schema_data['@graph'], 'Product' );
 		// $article_piece = $this->get_piece_by_type( $schema_data['@graph'], 'Article' );
 
 		$this->markTestIncomplete('Figure out assertions ');
