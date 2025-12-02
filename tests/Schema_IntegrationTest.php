@@ -60,13 +60,11 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$this->go_to( \get_permalink( $post_id ) );
 
-		$schema_output = $this->get_yoast_schema_output();
+		$yoast_schema = $this->get_yoast_schema_output();
+		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
-		$this->assertJson( $schema_output );
-
-		$schema_data = \json_decode( $schema_output, JSON_OBJECT_AS_ARRAY );
-
-		$webpage_piece = $this->get_piece_by_type( $schema_data['@graph'], 'WebPage' );
+		$webpage_piece = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'WebPage' );
 		// $article_piece = $this->get_piece_by_type( $schema_data['@graph'], 'Article' );
 
 		$this->markTestIncomplete('Figure out assertions ');
@@ -109,11 +107,11 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 	}
 	
 	private function get_yoast_schema_output(): string {
-		return this->get_schema_output( 'wpseo_head' );
+		return $this->get_schema_output( 'wpseo_head' );
 	}
 
 	private function get_edd_schema_output(): string {
-		return this->get_schema_output( 'wp_footer' );
+		return $this->get_schema_output( 'wp_footer' );
 	}
 
 	private function get_schema_output( string $action, bool $debug_wpseo_head = false ): string {
