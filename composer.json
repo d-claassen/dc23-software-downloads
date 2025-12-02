@@ -1,0 +1,69 @@
+{
+	"name": "d-claassen/software-downloads",
+	"description": "A WordPress plugin building on Easy Digital Downloads.",
+	"type": "project",
+	"authors": [
+		{
+			"name": "Dennis Claassen",
+			"email": "declaassen@gmail.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"DC23\\SoftwareDownloads\\": "src/"
+		}
+	},
+	"require-dev": {
+		"composer/installers": "^2.0",
+		"yoast/yoastcs": "^3.2",
+		"phpunit/phpunit": "^10.5.45",
+		"brain/monkey": "^2.6",
+		"wpackagist-plugin/wordpress-seo": ">=25.0,<=26.4",
+        "wpackagist-plugin/easy-digital-downloads": ">=3.5,<=3.6",
+		"antecedent/patchwork": "^2.1.28",
+		"brain/faker": "dev-master",
+		"phpstan/phpstan": "^1.12",
+		"szepeviktor/phpstan-wordpress": "^1.3",
+		"phpstan/extension-installer": "^1.4",
+		"mockery/mockery": "^1.6.12",
+		"yoast/phpunit-polyfills": "^2.0"
+	},
+	"repositories": {
+		"wpackagist": {
+			"type": "composer",
+			"url": "https://wpackagist.org",
+			"only": [
+				"wpackagist-plugin/*"
+			]
+		}
+	},
+	"config": {
+		"allow-plugins": {
+			"dealerdirect/phpcodesniffer-composer-installer": true,
+			"composer/installers": true,
+			"infection/extension-installer": true,
+			"phpstan/extension-installer": true
+		},
+		"platform": {
+			"php": "8.2.14"
+		}
+	},
+	"extra": {
+		"installer-paths": {
+			"vendor/wpackagist/{$name}/": [
+				"type:wordpress-plugin"
+			]
+		}
+	},
+	"scripts": {
+		"lint": [
+			"@php ./vendor/bin/parallel-lint . -e php --show-deprecated --exclude vendor --exclude .git"
+		],
+		"cs": [
+			"@php ./vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1"
+		],
+		"test": [
+			"@php ./vendor/bin/phpunit --process-isolation"
+		]
+	}
+}
