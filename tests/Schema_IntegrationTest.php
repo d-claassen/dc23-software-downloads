@@ -112,6 +112,7 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		ob_start();
 		do_action( 'wpseo_head' );
+		do_action( 'wp_footer' );
 		$wpseo_head = ob_get_contents();
 		ob_end_clean();
 
