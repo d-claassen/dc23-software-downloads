@@ -109,18 +109,17 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 	}
 	
 	private function get_yoast_schema_output(): string {
-		return this->get_schema_output();
+		return this->get_schema_output( 'wpseo_head' );
 	}
 
 	private function get_edd_schema_output(): string {
-		return this->get_schema_output();
+		return this->get_schema_output( 'wp_footer' );
 	}
 
-	private function get_schema_output( bool $debug_wpseo_head = false ): string {
+	private function get_schema_output( string $action, bool $debug_wpseo_head = false ): string {
 
 		ob_start();
-		do_action( 'wpseo_head' );
-		do_action( 'wp_footer' );
+		do_action( $action );
 		$wpseo_head = ob_get_contents();
 		ob_end_clean();
 
