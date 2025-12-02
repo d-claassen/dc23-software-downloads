@@ -10,13 +10,13 @@ final class Schema_Integration {
 
 	/**
 	 * Filter the EDD product schema
-     *
-     * @param $schema mixed|array The product schema piece.
-     *
-     * @return mixed|array The product schema piece.
+	 *
+	 * @param $schema array The product schema piece.
+	 *
+	 * @return array The product schema piece.
 	 */
 	public function filter_download_schema( $schema ) {
-		if ( ! is_array( $schema ) ) {
+		if ( ! \is_array( $schema ) ) {
 			return $schema;
 		}
 
