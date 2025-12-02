@@ -51,7 +51,7 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 			array(
 				'title'        => 'WebPage with estimated reading time',
 				'post_content' => $this->get_post_content(),
-                'post_type'    => 'download',
+				'post_type'    => 'download',
 			)
 		);
 
@@ -67,9 +67,9 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 		$schema_data = \json_decode( $schema_output, JSON_OBJECT_AS_ARRAY );
 
 		$webpage_piece = $this->get_piece_by_type( $schema_data['@graph'], 'WebPage' );
-		$article_piece = $this->get_piece_by_type( $schema_data['@graph'], 'Article' );
+		// $article_piece = $this->get_piece_by_type( $schema_data['@graph'], 'Article' );
 
-        $this->markTestIncomplete('Figure out assertions ');
+		$this->markTestIncomplete('Figure out assertions ');
 
 		$this->assertSame( 'PT1M', $webpage_piece['timeRequired'], 'timeRequired should be filled for WebPage' );
 		$this->assertArrayNotHasKey( 'timeRequired', $article_piece, 'timeRequired should not exist for Article' );
