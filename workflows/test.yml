@@ -1,0 +1,93 @@
+name: 'Test'
+
+on:
+  push:
+    branches:
+      - main
+  pull_request: null
+
+# Cancels all previous workflow runs for the same branch that have not yet completed.
+concurrency:
+  # The concurrency group contains the workflow name and the branch name.
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  all-test:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        php_version: ["8.2", "8.3"]
+        wp_version: ["6.7", "6.8.3", "master"]
+        dependencies_version: ["lowest", "highest"]
+
+    name: "E2E Test: WP ${{ matrix.wp_version }} / PHP ${{ matrix.php_version }} / Composer ${{ matrix.dependencies_version }}"
+
+    # Allow builds to fail on as-of-yet unreleased WordPress versions.
+    continue-on-error: ${{ matrix.wp_version == 'master' }}
+
+    env:
+      WP_ENV_CORE: ${{ format( 'WordPress/WordPress#{0}', matrix.wp_version ) }}
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version-file: '.nvmrc'
+
+      - name: 'Setup PHP'
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php_version }}
+
+      - name: 'Validate composer.json and composer.lock'
+        run: 'composer validate --no-check-publish'
+
+      - name: 'NPM install'
+        run: npm install
+
+      - name: 'Composer install'
+        uses: ramsey/composer-install@v3
+        with:
+          dependency-versions: ${{ matrix.dependencies_version }}
+          composer-options: '--prefer-dist --no-progress --no-suggest --optimize-autoloader'
+
+      - name: 'Build the plugin'
+        run: 'npm run-script build'
+
+      - name: Install Playwright dependencies
+        run: npx playwright install chromium firefox webkit --with-deps
+
+      - name: Install WordPress and start the server
+        run: npm run wp-env start -- --xdebug=coverage || npm run wp-env start -- --xdebug=coverage
+
+      - name: 'Debug wp-env'
+        run: |
+          docker ps -a
+          npm run wp-env run -- tests-wordpress php -- --version
+          npm run wp-env run -- tests-cli wp core version
+          # npm run wp-env run -- tests-cli wp user list
+          npm run wp-env run -- tests-cli wp theme list
+          npm run wp-env run -- tests-cli wp plugin list
+          npm run wp-env run -- tests-wordpress composer -- --version
+          npm run wp-env run -- tests-wordpress phpunit -- --version
+
+      - name: Run Playwright tests
+        id: tests
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+        run: npm run test:e2e -- --pass-with-no-tests
+
+      # Somehow this disables/moves the plugin, breaking the E2E tests.
+      - name: Run PHPUnit tests
+        run: npm run wp-env run -- --env-cwd='wp-content/plugins/dc23-software-downloads' tests-wordpress composer test -- -- --coverage-text --display-errors --display-warnings
+
+      - name: 'Archive test artifacts'
+        uses: actions/upload-artifact@v5
+        if: ${{ failure() && steps.tests.conclusion == 'failure' }}
+        with:
+          name: 'tests-wp${{ matrix.wp_version }}-php${{ matrix.php_version }}-${{ matrix.dependencies_version }}'
+          path: 'artifacts'
