@@ -7,8 +7,19 @@ final class Schema_Integration {
 	public function register(): void {
 		\add_filter( 'edd_generate_download_structured_data', [ $this, 'filter_download_schema' ] );
 	}
-    
-    public function filter_download_schema($schema){
-        return $schema;
-    }
+
+	/**
+	 * Filter the EDD product schema
+     *
+     * @param $schema mixed|array The product schema piece.
+     *
+     * @return mixed|array The product schema piece.
+	 */
+	public function filter_download_schema( $schema ) {
+		if ( ! is_array( $schema ) ) {
+			return $schema;
+		}
+
+		return $schema;
+	}
 }
