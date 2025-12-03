@@ -6,6 +6,11 @@ final class Schema_Integration {
 
 	public function register(): void {
 		\add_filter( 'edd_generate_download_structured_data', [ $this, 'filter_download_schema' ] );
+        
+        \remove_filter(
+            'wpseo_schema_organization',
+            [ \YoastSEO()->classes->get( \Yoast\WP\SEO\Premium\Imtegrations\ThirdParty\EDD::class ), 'filter_organization_schema' ]
+        );
 	}
 
 	/**
