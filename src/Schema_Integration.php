@@ -8,7 +8,15 @@ final class Schema_Integration {
 		\add_filter( 'edd_generate_download_structured_data', [ $this, 'filter_download_schema' ] );
 		\add_filter( 'wpseo_schema_organization', [ $this, 'filter_organization_schema' ], 10, 2 );
 	}
-	
+
+	/**
+	 * Support person.
+		*
+		* @param array<string, mixed> $organization_piece
+		* @param WPSEO_Schema_Context $context
+		*
+		* @return array<string, mixed>
+		*/
 	public function filter_organization_schema( $organization_piece, $context ) {
 		if ( $context->person_or_organization === 'person' ) {
 			$organization_piece['@type'][] = 'Person';
