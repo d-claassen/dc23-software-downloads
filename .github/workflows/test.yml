@@ -44,6 +44,8 @@ jobs:
           php-version: ${{ matrix.php_version }}
 
       - name: 'Validate composer.json and composer.lock'
+        env:
+          COMPOSER_AUTH: '{"http-basic": {"my.yoast.com": "${{ secrets.MYYOAST_TOKEN }}"}}'
         run: 'composer validate --no-check-publish'
 
       - name: 'NPM install'
