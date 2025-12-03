@@ -18,7 +18,7 @@ final class Schema_Integration {
 		* @return array<string, mixed>
 		*/
 	public function filter_organization_schema( $organization_piece, $context ) {
-		if ( $context->person_or_organization === 'person' ) {
+		if ( $context->site_represents === 'person' ) {
 			$organization_piece['@type'][] = 'Person';
 		}
 		
