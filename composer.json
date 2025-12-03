@@ -35,6 +35,17 @@
 			"only": [
 				"wpackagist-plugin/*"
 			]
+		},
+		"my-yoast": {
+			"type": "composer",
+			"url": "https://my.yoast.com/packages/",
+			"only": [
+				"yoast/wordpress-seo-local",
+				"yoast/wordpress-seo-premium",
+				"yoast/wpseo-video",
+				"yoast/wpseo-woocommerce",
+				"yoast/yoast-news-seo"
+			]
 		}
 	},
 	"config": {
