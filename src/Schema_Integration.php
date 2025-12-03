@@ -41,7 +41,7 @@ final class Schema_Integration {
 		}
 
 		$person_reference = [
-			'@id'  => YoastSEO()->helpers->schema->id->get_user_schema_id( $context->site_user_id, $context ),
+			'@id'  => \YoastSEO()->helpers->schema->id->get_user_schema_id( $context->site_user_id, $context ),
 		];
 		
 		$schema['brand']['@id'] = $person_reference['@id'];
