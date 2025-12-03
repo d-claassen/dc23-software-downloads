@@ -9,13 +9,18 @@ final class Schema_Integration {
 
 	public function register(): void {
 		\add_filter( 'edd_generate_download_structured_data', [ $this, 'filter_download_schema' ] );
-        
-        if ( YoastSEO()->classes->has( EDD::class ) ) {
-            \remove_filter(
-                'wpseo_schema_organization',
-                [ YoastSEO()->classes->get( EDD::class ), 'filter_organization_schema' ]
-            );
-        }
+
+		try {
+			$edd = YoastSEO()->classes->get( EDD::class );
+			\remove_filter(
+				'wpseo_schema_organization',
+				[ $edd, 'filter_organization_schema' ]
+			);
+		} catch(
+			\YoastSEO_Vendor\Symfony\Component\DependencyInjection\Exception\ServiceNotFoundException $serviceNotFound
+		) {
+			// no yoast edd integration
+		}
 	}
 
 	/**
