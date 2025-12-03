@@ -36,6 +36,8 @@ final class Schema_Integration {
 		if ( ! \is_array( $schema ) ) {
 			return $schema;
 		}
+		
+		$context = \YoastSEO()->meta->for_current_page();
 		if ( $context->site_represents !== 'person' ) {
 			return $schema;
 		}
