@@ -36,6 +36,15 @@ final class Schema_Integration {
 		if ( ! \is_array( $schema ) ) {
 			return $schema;
 		}
+		if ( $context->site_represents !== 'person' ) {
+			return $schema;
+		}
+
+		$person_reference = [
+			'@id'  => YoastSEO()->helpers->schema->id->get_user_schema_id( $context->site_user_id, $context ),
+		];
+		
+		$schema['brand']['@id'] = $person_reference['@id'];
 
 		return $schema;
 	}
