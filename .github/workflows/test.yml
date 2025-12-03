@@ -45,7 +45,7 @@ jobs:
 
       - name: 'Validate composer.json and composer.lock'
         env:
-          COMPOSER_AUTH: '{"http-basic": {"my.yoast.com": {"token": "${{ secrets.MYYOAST_TOKEN }}"}}}'
+          COMPOSER_AUTH: '{"http-basic": {"my.yoast.com": {"username": "token", "password": "${{ secrets.MYYOAST_TOKEN }}"}}}'
         run: 'composer validate --no-check-publish'
 
       - name: 'NPM install'
