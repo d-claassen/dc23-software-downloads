@@ -62,6 +62,14 @@
 	},
 	"extra": {
 		"installer-paths": {
+			"vendor/yoast/{$name}/": [
+				"yoast/wordpress-seo",
+				"yoast/wordpress-seo-local",
+				"yoast/wordpress-seo-premium",
+				"yoast/wpseo-video",
+				"yoast/wpseo-woocommerce",
+				"yoast/yoast-news-seo"
+			],
 			"vendor/wpackagist/{$name}/": [
 				"type:wordpress-plugin"
 			]
