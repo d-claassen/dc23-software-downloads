@@ -11,6 +11,7 @@ final class Schema_Integration {
 	public function register(): void {
 		\add_filter( 'edd_generate_download_structured_data', [ $this, 'filter_download_schema' ] );
 
+		return;
 		try {
 			$edd = YoastSEOPremium()->classes->get( EDD::class ) ?? YoastSEO()->classes->get( EDD::class );
 			\remove_filter(
