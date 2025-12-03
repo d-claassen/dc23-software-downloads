@@ -9,7 +9,7 @@ final class Schema_Integration {
         
         \remove_filter(
             'wpseo_schema_organization',
-            [ \YoastSEO()->classes->get( \Yoast\WP\SEO\Premium\Imtegrations\ThirdParty\EDD::class ), 'filter_organization_schema' ]
+            [ \YoastSEO()->classes->get( \Yoast\WP\SEO\Premium\Imtegrations\Third_Party\EDD::class ), 'filter_organization_schema' ]
         );
 	}
 
