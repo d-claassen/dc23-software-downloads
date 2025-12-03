@@ -68,14 +68,15 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
 		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
 
-		$webpage_piece = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'WebPage' );
+		$person_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Person' );
 		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
-		// $article_piece = $this->get_piece_by_type( $schema_data['@graph'], 'Article' );
 
-		$this->markTestIncomplete('Figure out assertions ');
-
-		$this->assertSame( 'PT1M', $webpage_piece['timeRequired'], 'timeRequired should be filled for WebPage' );
-		$this->assertArrayNotHasKey( 'timeRequired', $article_piece, 'timeRequired should not exist for Article' );
+		$this->assertSame( 
+			[ 'brand' => [ '@id' => $person_piece['@id'] ] ],
+			$product_piece,
+			'product piece should ref person as brand'
+		);
+		$this->assertContains( 'Brand', $person_piece['@type'], 'person should be Brand' );
 	}
 	
 	public function test_should_not_impact_page_webpage(): void {
