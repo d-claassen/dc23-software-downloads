@@ -137,7 +137,8 @@ namespace DC23 {
 	 */
 	function _manually_load_plugin() {
 		require dirname( __DIR__ ) . '/../easy-digital-downloads/easy-digital-downloads.php';
-				require dirname( __DIR__ ) . '/../wordpress-seo/wp-seo.php';
+		require dirname( __DIR__ ) . '/../wordpress-seo/wp-seo.php';
+		require dirname( __DIR__ ) . '/../wordpress-seo-premium/wp-seo-premium.php';
 		require dirname( __DIR__ ) . '/dc23-software-downloads.php';
 	}
 
