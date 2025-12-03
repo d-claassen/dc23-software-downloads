@@ -6,7 +6,7 @@ final class Schema_Integration {
 
 	public function register(): void {
 		\add_filter( 'edd_generate_download_structured_data', [ $this, 'filter_download_schema' ] );
-		\add_filter( 'wpseo_schema_organization', [ $this, 'filter_organization_schema' ] );
+		\add_filter( 'wpseo_schema_organization', [ $this, 'filter_organization_schema' ], 10, 2 );
 	}
 	
 	public function filter_organization_schema( $organization_piece, $context ) {
