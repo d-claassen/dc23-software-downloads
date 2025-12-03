@@ -51,6 +51,8 @@ jobs:
 
       - name: 'Composer install'
         uses: ramsey/composer-install@v3
+        env:
+          COMPOSER_AUTH: '{"http-basic": {"my.yoast.com": "${{ secrets.MYYOAST_TOKEN }}"}}'
         with:
           dependency-versions: ${{ matrix.dependencies_version }}
           composer-options: '--prefer-dist --no-progress --no-suggest --optimize-autoloader'
