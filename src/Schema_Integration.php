@@ -49,6 +49,11 @@ final class Schema_Integration {
 		
 		$schema['brand']['@id'] = $person_reference['@id'];
 
+		// Check for single offer instance, not in a list.
+		if ( isset( $schema['offers']['@type'] ) ) {
+					$schema['offers']['seller']['@id'] = $person_reference['@id'];
+		}
+		
 		return $schema;
 	}
 }
