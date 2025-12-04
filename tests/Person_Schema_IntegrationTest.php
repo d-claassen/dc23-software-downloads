@@ -3,11 +3,11 @@
 namespace DC23\Tests\SoftwareDownloads;
 
 /**
- * Class Schema_IntegrationTest.
+ * Class Person_Schema_IntegrationTest.
  *
- * @testdox Schema for a single post "download"
+ * @testdox Person Schema for a single post "download"
  */
-class Schema_IntegrationTest extends \WP_UnitTestCase {
+class Person_Schema_IntegrationTest extends \WP_UnitTestCase {
 
 	private $user_id;
 
