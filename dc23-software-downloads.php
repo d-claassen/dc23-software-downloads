@@ -7,7 +7,7 @@
  *
  * @wordpress-plugin
  * Plugin Name: DC23 Software Downloads
- * Version: 0.3.0
+ * Version: 0.3.1
  * Description: Add structured markup related to Easy Digital Downloads in your WordPress website.
  * Requires at least: 6.2
  * Requires PHP: 8.1
