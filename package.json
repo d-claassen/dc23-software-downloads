@@ -36,7 +36,7 @@
 		"start": "wp-scripts start",
 		"test:unit": "wp-scripts test-unit-js",
 		"test:e2e": "wp-scripts test-playwright",
-		"version": "node ./scripts/update-version.js $npm_package_version && git add dc23-reading-time.php readme.txt",
+		"version": "node ./scripts/update-version.js $npm_package_version && git add dc23-software-downloads.php readme.txt",
 		"wp-env": "wp-env"
 	}
 }
