@@ -90,6 +90,9 @@ class Product_Schema_IntegrationTest extends \WP_UnitTestCase {
 			)
 		);
 
+		// Configure the download page as "ItemPage".
+		\YoastSEO()->helpers->meta->set_value( 'schema_page_type', 'ItemPage', $post_id );
+	
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [] );
 
