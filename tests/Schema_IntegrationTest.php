@@ -72,8 +72,8 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
 		$this->assertSame( 
-			[ '@id' => $person_piece['@id'] ],
-			$product_piece['brand'],
+			$person_piece['@id'],
+			$product_piece['brand']['@id'],
 			'product piece should ref person as brand'
 		);
 		$this->assertSame( 
