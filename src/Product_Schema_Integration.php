@@ -1,5 +1,7 @@
 <?php
 
+namespace DC23\SoftwareDownloads;
+
 final class Product_Schema_Integration {
 
     public function register(): void {
