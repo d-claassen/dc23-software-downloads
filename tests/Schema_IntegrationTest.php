@@ -77,8 +77,8 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 			'product piece should ref person as brand'
 		);
 		$this->assertSame( 
-			[ '@id' => $person_piece['@id'] ],
-			$product_piece['offers']['seller'],
+			$person_piece['@id'],
+			$product_piece['offers']['seller'][ '@id'],
 			'product piece should ref person as seller'
 		);
 		$this->assertContains( 'Brand', $person_piece['@type'], 'person should be Brand' );
