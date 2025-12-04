@@ -5,8 +5,8 @@ namespace DC23\SoftwareDownloads;
 final class Schema_Integration {
 
 	public function register(): void {
-		\add_filter( 'edd_generate_download_structured_data', [ $this, 'filter_download_schema' ] );
-		\add_filter( 'wpseo_schema_organization', [ $this, 'filter_organization_schema' ], 10, 2 );
+		\add_filter( 'edd_generate_download_structured_data', [ $this, 'filter_download_schema' ], 20 );
+		\add_filter( 'wpseo_schema_organization', [ $this, 'filter_organization_schema' ], 20, 2 );
 	}
 
 	/**
