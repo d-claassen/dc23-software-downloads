@@ -30,7 +30,7 @@ if ( ! function_exists( 'dc23_software_downloads_setup' ) ) :
 	function dc23_software_downloads_setup(): void {
         // register_block_type( __DIR__ . '/build/software-downloads' );
 
-		( new \DC23\SoftwareDownloads\Schema_Integration() )->register();
+		( new \DC23\SoftwareDownloads\Person_Schema_Integration() )->register();
 	}
 endif;
 add_action( 'init', 'dc23_software_downloads_setup' );
