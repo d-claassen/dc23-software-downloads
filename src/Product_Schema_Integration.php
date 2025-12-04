@@ -24,6 +24,14 @@ final class Product_Schema_Integration {
 			$webpage_piece['@type'] = (array) $webpage_piece['@type'];
 			$webpage_piece['@type'][] = 'ItemPage';
 		}
+
+		// We normally add a `ReadAction` on pages, we're replacing with a `BuyAction` on product pages.
+		$webpage_data['potentialAction'] = [
+			'@type'  => 'BuyAction',
+			'target' => $context->canonical, // \YoastSEO()->meta->for_current_page()->canonical,
+		];
+		
+		unset( $webpage_data['datePublished'], $webpage_data['dateModified'] );
 		
 		return $webpage_piece;
 	}
