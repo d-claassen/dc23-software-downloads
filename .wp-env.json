@@ -3,7 +3,8 @@
   "core": null,
   "plugins": [
     "./vendor/wpackagist/easy-digital-downloads",
-    "./vendor/wpackagist/wordpress-seo",
-    "."
+    "./vendor/yoast/wordpress-seo",
+    ".",
+    "./vendor/yoast/wordpress-seo-premium"
   ]
 }

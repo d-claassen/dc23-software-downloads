@@ -18,8 +18,9 @@
 		"yoast/yoastcs": "^3.2",
 		"phpunit/phpunit": "^10.5.45",
 		"brain/monkey": "^2.6",
-		"wpackagist-plugin/wordpress-seo": ">=25.0,<=26.4",
-        "wpackagist-plugin/easy-digital-downloads": ">=3.5,<=3.6",
+		"yoast/wordpress-seo": "26.5",
+		"yoast/wordpress-seo-premium": "26.5",
+		"wpackagist-plugin/easy-digital-downloads": ">=3.5,<=3.6",
 		"antecedent/patchwork": "^2.1.28",
 		"brain/faker": "dev-master",
 		"phpstan/phpstan": "^1.12",
@@ -34,6 +35,17 @@
 			"url": "https://wpackagist.org",
 			"only": [
 				"wpackagist-plugin/*"
+			]
+		},
+		"my-yoast": {
+			"type": "composer",
+			"url": "https://my.yoast.com/packages/",
+			"only": [
+				"yoast/wordpress-seo-local",
+				"yoast/wordpress-seo-premium",
+				"yoast/wpseo-video",
+				"yoast/wpseo-woocommerce",
+				"yoast/yoast-news-seo"
 			]
 		}
 	},
@@ -50,6 +62,14 @@
 	},
 	"extra": {
 		"installer-paths": {
+			"vendor/yoast/{$name}/": [
+				"yoast/wordpress-seo",
+				"yoast/wordpress-seo-local",
+				"yoast/wordpress-seo-premium",
+				"yoast/wpseo-video",
+				"yoast/wpseo-woocommerce",
+				"yoast/yoast-news-seo"
+			],
 			"vendor/wpackagist/{$name}/": [
 				"type:wordpress-plugin"
 			]

@@ -6,6 +6,23 @@ final class Schema_Integration {
 
 	public function register(): void {
 		\add_filter( 'edd_generate_download_structured_data', [ $this, 'filter_download_schema' ] );
+		\add_filter( 'wpseo_schema_organization', [ $this, 'filter_organization_schema' ], 10, 2 );
+	}
+
+	/**
+	 * Support person.
+		*
+		* @param array<string, mixed> $organization_piece
+		* @param WPSEO_Schema_Context $context
+		*
+		* @return array<string, mixed>
+		*/
+	public function filter_organization_schema( $organization_piece, $context ) {
+		if ( $context->site_represents === 'person' ) {
+			$organization_piece['@type'][] = 'Person';
+		}
+		
+		return $organization_piece;
 	}
 
 	/**
@@ -19,7 +36,23 @@ final class Schema_Integration {
 		if ( ! \is_array( $schema ) ) {
 			return $schema;
 		}
+		
+		$context = \YoastSEO()->meta->for_current_page();
+		if ( $context->site_represents !== 'person' ) {
+			return $schema;
+		}
 
+		$person_reference = [
+			'@id'  => \YoastSEO()->helpers->schema->id->get_user_schema_id( $context->site_user_id, $context ),
+		];
+		
+		$schema['brand']['@id'] = $person_reference['@id'];
+
+		// Check for single offer instance, not in a list.
+		if ( isset( $schema['offers']['@type'] ) ) {
+					$schema['offers']['seller']['@id'] = $person_reference['@id'];
+		}
+		
 		return $schema;
 	}
 }

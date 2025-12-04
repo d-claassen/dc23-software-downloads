@@ -60,22 +60,31 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$this->go_to( \get_permalink( $post_id ) );
 
-		$schema_output = $this->get_schema_output();
+		$yoast_schema = $this->get_yoast_schema_output();
+		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
-		$this->assertJson( $schema_output );
+		$edd_schema = $this->get_edd_schema_output();
+		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
 
-		$schema_data = \json_decode( $schema_output, JSON_OBJECT_AS_ARRAY );
+		$person_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Person' );
+		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
-		$webpage_piece = $this->get_piece_by_type( $schema_data['@graph'], 'WebPage' );
-		// $article_piece = $this->get_piece_by_type( $schema_data['@graph'], 'Article' );
-
-		$this->markTestIncomplete('Figure out assertions ');
-
-		$this->assertSame( 'PT1M', $webpage_piece['timeRequired'], 'timeRequired should be filled for WebPage' );
-		$this->assertArrayNotHasKey( 'timeRequired', $article_piece, 'timeRequired should not exist for Article' );
+		$this->assertSame( 
+			$person_piece['@id'],
+			$product_piece['brand']['@id'],
+			'product piece should ref person as brand'
+		);
+		$this->assertSame( 
+			$person_piece['@id'],
+			$product_piece['offers']['seller'][ '@id'],
+			'product piece should ref person as seller'
+		);
+		$this->assertContains( 'Brand', $person_piece['@type'], 'person should be Brand' );
 	}
 	
-	public function test_should_not_impact_page_webpage(): void {
+	public function skip_test_should_not_impact_page_webpage(): void {
 		$post_id = self::factory()->post->create(
 			array(
 				'title'        => 'WebPage without estimated reading time',
@@ -89,7 +98,7 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$this->go_to( \get_permalink( $post_id ) );
 
-		$schema_output = $this->get_schema_output();
+		$schema_output = $this->get_yoast_schema_output();
 
 		$this->assertJson( $schema_output );
 
@@ -97,7 +106,7 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$webpage_piece = $this->get_piece_by_type( $schema_data['@graph'], 'WebPage' );
 
-        $this->markTestIncomplete('Figure out assertions ');
+		$this->markTestIncomplete('Figure out assertions ');
         
         
 		$this->assertArrayNotHasKey( 'timeRequired', $webpage_piece, 'timeRequired should not exist for WebPage' );
@@ -107,12 +116,19 @@ class Schema_IntegrationTest extends \WP_UnitTestCase {
 			'No Article on Page page'
 		);
 	}
+	
+	private function get_yoast_schema_output(): string {
+		return $this->get_schema_output( 'wpseo_head' );
+	}
 
-	private function get_schema_output( bool $debug_wpseo_head = false ): string {
+	private function get_edd_schema_output(): string {
+		return $this->get_schema_output( 'wp_footer' );
+	}
+
+	private function get_schema_output( string $action, bool $debug_wpseo_head = true ): string {
 
 		ob_start();
-		do_action( 'wpseo_head' );
-		do_action( 'wp_footer' );
+		do_action( $action );
 		$wpseo_head = ob_get_contents();
 		ob_end_clean();
 

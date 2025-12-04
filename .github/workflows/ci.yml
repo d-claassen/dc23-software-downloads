@@ -39,7 +39,11 @@ jobs:
         run: npm install
 
       - name: 'Composer install'
-        run: 'composer install --prefer-dist --no-progress --no-suggest --optimize-autoloader'
+        uses: ramsey/composer-install@v3
+        env:
+          COMPOSER_AUTH: '{"http-basic": {"my.yoast.com": {"username": "token", "password": "${{ secrets.MYYOAST_TOKEN }}"}}}'
+        with:
+          composer-options: '--prefer-dist --no-progress --no-suggest --optimize-autoloader'
 
 # not yet ready for phpunit 10
 #      - name: 'Composer install pt 2'
