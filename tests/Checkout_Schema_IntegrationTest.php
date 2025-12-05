@@ -54,9 +54,9 @@ class Checkout_Schema_IntegrationTest extends \WP_UnitTestCase {
 				'post_type'    => 'page',
 			)
 		);
-        
-        // Set as the checkout page
-        edd_update_option( 'purchase_page', $post_id );
+		
+		// Set as the checkout page
+		edd_update_option( 'purchase_page', $post_id );
 
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [] );
@@ -92,8 +92,8 @@ class Checkout_Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		// Configure the checkout page as "CheckoutPage".
 		\YoastSEO()->helpers->meta->set_value( 'schema_page_type', 'CheckoutPage', $post_id );
-        // Set as the checkout page
-        edd_update_option( 'purchase_page', $post_id );
+		// Set as the checkout page
+		edd_update_option( 'purchase_page', $post_id );
 
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [] );
@@ -104,7 +104,7 @@ class Checkout_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
 		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
-		$webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'ItemPage' );
+		$webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'CheckoutPage' );
 
 		$this->assertSame( 
             ['WebPage', 'CheckoutPage'],
