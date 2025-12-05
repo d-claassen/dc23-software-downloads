@@ -20,10 +20,7 @@ final class Product_Schema_Integration {
 		if ( ! is_singular( 'download' ) ) {
 			return $webpage_piece;
 		}
-		
-		print '<!-- Incoming webpage type: ';
-		var_dump( $webpage_piece['@type'] );
-		print '-->' . PHP_EOL;
+
 		// Ensure the download page is an ItemPage.
 		if ( ! in_array( 'ItemPage', (array)	$webpage_piece['@type']) ) {
 			$webpage_piece['@type'] = (array) $webpage_piece['@type'];
