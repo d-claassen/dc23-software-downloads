@@ -22,10 +22,17 @@ final class Product_Schema_Integration {
 		}
 
 		// Ensure the download page is an ItemPage.
-		if ( ! in_array( 'ItemPage', (array)	$webpage_piece['@type']) ) {
+		if ( ! \is_array( $this->context->schema_page_type ) ) {
+			$this->context->schema_page_type = [ $this->context->schema_page_type ];
+		}
+		$this->context->schema_page_type[]  = 'ItemPage';
+
+		/*
+		if ( ! in_array( 'ItemPage', (array) $webpage_piece['@type']) ) {
 			$webpage_piece['@type'] = (array) $webpage_piece['@type'];
 			$webpage_piece['@type'][] = 'ItemPage';
 		}
+		*/
 
 		// We normally add a `ReadAction` on pages, we're replacing with a `BuyAction` on product pages.
 		$webpage_piece['potentialAction'] = [
