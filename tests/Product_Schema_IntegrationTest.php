@@ -72,9 +72,15 @@ class Product_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
 		$this->assertSame( 
-            ['WebPage', 'ItemPage' ],
-            $webpage_piece['@type'],
+			['WebPage', 'ItemPage' ],
+			$webpage_piece['@type'],
 			'webpage piece should be typed additionally with ItemPage'
+		);
+		
+		$this->assertSame(
+			'BuyAction',
+			$webpage_piece['potentialAction']['@type'],
+			'Webpage action should be to buy'
 		);
 
 		$this->assertArrayNotHasKey( 'datePublished', $webpage_piece, 'webpage should not be timestamped' );
@@ -105,7 +111,7 @@ class Product_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'ItemPage' );
 
 		$this->assertSame( 
-            'ItemPage',
+            ['ItemPage'],
             $webpage_piece['@type'],
 			'webpage piece should be typed additionally with ItemPage'
 		);
