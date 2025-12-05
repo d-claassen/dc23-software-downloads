@@ -32,6 +32,10 @@ final class Product_Schema_Integration {
 			if ( isset( $webpage_piece['mainEntity']['@type' ] ) || isset( $webpage_piece['mainEntity']['@id'] ) ) {
 				$webpage_piece['mainEntity'] = [ $webpage_piece['mainEntity'] ];
 			}
+			
+			print '<!-- context main entity: ';
+			var_dump( $context->main_entity_of_page );
+			print '-->'.PHP_EOL;
 
 			$missing_entities = array_diff( $context->main_entity_of_page, $webpage_piece[ 'mainEntity' ] );
 			if ( ! empty( $missing_entities ) ) {
