@@ -63,8 +63,8 @@ class Product_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'ItemPage' );
 		// $product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
-		$this->assertSame( 
-			['WebPage', 'ItemPage' ],
+		$this->assertEqualsCanonicalizing( 
+			['FAQPage', 'ItemPage', 'WebPage'],
 			$webpage_piece['@type'],
 			'webpage piece should be typed additionally with ItemPage'
 		);
@@ -102,8 +102,8 @@ class Product_Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'ItemPage' );
 
-		$this->assertSame( 
-            ['WebPage', 'ItemPage'],
+		$this->assertEqualsCanonicalizing( 
+			['FAQPage', 'ItemPage', 'WebPage'],
             $webpage_piece['@type'],
 			'webpage piece should be typed additionally with ItemPage'
 		);
