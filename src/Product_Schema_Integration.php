@@ -22,10 +22,10 @@ final class Product_Schema_Integration {
 		}
 
 		// Ensure the download page is an ItemPage.
-		if ( ! \is_array( $this->context->schema_page_type ) ) {
-			$this->context->schema_page_type = [ $this->context->schema_page_type ];
+		if ( ! \is_array( $context->schema_page_type ) ) {
+			$context->schema_page_type = [ $this->context->schema_page_type ];
 		}
-		$this->context->schema_page_type[]  = 'ItemPage';
+		$context->schema_page_type[]  = 'ItemPage';
 
 		/*
 		if ( ! in_array( 'ItemPage', (array) $webpage_piece['@type']) ) {
