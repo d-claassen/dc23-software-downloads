@@ -27,6 +27,16 @@ final class Product_Schema_Integration {
 			$webpage_piece['@type'][] = 'ItemPage';
 		}
 
+		// Ensure the main entity is a list of entities.
+		if ( isset( $webpage_piece['mainEntity']['@type' ] ) || isset( $webpage_piece['mainEntity']['@id'] ) ) {
+			$webpage_piece['mainEntity'] = [ $webpage_piece['mainEntity'] ];
+		}
+
+		$missing_entities = array_diff( $context->main_entity_of_page, $webpage_piece[ 'mainEntity' ] );
+		if ( ! empty( $missing_entities ) ) {
+			array_push( $webpage_piece['mainEntity'], ...$missing_entities );
+		}
+
 		// We normally add a `ReadAction` on pages, we're replacing with a `BuyAction` on product pages.
 		$webpage_piece['potentialAction'] = [
 			'@type'  => 'BuyAction',
