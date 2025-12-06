@@ -4,9 +4,9 @@ namespace DC23\SoftwareDownloads;
 
 final class Product_Schema_Integration {
 
-    public function register(): void {
-        \add_filter( 'wpseo_schema_webpage', [ $this, 'filter_webpage_schema' ], 20, 2 );
-    }
+	public function register(): void {
+		\add_filter( 'wpseo_schema_webpage', [ $this, 'filter_webpage_schema' ], 20, 2 );
+	}
 
 	/**
 	 * Product schema graph.
@@ -27,13 +27,15 @@ final class Product_Schema_Integration {
 			$webpage_piece['@type'][] = 'ItemPage';
 		}
 
+		// For FAQ results, the questions need to be referred from the WebPage mainEntity prop.
+		// The Yoast SEO FAQ block adds them there, but the EDD integration discards them.
+		// Here we bring them back the question ids when they were stored in the context.
 		if ( ! empty( $context->main_entity_of_page ) ) {
-			// Ensure the main entity is a list of entities.
+			// Ensure the main entity is a list of entities, so it can reference the product AND the questions.
 			if ( isset( $webpage_piece['mainEntity']['@type' ] ) || isset( $webpage_piece['mainEntity']['@id'] ) ) {
 				$webpage_piece['mainEntity'] = [ $webpage_piece['mainEntity'] ];
 			}
 
-			$missing_entities = array_diff( $webpage_piece[ 'mainEntity' ], $context->main_entity_of_page );
 			$missing_entities = array_filter(
 				$context->main_entity_of_page,
 				static function ( $entity ) use ($webpage_piece): bool {
@@ -43,15 +45,10 @@ final class Product_Schema_Integration {
 							return false;
 						}
 					}
+					// true: the context entity ref is missing from the webpage piece.
 					return true;
 				}
 			);
-
-			print '<!-- context main entity: ';
-			var_dump( $context->main_entity_of_page );
-			var_dump( $webpage_piece[ 'mainEntity' ] );
-			var_dump( $missing_entities );
-			print '-->'.PHP_EOL;
 
 			if ( ! empty( $missing_entities ) ) {
 				array_push( $webpage_piece['mainEntity'], ...$missing_entities );
@@ -61,7 +58,7 @@ final class Product_Schema_Integration {
 		// We normally add a `ReadAction` on pages, we're replacing with a `BuyAction` on product pages.
 		$webpage_piece['potentialAction'] = [
 			'@type'  => 'BuyAction',
-			'target' => $context->canonical, // \YoastSEO()->meta->for_current_page()->canonical,
+			'target' => $context->canonical,
 		];
 		
 		unset( $webpage_piece['datePublished'], $webpage_piece['dateModified'] );
