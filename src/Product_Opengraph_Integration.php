@@ -25,6 +25,17 @@ final class Product_Opengraph_Integration {
 	}
 	
 	public function remove_unneeded_presenters( $presenters ) {
+		if ( is_singular( 'download' ) ) {
+			foreach ( $presenters as $key => $object ) {
+				if (
+					$object instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Publisher_Presenter )
+					|| $object instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Author_Presenter )
+				) {
+					unset( $presenters[ $key ] );
+				}
+			}
+		}
+
 		return $presenters;
 	}
 }
