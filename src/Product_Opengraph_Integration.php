@@ -4,8 +4,9 @@ namespace DC23\SoftwareDownloads;
 
 final class Product_Opengraph_Integration {
 
-    public function register(): void {
-        add_filter( 'wpseo_opengraph_type', [ $this, 'download_type_product' ] );
+	public function register(): void {
+		add_filter( 'wpseo_opengraph_type', [ $this, 'download_type_product' ] );
+		add_filter( 'wpseo_frontend_presenters', [ $this, 'remove_unneeded_presenters' ] );
 	}
 
 	/**
@@ -21,5 +22,9 @@ final class Product_Opengraph_Integration {
 		}
 
 		return $type;
+	}
+	
+	public function remove_unneeded_presenters( $presenters ) {
+		return $presenters;
 	}
 }
