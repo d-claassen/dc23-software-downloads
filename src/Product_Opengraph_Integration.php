@@ -2,6 +2,8 @@
 
 namespace DC23\SoftwareDownloads;
 
+use Yoast\WP\SEO\Presenters\Abstract_Presenter;
+
 final class Product_Opengraph_Integration {
 
 	public function register(): void {
@@ -27,9 +29,9 @@ final class Product_Opengraph_Integration {
 	/*
 	 * If this is a product page, remove OpenGraph article metatag presenters.
 	 *
-	 * @param array<string> $presenters
+	 * @param array<array-key, Abstract_Presenter> $presenters
 	 *
-	 * @return array<string>
+	 * @return array<array-key, Abstract_Presenter>
 	 */
 	public function remove_unneeded_presenters( $presenters ) {
 		if ( is_singular( 'download' ) ) {
