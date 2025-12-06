@@ -33,7 +33,7 @@ final class Product_Schema_Integration {
 				$webpage_piece['mainEntity'] = [ $webpage_piece['mainEntity'] ];
 			}
 
-			$missing_entities = array_diff( $context->main_entity_of_page, $webpage_piece[ 'mainEntity' ] );
+			$missing_entities = array_diff( $webpage_piece[ 'mainEntity' ], $context->main_entity_of_page );
 
 			print '<!-- context main entity: ';
 			var_dump( $context->main_entity_of_page );
