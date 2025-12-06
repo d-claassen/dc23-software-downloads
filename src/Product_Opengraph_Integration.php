@@ -37,8 +37,8 @@ final class Product_Opengraph_Integration {
 		if ( is_singular( 'download' ) ) {
 			foreach ( $presenters as $key => $presenter ) {
 				if (
-					$presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Publisher_Presenter )
-					|| $presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Author_Presenter )
+					$presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Publisher_Presenter
+					|| $presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Author_Presenter
 				) {
 					unset( $presenters[ $key ] );
 				}
