@@ -69,6 +69,8 @@ class Product_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'webpage piece should be typed additionally with ItemPage'
 		);
 		
+		$this->assertCount( 2, $webpage_piece ['mainEntity'], 'Product and FAQ should both be main entity' );
+		
 		$this->assertSame(
 			'BuyAction',
 			$webpage_piece['potentialAction']['@type'],
@@ -104,7 +106,7 @@ class Product_Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$this->assertEqualsCanonicalizing( 
 			['FAQPage', 'ItemPage', 'WebPage'],
-            $webpage_piece['@type'],
+			$webpage_piece['@type'],
 			'webpage piece should be typed additionally with ItemPage'
 		);
 	}
