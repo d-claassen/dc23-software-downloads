@@ -23,13 +23,20 @@ final class Product_Opengraph_Integration {
 
 		return $type;
 	}
-	
+
+	/*
+	 * If this is a product page, remove OpenGraph article metatag presenters.
+	 *
+	 * @param array<string> $presenters
+	 *
+	 * @return array<string>
+	 */
 	public function remove_unneeded_presenters( $presenters ) {
 		if ( is_singular( 'download' ) ) {
-			foreach ( $presenters as $key => $object ) {
+			foreach ( $presenters as $key => $presenter ) {
 				if (
-					$object instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Publisher_Presenter )
-					|| $object instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Author_Presenter )
+					$presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Publisher_Presenter )
+					|| $presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Author_Presenter )
 				) {
 					unset( $presenters[ $key ] );
 				}
