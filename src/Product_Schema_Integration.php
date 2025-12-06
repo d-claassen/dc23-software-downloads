@@ -34,6 +34,18 @@ final class Product_Schema_Integration {
 			}
 
 			$missing_entities = array_diff( $webpage_piece[ 'mainEntity' ], $context->main_entity_of_page );
+			$missing_entities = array_filter(
+				$context->main_entity_of_page,
+				static fn ( $entity ): bool {
+					foreach( $webpage_piece[ 'mainEntity' ] as $assigned_entity ) {
+						if( $entity === $assigned_entity ) {
+						 // false: not missing.
+							return false;
+						}
+					}
+					return true:
+				}
+			);
 
 			print '<!-- context main entity: ';
 			var_dump( $context->main_entity_of_page );
