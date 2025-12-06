@@ -43,7 +43,7 @@ final class Product_Schema_Integration {
 							return false;
 						}
 					}
-					return true:
+					return true;
 				}
 			);
 
