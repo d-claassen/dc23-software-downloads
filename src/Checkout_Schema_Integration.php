@@ -26,6 +26,9 @@ final class Checkout_Schema_Integration {
 			$webpage_piece['@type'] = (array) $webpage_piece['@type'];
 			$webpage_piece['@type'][] = 'CheckoutPage';
 		}
+		
+		// Having the regular `ReadAction` on a checkout makes no sense.
+		unset( $webpage_piece['potentialAction'] );
 
 		return $webpage_piece;
 	}
