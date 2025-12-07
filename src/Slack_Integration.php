@@ -33,7 +33,7 @@ final class Slack_Integration {
 		// Override the data.
 		$data         = [];
 		if ( $show_price ) {
-			$data[ 'Price' ] = $download->get_price() .'/'. edd_format_amount( $download->get_price() );
+			$data[ 'Price' ] = \edd_currency_filter( \edd_format_amount( $download->get_price() ) );
 		}
 		$data[ 'Availability' ] = $availability;
 
