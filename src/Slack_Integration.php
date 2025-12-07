@@ -20,21 +20,20 @@ final class Slack_Integration {
 	 */
 	public function filter_enhanced_data( $data, $presentation ) {
 		$object   = $presentation->model;
-		$download = \edd_download( $object->object_id );
+		$download = \edd_get_download( $object->object_id );
 
-		if ( ! $download ) {
-            return $data;
-        }
-
-        // Override the data.
-		$data         = [];
+		if ( ! $download instanceof \EDD_Download ) {
+			return $data;
+		}
 
 		// Omit the price amount for variable downloads.
 		$show_price   = ! $download->has_variable_prices();
-        $availability = 'In stock';
+		$availability = 'In stock';
 
+		// Override the data.
+		$data         = [];
 		if ( $show_price ) {
-            $data[ 'Price' ] = $download->get_price();
+			$data[ 'Price' ] = \edd_currency_filter( \edd_format_amount( $download->get_price() ) );
 		}
 		$data[ 'Availability' ] = $availability;
 
