@@ -13,5 +13,12 @@ final class Product_Brand extends Abstract_Indexable_Tag_Presenter {
 	 */
 	protected $tag_format = self::META_PROPERTY_CONTENT;
 
+	/**
+	 * The tag key name.
+	 *
+	 * @var string
+	 */
+	protected $key = 'product:brand';
+
 
 }
