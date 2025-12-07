@@ -61,6 +61,8 @@ final class Product_Opengraph_Integration {
 	
 		// Replicating EDDs "Structured_Data" approach.
 		$presenters[] = new Presenters\OpenGraph\Product_Brand( get_bloginfo( 'name' ) );
+		$presenters[] = new Presenters\OpenGraph\Product_Price_Amount( 0 );
+		$presenters[] = new Presenters\OpenGraph\Product_Price_Currency( 'EUR' );
 		$presenters[] = new Presenters\OpenGraph\Product_Retailer_Item_ID(
 			$download->get_sku() !== '-' ? $download->get_sku() : $download->ID,
 		);
