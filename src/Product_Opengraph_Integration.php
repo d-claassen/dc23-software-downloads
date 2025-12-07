@@ -67,6 +67,9 @@ final class Product_Opengraph_Integration {
 			$presenters[] = new Presenters\OpenGraph\Product_Price_Currency( \edd_get_currency() );
 		}
 		
+		$presenters[] = new Presenters\OpenGraph\OpenGraph_Availability( false, true );
+		$presenters[] = new Presenters\OpenGraph\Product_Availability( false, true );
+						
 		$presenters[] = new Presenters\OpenGraph\Product_Retailer_Item_ID(
 			$download->get_sku() !== '-' ? $download->get_sku() : $download->ID,
 		);
