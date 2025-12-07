@@ -31,6 +31,14 @@ final class OpenGraph_Availability extends Abstract_Indexable_Tag_Presenter {
 	 * @return string
 	 */
 	public function get() {
-		return 'instock';
+		if ( $this->is_on_backorder ) {
+			return 'backorder';
+		}
+
+		if ( $this->is_in_stock ) {
+			return 'instock';
+		}
+
+		return 'out of stock';
 	}
 }
