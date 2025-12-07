@@ -44,7 +44,7 @@ final class Product_Opengraph_Integration {
 		}
 		
 		// Return false if a download object could not be retrieved.
-		$download = edd_get_download( $context->post_id );
+		$download = edd_get_download( $context->indexable->object_id );
 		if ( ! $download instanceof \EDD_Download ) {
 			return false;
 		}
