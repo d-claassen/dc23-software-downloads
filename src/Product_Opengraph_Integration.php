@@ -70,6 +70,7 @@ final class Product_Opengraph_Integration {
 		$presenters[] = new Presenters\OpenGraph\Product_Retailer_Item_ID(
 			$download->get_sku() !== '-' ? $download->get_sku() : $download->ID,
 		);
+		$presenters[] = new Presenters\OpenGraph\Product_Condition();
 
 		return $presenters;
 	}
