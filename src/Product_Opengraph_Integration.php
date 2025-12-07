@@ -42,6 +42,12 @@ final class Product_Opengraph_Integration {
 		if ( ! is_singular( 'download' ) ) {
 			return $presenters;
 		}
+		
+		// Return false if a download object could not be retrieved.
+		$download = edd_get_download( $context->post_id );
+		if ( ! $download instanceof \EDD_Download ) {
+			return false;
+		}
 			
 		// Remove OpenGraph article metatag presenters.
 		foreach ( $presenters as $key => $presenter ) {
