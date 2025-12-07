@@ -20,5 +20,16 @@ final class Product_Brand extends Abstract_Indexable_Tag_Presenter {
 	 */
 	protected $key = 'product:brand';
 
+	public function __construct( 
+		private readonly string $brand
+	) {}
 
+	/**
+	 * Gets the raw value of a presentation.
+	 *
+	 * @return string
+	 */
+	public function get() {
+		return $this->brand;
+	}
 }
