@@ -8,7 +8,7 @@ final class Product_Opengraph_Integration {
 
 	public function register(): void {
 		add_filter( 'wpseo_opengraph_type', [ $this, 'download_type_product' ] );
-		add_filter( 'wpseo_frontend_presenters', [ $this, 'opengraph_product_presenters' ] );
+		add_filter( 'wpseo_frontend_presenters', [ $this, 'opengraph_product_presenters' ], 10, 2 );
 	}
 
 	/**
