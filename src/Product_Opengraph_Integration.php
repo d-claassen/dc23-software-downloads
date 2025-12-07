@@ -77,40 +77,4 @@ final class Product_Opengraph_Integration {
 
 		return $presenters;
 	}
-	
-	/**
-	 * Adds the WooCommerce OpenGraph presenter.
-	 *
-	 * @param Abstract_Indexable_Presenter[] $presenters The presenter instances.
-	 * @param Meta_Tags_Context              $context    The meta tags context.
-	 *
-	 * @return Abstract_Indexable_Presenter[] The extended presenters.
-	 */
-	public function add_frontend_presenter( $presenters, $context ) {
-		if ( ! is_array( $presenters ) ) {
-			return $presenters;
-		}
-
-		$product = $this->get_product( $context );
-		if ( ! $product instanceof WC_Product ) {
-			return $presenters;
-		}
-
-		$presenters[] = new WPSEO_WooCommerce_Product_Brand_Presenter( $product );
-
-		if ( $this->should_show_price() ) {
-			$presenters[] = new WPSEO_WooCommerce_Product_Price_Amount_Presenter( $product );
-			$presenters[] = new WPSEO_WooCommerce_Product_Price_Currency_Presenter( $product );
-		}
-
-		$is_on_backorder = $product->is_on_backorder();
-		$is_in_stock     = ( $is_on_backorder === true ) ? false : $product->is_in_stock();
-		$presenters[]    = new WPSEO_WooCommerce_Pinterest_Product_Availability_Presenter( $product, $is_on_backorder, $is_in_stock );
-		$presenters[]    = new WPSEO_WooCommerce_Product_Availability_Presenter( $product, $is_on_backorder, $is_in_stock );
-
-		$presenters[] = new WPSEO_WooCommerce_Product_Retailer_Item_ID_Presenter( $product );
-		$presenters[] = new WPSEO_WooCommerce_Product_Condition_Presenter( $product );
-
-		return $presenters;
-	}
-} 
+}
