@@ -23,7 +23,7 @@ final class ReturnPolicy_Schema_Integration {
                 $organization_piece['hasMerchantReturnPolicy'] = [
                     '@type' => 'MerchantReturnPolicy',
                     'applicableCountry' => '',
-                    'returnPolicyCategory' => 'https://schema.org/MerchantInfiniteReturnWindow',
+                    'returnPolicyCategory' => 'https://schema.org/MerchantReturnUnlimitedWindow',
                 ];
             } else {
             	$retval = absint( $return_window );
