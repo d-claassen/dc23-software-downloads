@@ -46,7 +46,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 				EOL;
 	}
 
-	public function test_should_somehow_impact_download_webpage(): void {
+	public function test_should_have_infinite_return_policy(): void {
 		$post_id = self::factory()->post->create(
 			array(
 				'title'        => 'WebPage with estimated reading time',
@@ -66,48 +66,54 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
 
-        $this->assertArrayHasKey(
-            'hasMerchantReturnPolicy',
-            $organization_piece,
-            'ReturnPolicy piece in Organization'
-        );
+		$this->assertArrayHasKey(
+			'hasMerchantReturnPolicy',
+			$organization_piece,
+			'ReturnPolicy piece in Organization'
+		);
 		$this->assertSame( 
 			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
 			'https://schema.org/MerchantReturnUnlimitedWindow',
-			'finite window'
+			'infinite window'
 		);
 	}
 	
-	public function skip_test_should_not_impact_page_webpage(): void {
+	public function test_should_have_limited_return_policy(): void {
 		$post_id = self::factory()->post->create(
 			array(
-				'title'        => 'WebPage without estimated reading time',
+				'title'        => 'WebPage with estimated reading time',
 				'post_content' => $this->get_post_content(),
-				'post_type'    => 'page',
+				'post_type'    => 'download',
 			)
 		);
+		
+		\EDD\Settings\Setting::update( 'return_window', 30 );
 
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [] );
 
 		$this->go_to( \get_permalink( $post_id ) );
 
-		$schema_output = $this->get_yoast_schema_output();
+		$yoast_schema = $this->get_yoast_schema_output();
+		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
-		$this->assertJson( $schema_output );
+		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
 
-		$schema_data = \json_decode( $schema_output, JSON_OBJECT_AS_ARRAY );
-
-		$webpage_piece = $this->get_piece_by_type( $schema_data['@graph'], 'WebPage' );
-
-		$this->markTestIncomplete('Figure out assertions ');
-        
-        
-		$this->assertArrayNotHasKey( 'timeRequired', $webpage_piece, 'timeRequired should not exist for WebPage' );
-		
-		$this->assertEmpty(
-			array_filter( $schema_data['@graph'], fn( $piece ) => in_array( 'Article', (array) $piece['@type'], true ) ),
-			'No Article on Page page'
+		$this->assertArrayHasKey(
+			'hasMerchantReturnPolicy',
+			$organization_piece,
+			'ReturnPolicy piece in Organization'
+		);
+		$this->assertSame( 
+			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
+			'https://schema.org/MerchantReturnFiniteReturnWindow',
+			'finite window'
+		);
+		$this->assertSame( 
+			$organization_piece['hasMerchantReturnPolicy']['merchantReturnDays'],
+			30,
+			'30 day window'
 		);
 	}
 	
