@@ -9,6 +9,13 @@ final class ReturnPolicy_Schema_Integration {
     }
     
     public function extend_organization_with_return_policy( $organization_piece, $context ) {
+        $refundability = edd_get_option( 'refundability', 'refundable' );
+        if ( $refundability === 'non-refundable' ) {
+            $organization_piece['hasMerchantReturnPolicy'] = [
+                '@type' => 'MerchantReturnPolicy',
+            ];
+        }
+        
         return $organization_piece;
     }
 }
