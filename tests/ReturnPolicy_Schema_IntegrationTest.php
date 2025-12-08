@@ -116,7 +116,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'30 day window'
 		);
 	}
-		public function test_should_have_limited_return_policy(): void {
+		public function test_should_have_no_return_policy(): void {
 		$post_id = self::factory()->post->create(
 			array(
 				'title'        => 'WebPage with estimated reading time',
