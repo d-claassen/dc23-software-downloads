@@ -67,17 +67,17 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 	 */
 	protected function generate_return_policy(): array {
 		$id = $this->context->canonical . '#/schema/return-policy/' . \esc_attr( $this->context->object_id );
-        $base_country = \edd_get_setting('base_country', '');
+                $base_country = \edd_get_setting('base_country', '');
 		$data = [
-			'@type'          => 'MerchantReturnPolicy',
-			'@id'            => $id,
-			'country'        => $base_country,
+			'@type'             => 'MerchantReturnPolicy',
+			'@id'               => $id,
+			'applicableCountry' => $base_country,
 		];
-        
-        $download = \edd_get_download( $this->context->object_id );
-        $download_refundable = $download->get_refundable();
-
-        $download_refund_window = $download->get_refund_window();
+                
+                $download = \edd_get_download( $this->context->object_id );
+                $download_refundable = $download->get_refundable();
+                
+                $download_refund_window = $download->get_refund_window();
 
 		return $data;
 	}
