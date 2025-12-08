@@ -32,10 +32,6 @@ final class ReturnPolicy_Schema_Integration {
                 $return_policy['merchantReturnDays'] = absint( $return_window );
             }
         }
-        print '<!-- ';
-        \printf( ' refundability: %s', $refundability );
-        \printf( 'refund/return_window: %s', $return_window ?? 'n/a' );
-        print ' -->';
     
         $organization_piece['hasMerchantReturnPolicy'] = $return_policy;
         
