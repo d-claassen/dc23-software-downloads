@@ -25,8 +25,13 @@ final class ReturnPolicy_Schema_Integration {
                     'applicableCountry' => '',
                     'returnPolicyCategory' => 'https://schema.org/MerchantReturnUnlimitedWindow',
                 ];
-            } else {
-            	$retval = absint( $return_window );
+            } else {                
+                $organization_piece['hasMerchantReturnPolicy'] = [
+                    '@type' => 'MerchantReturnPolicy',
+                    'applicableCountry' => '',
+                    'returnPolicyCategory' => 'https://schema.org/MerchantReturnFiniteReturnWindow',
+                    'merchantReturnDays' => absint( $return_window ),
+                ];
             }
         }
         
