@@ -17,7 +17,17 @@ final class ReturnPolicy_Schema_Integration {
                 'returnPolicyCategory' => 'https://schema.org/MerchantReturnNotPermitted',
             ];
         } else {
-            
+            $return_window = edd_get_option( 'refund_window', 0 ); // needs to be 0 here
+
+            if ( empty( $return_window ) ) {
+                $organization_piece['hasMerchantReturnPolicy'] = [
+                    '@type' => 'MerchantReturnPolicy',
+                    'applicableCountry' => '',
+                    'returnPolicyCategory' => 'https://schema.org/MerchantInfiniteReturnWindow',
+                ];
+            } else {
+            	$retval = absint( $return_window );
+            }
         }
         
         return $organization_piece;
