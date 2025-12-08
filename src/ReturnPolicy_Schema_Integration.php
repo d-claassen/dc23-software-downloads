@@ -9,34 +9,35 @@ final class ReturnPolicy_Schema_Integration {
     }
     
     public function extend_organization_with_return_policy( $organization_piece, $context ) {
+        $country = \edd_get_option( 'base_country', '' );
+        if ( $country === '' ) {
+            // Country is required. Bail out.
+            return $organization_piece;
+        }
+        
+        $return_policy = [
+            '@type' => 'MerchantReturnPolicy',
+            'applicableCountry' => $base_country,
+        ];
+        
         $refundability = edd_get_option( 'refundability', 'refundable' );
-        print '<!-- ';
-        \printf( ' refundability: %s', $refundability );
         if ( $refundability === 'nonrefundable' ) {
-            $organization_piece['hasMerchantReturnPolicy'] = [
-                '@type' => 'MerchantReturnPolicy',
-                'applicableCountry' => \edd_get_option( 'base_country', '' ),
-                'returnPolicyCategory' => 'https://schema.org/MerchantReturnNotPermitted',
-            ];
+            $return_policy['returnPolicyCategory'] = 'https://schema.org/MerchantReturnNotPermitted';
         } else {
             $return_window = edd_get_option( 'refund_window', 0 ); // needs to be 0 here
-            \printf( 'refund/return_window: %s', $return_window );
             if ( empty( $return_window ) ) {
-                $organization_piece['hasMerchantReturnPolicy'] = [
-                    '@type' => 'MerchantReturnPolicy',
-                    'applicableCountry' => \edd_get_option( 'base_country', '' ),
-                    'returnPolicyCategory' => 'https://schema.org/MerchantReturnUnlimitedWindow',
-                ];
+                $return_policy['returnPolicyCategory'] = 'https://schema.org/MerchantReturnUnlimitedWindow';
             } else {                
-                $organization_piece['hasMerchantReturnPolicy'] = [
-                    '@type' => 'MerchantReturnPolicy',
-                    'applicableCountry' => \edd_get_option( 'base_country', '' ),
-                    'returnPolicyCategory' => 'https://schema.org/MerchantReturnFiniteReturnWindow',
-                    'merchantReturnDays' => absint( $return_window ),
-                ];
+                $return_policy['returnPolicyCategory'] = 'https://schema.org/MerchantReturnFiniteReturnWindow';
+                $return_policy['merchantReturnDays'] = absint( $return_window );
             }
         }
+        print '<!-- ';
+        \printf( ' refundability: %s', $refundability );
+        \printf( 'refund/return_window: %s', $return_window ?? 'n/a' );
         print ' -->';
+    
+        $organization_piece['hasMerchantReturnPolicy'] = $return_policy;
         
         return $organization_piece;
     }
