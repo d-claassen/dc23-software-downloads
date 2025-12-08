@@ -45,6 +45,33 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 				from its origin would be the word "and".
 				EOL;
 	}
+	
+	public function test_should_have_country_for_return_policy(): void {
+		$post_id = self::factory()->post->create(
+			array(
+				'title'        => 'WebPage with estimated reading time',
+				'post_content' => $this->get_post_content(),
+				'post_type'    => 'download',
+			)
+		);
+
+		// Update object to persist meta value to indexable.
+		self::factory()->post->update_object( $post_id, [] );
+
+		$this->go_to( \get_permalink( $post_id ) );
+
+		$yoast_schema = $this->get_yoast_schema_output();
+		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
+
+		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
+
+		$this->assertArrayNotHasKey(
+			'hasMerchantReturnPolicy',
+			$organization_piece,
+			'ReturnPolicy piece in Organization'
+		);
+	}
 
 	public function test_should_have_infinite_return_policy(): void {
 		$post_id = self::factory()->post->create(
