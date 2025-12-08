@@ -87,7 +87,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			)
 		);
 		
-		\EDD\Settings\Setting::update( 'return_window', 30 );
+		\EDD\Settings\Setting::update( 'refund_window', 30 );
 
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [] );
