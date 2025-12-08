@@ -75,9 +75,19 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 		];
                 
                 $download = \edd_get_download( $this->context->object_id );
-                $download_refundable = $download->get_refundable();
-                
-                $download_refund_window = $download->get_refund_window();
+ 
+                $refundability = $download->get_refundability();
+                if ( $refundability === 'nonrefundable' ) {
+                    $data['returnPolicyCategory'] = 'https://schema.org/MerchantReturnNotPermitted';
+                } else {
+                    $return_window = $download->get_refund_window();
+                    if ( empty( $return_window ) ) {
+                        $return_policy['returnPolicyCategory'] = 'https://schema.org/MerchantReturnUnlimitedWindow';
+                    } else {                
+                        $return_policy['returnPolicyCategory'] = 'https://schema.org/MerchantReturnFiniteReturnWindow';
+                        $return_policy['merchantReturnDays'] = absint( $return_window );
+                    }
+                }
 
 		return $data;
 	}
