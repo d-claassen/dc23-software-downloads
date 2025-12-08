@@ -12,7 +12,7 @@ final class ReturnPolicy_Schema_Integration {
         $refundability = edd_get_option( 'refundability', 'refundable' );
         print '<!-- ';
         \printf( ' refundability: %s', $refundability );
-        if ( $refundability === 'non-refundable' ) {
+        if ( $refundability === 'nonrefundable' ) {
             $organization_piece['hasMerchantReturnPolicy'] = [
                 '@type' => 'MerchantReturnPolicy',
                 'applicableCountry' => \edd_get_option( 'base_country' ),
