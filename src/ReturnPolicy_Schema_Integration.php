@@ -13,7 +13,11 @@ final class ReturnPolicy_Schema_Integration {
         if ( $refundability === 'non-refundable' ) {
             $organization_piece['hasMerchantReturnPolicy'] = [
                 '@type' => 'MerchantReturnPolicy',
+                'applicableCountry' => '',
+                'returnPolicyCategory' => 'https://schema.org/MerchantReturnNotPermitted',
             ];
+        } else {
+            
         }
         
         return $organization_piece;
