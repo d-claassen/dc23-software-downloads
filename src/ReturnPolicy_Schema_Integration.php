@@ -17,7 +17,7 @@ final class ReturnPolicy_Schema_Integration {
         
         $return_policy = [
             '@type' => 'MerchantReturnPolicy',
-            'applicableCountry' => $base_country,
+            'applicableCountry' => $country,
         ];
         
         $refundability = edd_get_option( 'refundability', 'refundable' );
