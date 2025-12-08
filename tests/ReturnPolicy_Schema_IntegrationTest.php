@@ -73,7 +73,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
         );
 		$this->assertSame( 
 			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
-			'https://schema.org/MerchantReturnFiniteWindow',
+			'https://schema.org/MerchantReturnUnlimitedWindow',
 			'finite window'
 		);
 	}
