@@ -34,6 +34,7 @@ if ( ! function_exists( 'dc23_software_downloads_setup' ) ) :
 		( new \DC23\SoftwareDownloads\Person_Schema_Integration() )->register();
         ( new \DC23\SoftwareDownloads\Product_Opengraph_Integration() )->register();
         ( new \DC23\SoftwareDownloads\Product_Schema_Integration() )->register();
+        ( new \DC23\SoftwareDownloads\ReturnPolicy_Schema_Integration() )->register();
         ( new \DC23\SoftwareDownloads\Slack_Integration() )->register();
 	}
 endif;

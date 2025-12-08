@@ -3,11 +3,11 @@
 namespace DC23\Tests\SoftwareDownloads;
 
 /**
- * Class Checkout_Schema_IntegrationTest.
+ * Class ReturnPolicy_Schema_IntegrationTest.
  *
- * @testdox Checkout Schema for the EDD checkout page.
+ * @testdox ReturnPolicy Schema for a single post "download"
  */
-class Checkout_Schema_IntegrationTest extends \WP_UnitTestCase {
+class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 
 	private $user_id;
 
@@ -20,7 +20,7 @@ class Checkout_Schema_IntegrationTest extends \WP_UnitTestCase {
 		\YoastSEO()->helpers->options->set( 'company_or_person', 'person' );
 		\YoastSEO()->helpers->options->set( 'company_or_person_user_id', $this->user_id );
 		
-		\EDD\Settings\Setting::update( 'base_country', 'NL' );
+				\EDD\Settings\Setting::update( 'base_country', 'NL' );
 	}
 
 	// override wordpress function thats incompatible
@@ -47,18 +47,17 @@ class Checkout_Schema_IntegrationTest extends \WP_UnitTestCase {
 				from its origin would be the word "and".
 				EOL;
 	}
-
-	public function test_should_type_edd_checkout_as_checkoutpage(): void {
+	
+	public function test_should_have_country_for_return_policy(): void {
 		$post_id = self::factory()->post->create(
 			array(
-				'title'        => 'Checkout',
+				'title'        => 'WebPage with estimated reading time',
 				'post_content' => $this->get_post_content(),
-				'post_type'    => 'page',
+				'post_type'    => 'download',
 			)
 		);
 		
-		// Set as the checkout page
-		edd_update_option( 'purchase_page', $post_id );
+						\EDD\Settings\Setting::update( 'base_country', '' );
 
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [] );
@@ -69,33 +68,57 @@ class Checkout_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
 		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
-		// $edd_schema = $this->get_edd_schema_output();
-		// $this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
-		// $edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
 
-		$webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'CheckoutPage' );
-		// $product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
-
-		$this->assertSame( 
-			['WebPage', 'CheckoutPage' ],
-			$webpage_piece['@type'],
-			'webpage piece should be typed additionally with CheckoutPage'
+		$this->assertArrayNotHasKey(
+			'hasMerchantReturnPolicy',
+			$organization_piece,
+			'ReturnPolicy piece in Organization'
 		);
 	}
-	
-	public function test_should_leave_checkoutpage_untouched(): void {
+
+	public function test_should_have_infinite_return_policy(): void {
 		$post_id = self::factory()->post->create(
 			array(
-				'title'        => 'WebPage with downloadable software',
+				'title'        => 'WebPage with estimated reading time',
 				'post_content' => $this->get_post_content(),
-				'post_type'    => 'page',
+				'post_type'    => 'download',
 			)
 		);
 
-		// Configure the checkout page as "CheckoutPage".
-		\YoastSEO()->helpers->meta->set_value( 'schema_page_type', 'CheckoutPage', $post_id );
-		// Set as the checkout page
-		edd_update_option( 'purchase_page', $post_id );
+		// Update object to persist meta value to indexable.
+		self::factory()->post->update_object( $post_id, [] );
+
+		$this->go_to( \get_permalink( $post_id ) );
+
+		$yoast_schema = $this->get_yoast_schema_output();
+		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
+
+		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
+
+		$this->assertArrayHasKey(
+			'hasMerchantReturnPolicy',
+			$organization_piece,
+			'ReturnPolicy piece in Organization'
+		);
+		$this->assertSame( 
+			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
+			'https://schema.org/MerchantReturnUnlimitedWindow',
+			'infinite window'
+		);
+	}
+	
+	public function test_should_have_limited_return_policy(): void {
+		$post_id = self::factory()->post->create(
+			array(
+				'title'        => 'WebPage with estimated reading time',
+				'post_content' => $this->get_post_content(),
+				'post_type'    => 'download',
+			)
+		);
+		
+		\EDD\Settings\Setting::update( 'refund_window', 30 );
 
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [] );
@@ -106,12 +129,55 @@ class Checkout_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
 		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
-		$webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'CheckoutPage' );
+		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
 
+		$this->assertArrayHasKey(
+			'hasMerchantReturnPolicy',
+			$organization_piece,
+			'ReturnPolicy piece in Organization'
+		);
 		$this->assertSame( 
-            ['WebPage', 'CheckoutPage'],
-            $webpage_piece['@type'],
-			'webpage piece should be typed additionally with CheckoutPage'
+			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
+			'https://schema.org/MerchantReturnFiniteReturnWindow',
+			'finite window'
+		);
+		$this->assertSame( 
+			$organization_piece['hasMerchantReturnPolicy']['merchantReturnDays'],
+			30,
+			'30 day window'
+		);
+	}
+		public function test_should_have_no_return_policy(): void {
+		$post_id = self::factory()->post->create(
+			array(
+				'title'        => 'WebPage with estimated reading time',
+				'post_content' => $this->get_post_content(),
+				'post_type'    => 'download',
+			)
+		);
+		
+		\EDD\Settings\Setting::update( 'refundability', 'nonrefundable' );
+
+		// Update object to persist meta value to indexable.
+		self::factory()->post->update_object( $post_id, [] );
+
+		$this->go_to( \get_permalink( $post_id ) );
+
+		$yoast_schema = $this->get_yoast_schema_output();
+		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
+
+		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
+
+		$this->assertArrayHasKey(
+			'hasMerchantReturnPolicy',
+			$organization_piece,
+			'ReturnPolicy piece in Organization'
+		);
+		$this->assertSame( 
+			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
+			'https://schema.org/MerchantReturnNotPermitted',
+			'no returns'
 		);
 	}
 	
