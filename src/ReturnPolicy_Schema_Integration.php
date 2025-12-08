@@ -11,7 +11,7 @@ final class ReturnPolicy_Schema_Integration {
     public function extend_organization_with_return_policy( $organization_piece, $context ) {
         $refundability = edd_get_option( 'refundability', 'refundable' );
         print '<!-- ';
-        prinft( ' refundability: %s', $refundability );
+        \printf( ' refundability: %s', $refundability );
         if ( $refundability === 'non-refundable' ) {
             $organization_piece['hasMerchantReturnPolicy'] = [
                 '@type' => 'MerchantReturnPolicy',
@@ -20,7 +20,7 @@ final class ReturnPolicy_Schema_Integration {
             ];
         } else {
             $return_window = edd_get_option( 'refund_window', 0 ); // needs to be 0 here
-            prinft( 'refund/return_window: %s', $return_window );
+            \printf( 'refund/return_window: %s', $return_window );
             if ( empty( $return_window ) ) {
                 $organization_piece['hasMerchantReturnPolicy'] = [
                     '@type' => 'MerchantReturnPolicy',
@@ -36,7 +36,7 @@ final class ReturnPolicy_Schema_Integration {
                 ];
             }
         }
-        echo ' -->';
+        print ' -->';
         
         return $organization_piece;
     }
