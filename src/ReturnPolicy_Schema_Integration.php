@@ -15,7 +15,7 @@ final class ReturnPolicy_Schema_Integration {
         if ( $refundability === 'non-refundable' ) {
             $organization_piece['hasMerchantReturnPolicy'] = [
                 '@type' => 'MerchantReturnPolicy',
-                'applicableCountry' => '',
+                'applicableCountry' => \edd_get_option( 'base_country' ),
                 'returnPolicyCategory' => 'https://schema.org/MerchantReturnNotPermitted',
             ];
         } else {
@@ -24,13 +24,13 @@ final class ReturnPolicy_Schema_Integration {
             if ( empty( $return_window ) ) {
                 $organization_piece['hasMerchantReturnPolicy'] = [
                     '@type' => 'MerchantReturnPolicy',
-                    'applicableCountry' => '',
+                    'applicableCountry' => \edd_get_option( 'base_country' ),
                     'returnPolicyCategory' => 'https://schema.org/MerchantReturnUnlimitedWindow',
                 ];
             } else {                
                 $organization_piece['hasMerchantReturnPolicy'] = [
                     '@type' => 'MerchantReturnPolicy',
-                    'applicableCountry' => '',
+                    'applicableCountry' => \edd_get_option( 'base_country' ),
                     'returnPolicyCategory' => 'https://schema.org/MerchantReturnFiniteReturnWindow',
                     'merchantReturnDays' => absint( $return_window ),
                 ];
