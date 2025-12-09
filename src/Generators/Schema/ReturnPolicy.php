@@ -29,6 +29,13 @@ class ReturnPolicy extends Abstract_Schema_Piece {
         $global_refundability   = \edd_get_option('refundability', 'refundable');
         $download_refundability = $download->get_refundability();
 
+        printf(
+            '<!-- %s/%s/%s -->%s',
+            \var_export($global_refundability,true),
+            \var_export($download_refundability,true),
+            PHP_EOL
+        );
+
         // Custom refundable setting?
         if ( $global_refundability !== $download_refundability ) {
             return true;
@@ -36,6 +43,15 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 
         $global_refund_window   = \edd_get_option('refund_window');
         $download_refund_window = $download->get_refund_window();
+
+        
+        printf(
+            '<!-- %s/%s -->%s',
+            \var_export($global_refund_window,true),
+            \var_export($download_refund_window,true),
+            PHP_EOL
+        );
+
 
         // Custom refund_window setting?
         if ( $global_refund_window !== $download_refund_window ) {
