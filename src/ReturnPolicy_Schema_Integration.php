@@ -6,11 +6,9 @@ final class ReturnPolicy_Schema_Integration {
 
     public function register(): void {
         \add_filter( 'wpseo_schema_organization', [ $this, 'extend_organization_with_return_policy' ], 10, 2 );
-        \add_filter( 'wpseo_schema_graph_pieces', [ $this, 'add_product_return_policy' ], 11, 2 );
+        \add_filter( 'wpseo_schema_graph_pieces', [ $this, 'add_product_return_policy' ], 10, 2 );
         
-        
-
-		return apply_filters( 'edd_generate_download_structured_data_offer', $offer, $download );
+        \add_filters( 'edd_generate_download_structured_data_offer', [ $this, 'extend_offer_with_return_policy' ], 10, 2 );
 	
     }
     
