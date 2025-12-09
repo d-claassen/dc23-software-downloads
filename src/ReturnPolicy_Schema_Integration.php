@@ -87,7 +87,13 @@ final class ReturnPolicy_Schema_Integration {
 
         $function_refundability = \edd_get_download_refundability( $download->ID );
 
-        printf('<!-- %s/%s/%s -->%s', $global_refundability, $download_refundability, $function_refundability, PHP_EOL );
+        printf(
+            '<!-- %s/%s/%s -->%s',
+            \var_export($global_refundability,true),
+            \var_export($download_refundability,true),
+            \var_export($function_refundability,true),
+            PHP_EOL
+        );
         // Custom refundable setting?
         if ( $global_refundability !== $download_refundability ) {
             return true;
@@ -96,7 +102,12 @@ final class ReturnPolicy_Schema_Integration {
         $global_refund_window   = \edd_get_option('refund_window');
         $download_refund_window = $download->get_refund_window();
 
-        printf('<!-- %s/%s -->%s', $global_refund_window, $download_refund_window, PHP_EOL );
+        printf(
+            '<!-- %s/%s -->%s',
+            \var_export($global_refund_window,true),
+            \var_export($download_refund_window,true),
+            PHP_EOL
+        );
         // Custom refund_window setting?
         if ( $global_refund_window !== $download_refund_window ) {
             return true;
