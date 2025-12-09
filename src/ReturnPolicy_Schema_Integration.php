@@ -83,7 +83,9 @@ final class ReturnPolicy_Schema_Integration {
         $global_refundability   = \edd_get_option('refundability', 'refundable');
         $download_refundability = $download->get_refundability();
 
-        printf('<!-- %s/%s -->%s', $global_refundability, $download_refundability, PHP_EOL );
+        $function_refundability = \edd_get_download_refundability( $download->ID );
+
+        printf('<!-- %s/%s/%s -->%s', $global_refundability, $download_refundability, $function_refundability, PHP_EOL );
         // Custom refundable setting?
         if ( $global_refundability !== $download_refundability ) {
             return true;
