@@ -82,7 +82,7 @@ final class ReturnPolicy_Schema_Integration {
         return $offer_piece;
     }
     
-    private function has_custom_refunds( \EDD_Download $download, $context ): bool 
+    private function has_custom_refunds( \EDD_Download $download, $context ): bool {
         $download = \edd_get_download( $context->indexable->object_id );
         
     
