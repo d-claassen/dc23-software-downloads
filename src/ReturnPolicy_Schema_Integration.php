@@ -87,6 +87,7 @@ final class ReturnPolicy_Schema_Integration {
         
     
         $download->refundability = null;
+        $download->refund_window = null;
         
         $global_refundability   = \edd_get_option('refundability', 'refundable');
         $download_refundability = $download->get_refundability();
