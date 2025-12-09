@@ -66,14 +66,37 @@ final class ReturnPolicy_Schema_Integration {
 		 */
     public function extend_offer_with_return_policy( $offer_piece, $download ) {
         //todo: only if custom settings
-         
+        if ( ! $this->has_custom_refunds( $download ) ) {
+            return $offer_piece;
+        }
         
         $context = \YoastSEO()->meta->for_current_page();
-        $returnPolicyId = $context->canonical . '#/schema/return-policy/' . $context->indexable->object_id;
+        $returnPolicyId = $context->canonical . '#/schema/return-policy/' . $download->post_ID;
         $offer_piece['hasMerchantReturnPolicy'] = [
             '@id' => $returnPolicyId,
         ];
         
         return $offer_piece;
+    }
+    
+    private function has_custom_refunds( \EDD_Download $download ): bool {
+        $global_refundability   = \edd_get_option('refundability', 'refundable');
+        $download_refundability = $download->get_refundability();
+
+        // Custom refundable setting?
+        if ( $global_refundability !== $download_refundability ) {
+            return true;
+        }
+
+        $global_refund_window   = \edd_get_option('refund_window');
+        $download_refund_window = $download->get_refund_window();
+
+        // Custom refund_window setting?
+        if ( $global_refund_window !== $download_refund_window ) {
+            return true;
+        }
+        
+        // No custom settings.
+        return false;
     }
 }
