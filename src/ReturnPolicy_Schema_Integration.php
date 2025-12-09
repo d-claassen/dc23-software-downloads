@@ -6,7 +6,12 @@ final class ReturnPolicy_Schema_Integration {
 
     public function register(): void {
         \add_filter( 'wpseo_schema_organization', [ $this, 'extend_organization_with_return_policy' ], 10, 2 );
-        \add_filter( 'wpseo_schema_graph_pieces', 'add_product_return_policy', 11, 2 );
+        \add_filter( 'wpseo_schema_graph_pieces', [ $this, 'add_product_return_policy' ], 11, 2 );
+        
+        
+
+		return apply_filters( 'edd_generate_download_structured_data_offer', $offer, $download );
+	
     }
     
     public function extend_organization_with_return_policy( $organization_piece, $context ) {
@@ -53,5 +58,22 @@ final class ReturnPolicy_Schema_Integration {
        $pieces[] = new Generators\Schema\ReturnPolicy( $context );
     
        return $pieces;
+    }
+		/**
+		 * Filter the structured data for a single price offer.
+		 *
+		 * @since 3.1.4
+		 * @param array        $offer   Structured data for a single price offer.
+		 * @param EDD_Download $download Download object.
+		 */
+    public function extend_offer_with_return_policy( $offer_piece, $download ) {
+        //todo: only if custom settings
+         
+        $returnPolicyId = $context->canonical . '#/schema/return-policy/' . $context->object_id;
+        $offer_piece['hasMerchantReturnPolicy'] = [
+            '@id' => $returnPolicyId,
+        ];
+        
+        return $offer_piece;
     }
 }
