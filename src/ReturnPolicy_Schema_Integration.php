@@ -6,6 +6,7 @@ final class ReturnPolicy_Schema_Integration {
 
     public function register(): void {
         \add_filter( 'wpseo_schema_organization', [ $this, 'extend_organization_with_return_policy' ], 10, 2 );
+        \add_filter( 'wpseo_schema_graph_pieces', 'add_product_return_policy', 11, 2 );
     }
     
     public function extend_organization_with_return_policy( $organization_piece, $context ) {
@@ -36,5 +37,21 @@ final class ReturnPolicy_Schema_Integration {
         $organization_piece['hasMerchantReturnPolicy'] = $return_policy;
         
         return $organization_piece;
+    }
+    
+    /**
+     * Adds a return policy graph piece to the schema collector.
+     *
+     * @param list<Abstract_Schema_Piece>  $pieces  The current graph pieces.
+     * @param Meta_Tags_Context $context The current context.
+     *
+     * @return list<Abstract_Schema_Piece> The graph pieces.
+     */
+    public function add_product_return_policy( $pieces, $context ) {
+       $this->context = $context;
+    
+       $pieces[] = new Generators\Schema\ReturnPolicy( $context );
+    
+       return $pieces;
     }
 }
