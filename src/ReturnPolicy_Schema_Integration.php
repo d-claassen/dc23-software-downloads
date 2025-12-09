@@ -51,28 +51,23 @@ final class ReturnPolicy_Schema_Integration {
      * @return list<Abstract_Schema_Piece> The graph pieces.
      */
     public function add_product_return_policy( $pieces, $context ) {
-       //$this->context = $context;
-    
        $pieces[] = new Generators\Schema\ReturnPolicy( $context );
     
        return $pieces;
     }
-		/**
-		 * Filter the structured data for a single price offer.
-		 *
-		 * @since 3.1.4
-		 * @param array        $offer   Structured data for a single price offer.
-		 * @param EDD_Download $download Download object.
-		 */
+    
+	/**
+	 * Filter the structured data for a single price offer.
+     *
+     * @param array        $offer   Structured data for a single price offer.
+     * @param EDD_Download $download Download object.
+     */
     public function extend_offer_with_return_policy( $offer_piece, $download ) {
-        //todo: only if custom settings
-        
         $context = \YoastSEO()->meta->for_current_page();
                 
         if ( ! $this->has_custom_refunds( $download, $context ) ) {
             return $offer_piece;
         }
-        
 
         $returnPolicyId = $context->canonical . '#/schema/return-policy/' . $download->ID;
         $offer_piece['hasMerchantReturnPolicy'] = [
@@ -83,22 +78,16 @@ final class ReturnPolicy_Schema_Integration {
     }
     
     private function has_custom_refunds( \EDD_Download $download, $context ): bool {
-        $download = \edd_get_download( $context->indexable->object_id );
-        
-    
-        $download->refundability = null;
-        $download->refund_window = null;
+        // $download->refundability = null;
+        // $download->refund_window = null;
         
         $global_refundability   = \edd_get_option('refundability', 'refundable');
         $download_refundability = $download->get_refundability();
 
-        $function_refundability = \edd_get_download_refundability( $download->ID );
-
         printf(
-            '<!-- %s/%s/%s -->%s',
+            '<!-- %s/%s -->%s',
             \var_export($global_refundability,true),
             \var_export($download_refundability,true),
-            \var_export($function_refundability,true),
             PHP_EOL
         );
         // Custom refundable setting?
