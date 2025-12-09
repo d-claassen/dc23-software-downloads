@@ -15,51 +15,35 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 	 * @return bool
 	 */
 	public function is_needed() {
-		if ( ! is_singular( 'download' ) ) {
-			return false;
-		}
-        
+                if ( ! is_singular( 'download' ) ) {
+                        return false;
+                }
+                
                 $base_country = \edd_get_option('base_country', '');
                 if ( $base_country === '' ) {
                     return false;
                 }
-        
+                
                 $download = \edd_get_download( $this->context->indexable->object_id );
+                
+                $global_refundability   = \edd_get_option('refundability', 'refundable');
+                $download_refundability = $download->get_refundability();
+
+                // Custom refundable setting?
+                if ( $global_refundability !== $download_refundability ) {
+                    return true;
+                }
+
+                $global_refund_window   = \edd_get_option('refund_window');
+                $download_refund_window = $download->get_refund_window();
+
+                // Custom refund_window setting?
+                if ( $global_refund_window !== $download_refund_window ) {
+                    return true;
+                }
         
-        $global_refundability   = \edd_get_option('refundability', 'refundable');
-        $download_refundability = $download->get_refundability();
-
-        printf(
-            '<!-- %s/%s -->%s',
-            \var_export($global_refundability,true),
-            \var_export($download_refundability,true),
-            PHP_EOL
-        );
-
-        // Custom refundable setting?
-        if ( $global_refundability !== $download_refundability ) {
-            return true;
-        }
-
-        $global_refund_window   = \edd_get_option('refund_window');
-        $download_refund_window = $download->get_refund_window();
-
-        
-        printf(
-            '<!-- %s/%s -->%s',
-            \var_export($global_refund_window,true),
-            \var_export($download_refund_window,true),
-            PHP_EOL
-        );
-
-
-        // Custom refund_window setting?
-        if ( $global_refund_window !== $download_refund_window ) {
-            return true;
-        }
-        
-        // No custom settings.
-        return false;
+                // No custom settings.
+                return false;
 	}
 
 	/**
