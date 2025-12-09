@@ -66,11 +66,14 @@ final class ReturnPolicy_Schema_Integration {
 		 */
     public function extend_offer_with_return_policy( $offer_piece, $download ) {
         //todo: only if custom settings
-        if ( ! $this->has_custom_refunds( $download ) ) {
+        
+        $context = \YoastSEO()->meta->for_current_page();
+                
+        if ( ! $this->has_custom_refunds( $download, $context ) ) {
             return $offer_piece;
         }
         
-        $context = \YoastSEO()->meta->for_current_page();
+
         $returnPolicyId = $context->canonical . '#/schema/return-policy/' . $download->ID;
         $offer_piece['hasMerchantReturnPolicy'] = [
             '@id' => $returnPolicyId,
@@ -79,7 +82,10 @@ final class ReturnPolicy_Schema_Integration {
         return $offer_piece;
     }
     
-    private function has_custom_refunds( \EDD_Download $download ): bool {
+    private function has_custom_refunds( \EDD_Download $download, $context ): bool 
+        $download = \edd_get_download( $context->indexable->object_id );
+        
+    
         $download->refundability = null;
         
         $global_refundability   = \edd_get_option('refundability', 'refundable');
