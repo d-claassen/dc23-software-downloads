@@ -24,7 +24,7 @@ class ReturnPolicy extends Abstract_Schema_Piece {
             return false;
         }
 
-        $download = \edd_get_download( $this->context->object_id );
+        $download = \edd_get_download( $this->context->indexable->object_id );
         
         $global_refundable   = \edd_get_option('refundable');
         $download_refundable = $download->get_refundable();
@@ -66,7 +66,7 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 	 * @return array<sting, mixed>
 	 */
 	protected function generate_return_policy(): array {
-		$id = $this->context->canonical . '#/schema/return-policy/' . \esc_attr( $this->context->object_id );
+		$id = $this->context->canonical . '#/schema/return-policy/' . \esc_attr( $this->context->indexable->object_id );
                 $base_country = \edd_get_option('base_country', '');
 		$data = [
 			'@type'             => 'MerchantReturnPolicy',
@@ -74,7 +74,7 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 			'applicableCountry' => $base_country,
 		];
                 
-                $download = \edd_get_download( $this->context->object_id );
+                $download = \edd_get_download( $this->context->indexable->object_id );
  
                 $refundability = $download->get_refundability();
                 if ( $refundability === 'nonrefundable' ) {
