@@ -51,7 +51,7 @@ final class ReturnPolicy_Schema_Integration {
      * @return list<Abstract_Schema_Piece> The graph pieces.
      */
     public function add_product_return_policy( $pieces, $context ) {
-       $this->context = $context;
+       //$this->context = $context;
     
        $pieces[] = new Generators\Schema\ReturnPolicy( $context );
     
@@ -69,7 +69,7 @@ final class ReturnPolicy_Schema_Integration {
          
         
         $context = \YoastSEO()->meta->for_current_page();
-        $returnPolicyId = $context->canonical . '#/schema/return-policy/' . $context->object_id;
+        $returnPolicyId = $context->canonical . '#/schema/return-policy/' . $context->indexable->object_id;
         $offer_piece['hasMerchantReturnPolicy'] = [
             '@id' => $returnPolicyId,
         ];
