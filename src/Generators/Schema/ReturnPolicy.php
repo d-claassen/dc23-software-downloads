@@ -30,7 +30,7 @@ class ReturnPolicy extends Abstract_Schema_Piece {
         $download_refundability = $download->get_refundability();
 
         printf(
-            '<!-- %s/%s/%s -->%s',
+            '<!-- %s/%s -->%s',
             \var_export($global_refundability,true),
             \var_export($download_refundability,true),
             PHP_EOL
