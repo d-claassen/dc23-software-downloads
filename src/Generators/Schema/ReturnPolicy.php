@@ -19,18 +19,18 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 			return false;
 		}
         
-        $base_country = \edd_get_option('base_country', '');
-        if ( $base_country === '' ) {
-            return false;
-        }
-
-        $download = \edd_get_download( $this->context->indexable->object_id );
+                $base_country = \edd_get_option('base_country', '');
+                if ( $base_country === '' ) {
+                    return false;
+                }
         
-        $global_refundable   = \edd_get_option('refundable');
-        $download_refundable = $download->get_refundable();
+                $download = \edd_get_download( $this->context->indexable->object_id );
+        
+        $global_refundability   = \edd_get_option('refundability', 'refundable');
+        $download_refundability = $download->get_refundability();
 
         // Custom refundable setting?
-        if ( $global_refundable !== $download_refundable ) {
+        if ( $global_refundability !== $download_refundability ) {
             return true;
         }
 
