@@ -68,12 +68,22 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
 		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
+		$edd_schema = $this->get_edd_schema_output();
+		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+	
 		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
+		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
 		$this->assertArrayNotHasKey(
 			'hasMerchantReturnPolicy',
 			$organization_piece,
 			'ReturnPolicy piece in Organization'
+		);
+		$this->assertArrayNotHasKey(
+			'hasMerchantReturnPolicy',
+			$product_piece['offers'],
+			'ReturnPolicy piece in product offer'
 		);
 	}
 
@@ -95,7 +105,12 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
 		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
+		$edd_schema = $this->get_edd_schema_output();
+		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+	
 		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
+		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
 		$this->assertArrayHasKey(
 			'hasMerchantReturnPolicy',
@@ -106,6 +121,11 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
 			'https://schema.org/MerchantReturnUnlimitedWindow',
 			'infinite window'
+		);
+		$this->assertArrayNotHasKey(
+			'hasMerchantReturnPolicy',
+			$product_piece['offers'],
+			'ReturnPolicy piece in product offer'
 		);
 	}
 	
@@ -129,7 +149,12 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
 		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
+		$edd_schema = $this->get_edd_schema_output();
+		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+	
 		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
+		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
 		$this->assertArrayHasKey(
 			'hasMerchantReturnPolicy',
@@ -145,6 +170,11 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$organization_piece['hasMerchantReturnPolicy']['merchantReturnDays'],
 			30,
 			'30 day window'
+		);
+		$this->assertArrayNotHasKey(
+			'hasMerchantReturnPolicy',
+			$product_piece['offers'],
+			'ReturnPolicy piece in product offer'
 		);
 	}
 		public function test_should_have_no_return_policy(): void {
@@ -167,7 +197,12 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
 		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
+		$edd_schema = $this->get_edd_schema_output();
+		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+	
 		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
+		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
 		$this->assertArrayHasKey(
 			'hasMerchantReturnPolicy',
@@ -178,6 +213,11 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
 			'https://schema.org/MerchantReturnNotPermitted',
 			'no returns'
+		);
+		$this->assertArrayNotHasKey(
+			'hasMerchantReturnPolicy',
+			$product_piece['offers'],
+			'ReturnPolicy piece in product offer'
 		);
 	}
 	
