@@ -19,14 +19,14 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 			return false;
 		}
         
-        $base_country = \edd_get_setting('base_country', '');
+        $base_country = \edd_get_option('base_country', '');
         if ( $base_country === '' ) {
             return false;
         }
 
         $download = \edd_get_download( $this->context->object_id );
         
-        $global_refundable   = \edd_get_setting('refundable');
+        $global_refundable   = \edd_get_option('refundable');
         $download_refundable = $download->get_refundable();
 
         // Custom refundable setting?
@@ -34,7 +34,7 @@ class ReturnPolicy extends Abstract_Schema_Piece {
             return true;
         }
 
-        $global_refund_window   = \edd_get_setting('refund_window');
+        $global_refund_window   = \edd_get_option('refund_window');
         $download_refund_window = $download->get_refund_window();
 
         // Custom refund_window setting?
@@ -67,7 +67,7 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 	 */
 	protected function generate_return_policy(): array {
 		$id = $this->context->canonical . '#/schema/return-policy/' . \esc_attr( $this->context->object_id );
-                $base_country = \edd_get_setting('base_country', '');
+                $base_country = \edd_get_option('base_country', '');
 		$data = [
 			'@type'             => 'MerchantReturnPolicy',
 			'@id'               => $id,
