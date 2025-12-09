@@ -71,7 +71,7 @@ final class ReturnPolicy_Schema_Integration {
         }
         
         $context = \YoastSEO()->meta->for_current_page();
-        $returnPolicyId = $context->canonical . '#/schema/return-policy/' . $download->post_ID;
+        $returnPolicyId = $context->canonical . '#/schema/return-policy/' . $download->ID;
         $offer_piece['hasMerchantReturnPolicy'] = [
             '@id' => $returnPolicyId,
         ];
