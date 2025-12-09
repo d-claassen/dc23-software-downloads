@@ -80,6 +80,8 @@ final class ReturnPolicy_Schema_Integration {
     }
     
     private function has_custom_refunds( \EDD_Download $download ): bool {
+        $download->refundability = null;
+        
         $global_refundability   = \edd_get_option('refundability', 'refundable');
         $download_refundability = $download->get_refundability();
 
