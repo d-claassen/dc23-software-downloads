@@ -268,6 +268,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$product_piece['offers']['hasMerchantReturnPolicy']['@id'],
 			$returnpolicy_piece['@id'],
 			'Product ReturnPolicy refers to custom ReturnPolicy',
+		);
 	}
 	
 	private function get_yoast_schema_output(): string {
