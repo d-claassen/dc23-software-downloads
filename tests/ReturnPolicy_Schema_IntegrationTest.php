@@ -229,10 +229,12 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 				'post_type'    => 'download',
 			)
 		);
+		
+		set_post_meta( $post_id, '_edd_refundability', 'refundable' );
 
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [
-			'_edd_return_window' => 60,
+			'_edd_refund_window' => 60,
 		] );
 
 		$this->go_to( \get_permalink( $post_id ) );
