@@ -230,12 +230,11 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			)
 		);
 		
-		update_post_meta( $post_id, '_edd_refundability', 'refundable' );
-
+		\update_post_meta( $post_id, '_edd_refundability', 'refundable' );
+		\update_post_meta( $post_id, '_edd_refund_window', '60' );
+		
 		// Update object to persist meta value to indexable.
-		self::factory()->post->update_object( $post_id, [
-			'_edd_refund_window' => 60,
-		] );
+		self::factory()->post->update_object( $post_id, [] );
 
 		$this->go_to( \get_permalink( $post_id ) );
 
