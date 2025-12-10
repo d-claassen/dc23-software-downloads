@@ -65,10 +65,10 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 	 *
 	 * @return array<sting, mixed>
 	 */
-	protected function generate_return_policy(): array {
+                protected function generate_return_policy(): array {
 		$id = $this->context->canonical . '#/schema/return-policy/' . \esc_attr( $this->context->indexable->object_id );
-                $base_country = \edd_get_option('base_country', '');
-		$data = [
+                                $base_country = \edd_get_option('base_country', '');
+		$return_policy = [
 			'@type'             => 'MerchantReturnPolicy',
 			'@id'               => $id,
 			'applicableCountry' => $base_country,
@@ -78,7 +78,7 @@ class ReturnPolicy extends Abstract_Schema_Piece {
  
                 $refundability = $download->get_refundability();
                 if ( $refundability === 'nonrefundable' ) {
-                    $data['returnPolicyCategory'] = 'https://schema.org/MerchantReturnNotPermitted';
+                    $return_policy['returnPolicyCategory'] = 'https://schema.org/MerchantReturnNotPermitted';
                 } else {
                     $return_window = $download->get_refund_window();
                     if ( empty( $return_window ) ) {
@@ -89,6 +89,6 @@ class ReturnPolicy extends Abstract_Schema_Piece {
                     }
                 }
 
-		return $data;
+		return $return_policy;
 	}
 }
