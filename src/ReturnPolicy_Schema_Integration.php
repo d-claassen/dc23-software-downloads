@@ -78,7 +78,7 @@ final class ReturnPolicy_Schema_Integration {
     }
     
     private function has_custom_refunds( \EDD_Download $download, $context ): bool {
-        // $download->refundability = null;
+        $download->refundability = null;
         // $download->refund_window = null;
         
         $global_refundability   = \edd_get_option('refundability', 'refundable');
