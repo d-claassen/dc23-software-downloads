@@ -56,14 +56,11 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 				'post_type'    => 'download',
 			)
 		);
-		
-						\EDD\Settings\Setting::update( 'base_country', '' );
+
+		\EDD\Settings\Setting::update( 'base_country', '' );
 
 		// Update object to persist meta value to indexable.
-		self::factory()->post->update_object( $post_id, [
-			'_edd_refund_window' => 'oi',
-			'_edd_refundability' => 'io',
-		] );
+		self::factory()->post->update_object( $post_id, [] );
 
 		$this->go_to( \get_permalink( $post_id ) );
 
@@ -222,6 +219,55 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$product_piece['offers'],
 			'ReturnPolicy piece in product offer'
 		);
+	}
+	
+	public function test_should_have_custom_return_window_policy(): void {
+		$post_id = self::factory()->post->create(
+			array(
+				'title'        => 'WebPage with estimated reading time',
+				'post_content' => $this->get_post_content(),
+				'post_type'    => 'download',
+			)
+		);
+
+		// Update object to persist meta value to indexable.
+		self::factory()->post->update_object( $post_id, [
+			'_edd_return_window' => 60,
+		] );
+
+		$this->go_to( \get_permalink( $post_id ) );
+
+		$yoast_schema = $this->get_yoast_schema_output();
+		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
+
+		$edd_schema = $this->get_edd_schema_output();
+		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+	
+		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
+		$returnpolicy_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'MerchantReturnPolicy' );
+		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
+
+		$this->assertArrayHasKey(
+			'hasMerchantReturnPolicy',
+			$organization_piece,
+			'ReturnPolicy piece in Organization'
+		);
+		$this->assertSame( 
+			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
+			'https://schema.org/MerchantReturnUnlimitedWindow',
+			'infinite window'
+		);
+		$this->assertArrayHasKey(
+			'hasMerchantReturnPolicy',
+			$product_piece['offers'],
+			'ReturnPolicy piece in product offer'
+		);
+		$this->assertSame(
+			$product_piece['offers']['hasMerchantReturnPolicy']['@id'],
+			$returnpolicy_piece['@id'],
+			'Product ReturnPolicy refers to custom ReturnPolicy',
 	}
 	
 	private function get_yoast_schema_output(): string {
