@@ -118,8 +118,8 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'ReturnPolicy piece in Organization'
 		);
 		$this->assertSame( 
-			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
 			'https://schema.org/MerchantReturnUnlimitedWindow',
+			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
 			'infinite window'
 		);
 		$this->assertArrayNotHasKey(
@@ -162,13 +162,13 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'ReturnPolicy piece in Organization'
 		);
 		$this->assertSame( 
-			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
 			'https://schema.org/MerchantReturnFiniteReturnWindow',
+			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
 			'finite window'
 		);
 		$this->assertSame( 
-			$organization_piece['hasMerchantReturnPolicy']['merchantReturnDays'],
 			30,
+			$organization_piece['hasMerchantReturnPolicy']['merchantReturnDays'],
 			'30 day window'
 		);
 		$this->assertArrayNotHasKey(
@@ -210,8 +210,8 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'ReturnPolicy piece in Organization'
 		);
 		$this->assertSame( 
-			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
 			'https://schema.org/MerchantReturnNotPermitted',
+			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
 			'no returns'
 		);
 		$this->assertArrayNotHasKey(
@@ -261,14 +261,14 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'Product ReturnPolicy refers to custom ReturnPolicy',
 		);
 				
-		$this->assertSame( 
-			$returnpolicy_piece['returnPolicyCategory'],
+		$this->assertSame(
 			'https://schema.org/MerchantReturnFiniteReturnWindow',
+			$returnpolicy_piece['returnPolicyCategory'],
 			'custom finite window'
 		);
-		$this->assertSame( 
-			$returnpolicy_piece['merchantReturnDays'],
+		$this->assertSame(
 			60,
+			$returnpolicy_piece['merchantReturnDays'],
 			'custom 60 day window'
 		);
 	}
@@ -305,7 +305,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$this->assertArrayHasKey(
 			'hasMerchantReturnPolicy',
 			$product_piece['offers'],
-			'ReturnPolicy piece in product offer'
+			'ReturnPolicy piece in product offer',
 		);
 		$this->assertSame(
 			$product_piece['offers']['hasMerchantReturnPolicy']['@id'],
@@ -313,15 +313,15 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'Product ReturnPolicy refers to custom ReturnPolicy',
 		);
 				
-		$this->assertSame( 
-			$returnpolicy_piece['returnPolicyCategory'],
+		$this->assertSame(
 			'https://schema.org/MerchantReturnNotPermitted',
-			'no returns'
+			$returnpolicy_piece['returnPolicyCategory'],
+			'no returns',
 		);
 		$this->assertArrayNotHasKey(
 			'merchantReturnDays',
 			$returnpolicy_piece,
-			'ReturnPolicy piece in product offer'
+			'no return days in NotPermitted ReturnPolicy piece',
 		);
 	}
 	
