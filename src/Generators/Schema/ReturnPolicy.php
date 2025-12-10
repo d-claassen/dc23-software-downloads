@@ -30,7 +30,7 @@ class ReturnPolicy extends Abstract_Schema_Piece {
                 $download_refundability = $download->get_refundability();
 
                 // Custom refundable setting?
-                if ( $global_refundability !== $download_refundability ) {
+                if ( $download_refundability !== '' && $global_refundability !== $download_refundability ) {
                     return true;
                 }
 
@@ -38,7 +38,7 @@ class ReturnPolicy extends Abstract_Schema_Piece {
                 $download_refund_window = $download->get_refund_window();
 
                 // Custom refund_window setting?
-                if ( $global_refund_window !== $download_refund_window ) {
+                if ( $download_refund_window !== '' && $global_refund_window !== $download_refund_window ) {
                     return true;
                 }
         
