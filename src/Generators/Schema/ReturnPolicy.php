@@ -76,7 +76,8 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 		];
                 
                 $download = \edd_get_download( $this->context->indexable->object_id );
- 
+                 $download->refundability = null;
+
                 $refundability = $download->get_refundability();
                 if ( $refundability === 'nonrefundable' ) {
                     $return_policy['returnPolicyCategory'] = 'https://schema.org/MerchantReturnNotPermitted';
