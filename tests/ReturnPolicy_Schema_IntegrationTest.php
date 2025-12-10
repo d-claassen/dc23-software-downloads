@@ -252,16 +252,6 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$this->assertArrayHasKey(
 			'hasMerchantReturnPolicy',
-			$organization_piece,
-			'ReturnPolicy piece in Organization'
-		);
-		$this->assertSame( 
-			$organization_piece['hasMerchantReturnPolicy']['returnPolicyCategory'],
-			'https://schema.org/MerchantReturnUnlimitedWindow',
-			'infinite window'
-		);
-		$this->assertArrayHasKey(
-			'hasMerchantReturnPolicy',
 			$product_piece['offers'],
 			'ReturnPolicy piece in product offer'
 		);
@@ -269,6 +259,17 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$product_piece['offers']['hasMerchantReturnPolicy']['@id'],
 			$returnpolicy_piece['@id'],
 			'Product ReturnPolicy refers to custom ReturnPolicy',
+		);
+				
+		$this->assertSame( 
+			$returnpolicy_piece['returnPolicyCategory'],
+			'https://schema.org/MerchantReturnFiniteReturnWindow',
+			'custom finite window'
+		);
+		$this->assertSame( 
+			$returnpolicy_piece['merchantReturnDays'],
+			60,
+			'custom 60 day window'
 		);
 	}
 	
