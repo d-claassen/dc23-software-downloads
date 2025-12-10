@@ -91,7 +91,7 @@ final class ReturnPolicy_Schema_Integration {
             PHP_EOL
         );
         // Custom refundable setting?
-        if ( $global_refundability !== $download_refundability ) {
+        if ( $download_refundability !== '' && $global_refundability !== $download_refundability ) {
             return true;
         }
 
