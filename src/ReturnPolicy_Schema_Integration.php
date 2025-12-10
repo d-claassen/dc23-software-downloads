@@ -105,7 +105,7 @@ final class ReturnPolicy_Schema_Integration {
             PHP_EOL
         );
         // Custom refund_window setting?
-        if ( $global_refund_window !== $download_refund_window ) {
+        if ( $download_refund_window !== '' && $global_refund_window !== $download_refund_window ) {
             return true;
         }
         
