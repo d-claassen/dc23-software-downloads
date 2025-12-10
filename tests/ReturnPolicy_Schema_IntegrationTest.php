@@ -60,7 +60,10 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 						\EDD\Settings\Setting::update( 'base_country', '' );
 
 		// Update object to persist meta value to indexable.
-		self::factory()->post->update_object( $post_id, [] );
+		self::factory()->post->update_object( $post_id, [
+			'_edd_refund_window' => 'oi',
+			'_edd_refundability' => 'io',
+		] );
 
 		$this->go_to( \get_permalink( $post_id ) );
 
