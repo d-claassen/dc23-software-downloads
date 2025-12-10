@@ -25,6 +25,7 @@ class ReturnPolicy extends Abstract_Schema_Piece {
                 }
                 
                 $download = \edd_get_download( $this->context->indexable->object_id );
+                $download->refundability = null;
                 
                 $global_refundability   = \edd_get_option('refundability', 'refundable');
                 $download_refundability = $download->get_refundability();
