@@ -365,7 +365,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 		);
 				
 		$this->assertSame(
-			'https://schema.org/MerchantReturnInfiniteReturnWindow',
+			'https://schema.org/MerchantReturnUnlimitedWindow',
 			$returnpolicy_piece['returnPolicyCategory'],
 			'custom infinite window'
 		);
