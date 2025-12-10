@@ -62,8 +62,8 @@ jobs:
       - name: 'Build the plugin'
         run: 'npm run-script build'
 
-      #- name: Install Playwright dependencies
-      #  run: npx playwright install chromium firefox webkit --with-deps
+      - name: Install Playwright dependencies
+        run: npx playwright install chromium firefox webkit --with-deps
 
       - name: Install WordPress and start the server
         run: npm run wp-env start -- --xdebug=coverage || npm run wp-env start -- --xdebug=coverage
@@ -79,11 +79,11 @@ jobs:
           npm run wp-env run -- tests-wordpress composer -- --version
           npm run wp-env run -- tests-wordpress phpunit -- --version
 
-      #- name: Run Playwright tests
-      #  id: tests
-      #  env:
-      #    PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
-      #  run: npm run test:e2e -- --pass-with-no-tests
+      - name: Run Playwright tests
+        id: tests
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
+        run: npm run test:e2e -- --pass-with-no-tests
 
       # Somehow this disables/moves the plugin, breaking the E2E tests.
       - name: Run PHPUnit tests
