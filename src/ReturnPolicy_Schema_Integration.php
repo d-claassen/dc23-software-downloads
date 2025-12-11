@@ -78,18 +78,23 @@ final class ReturnPolicy_Schema_Integration {
     }
     
     private function has_custom_refunds( \EDD_Download $download, $context ): bool {
-        $download->refundability = null;
-        // $download->refund_window = null;
+        if ( $download->refundability === '' ) {
+            if ( WP_DEBUG === true ) {
+                \error_log(
+                    \sprintf('<!-- %s (%s::%s) -->%s',
+                        '\EDD_Download model cache bug workaround.',
+                        __CLASS__,
+                        __FUNCTION__,
+                        PHP_EOL,
+                    )
+                );
+            }
+           $download->refundability = null;
+        }
         
         $global_refundability   = \edd_get_option('refundability', 'refundable');
         $download_refundability = $download->get_refundability();
 
-        printf(
-            '<!-- %s/%s -->%s',
-            \var_export($global_refundability,true),
-            \var_export($download_refundability,true),
-            PHP_EOL
-        );
         // Custom refundable setting?
         if ( $download_refundability !== '' && $global_refundability !== $download_refundability ) {
             return true;
@@ -98,12 +103,6 @@ final class ReturnPolicy_Schema_Integration {
         $global_refund_window   = \edd_get_option('refund_window');
         $download_refund_window = $download->get_refund_window();
 
-        printf(
-            '<!-- %s/%s -->%s',
-            \var_export($global_refund_window,true),
-            \var_export($download_refund_window,true),
-            PHP_EOL
-        );
         // Custom refund_window setting?
         if ( $download_refund_window !== '' && $global_refund_window !== $download_refund_window ) {
             return true;
