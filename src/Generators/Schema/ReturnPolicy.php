@@ -15,35 +15,48 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 	 * @return bool
 	 */
 	public function is_needed() {
-		if ( ! is_singular( 'download' ) ) {
-			return false;
-		}
+                if ( ! is_singular( 'download' ) ) {
+                        return false;
+                }
+                
+                $base_country = \edd_get_option('base_country', '');
+                if ( $base_country === '' ) {
+                    return false;
+                }
+                
+                $download = \edd_get_download( $this->context->indexable->object_id );
+                if ( $download->refundability === '' ) {
+                    if ( WP_DEBUG === true ) {
+                        \error_log(
+                            \sprintf('<!-- %s (%s::%s) -->%s',
+                                '\EDD_Download model cache bug workaround.',
+                                __CLASS__,
+                                __FUNCTION__,
+                                PHP_EOL,
+                            )
+                        );
+                    }
+                   $download->refundability = null;
+                }
+                
+                $global_refundability   = \edd_get_option('refundability', 'refundable');
+                $download_refundability = $download->get_refundability();
+
+                // Custom refundable setting?
+                if ( $download_refundability !== '' && $global_refundability !== $download_refundability ) {
+                    return true;
+                }
+
+                $global_refund_window   = \edd_get_option('refund_window');
+                $download_refund_window = $download->get_refund_window();
+
+                // Custom refund_window setting?
+                if ( $download_refund_window !== '' && $global_refund_window !== $download_refund_window ) {
+                    return true;
+                }
         
-        $base_country = \edd_get_setting('base_country', '');
-        if ( $base_country === '' ) {
-            return false;
-        }
-
-        $download = \edd_get_download( $this->context->object_id );
-        
-        $global_refundable   = \edd_get_setting('refundable');
-        $download_refundable = $download->get_refundable();
-
-        // Custom refundable setting?
-        if ( $global_refundable !== $download_refundable ) {
-            return true;
-        }
-
-        $global_refund_window   = \edd_get_setting('refund_window');
-        $download_refund_window = $download->get_refund_window();
-
-        // Custom refund_window setting?
-        if ( $global_refund_window !== $download_refund_window ) {
-            return true;
-        }
-        
-        // No custom settings.
-        return false;
+                // No custom settings.
+                return false;
 	}
 
 	/**
@@ -65,20 +78,34 @@ class ReturnPolicy extends Abstract_Schema_Piece {
 	 *
 	 * @return array<sting, mixed>
 	 */
-	protected function generate_return_policy(): array {
-		$id = $this->context->canonical . '#/schema/return-policy/' . \esc_attr( $this->context->object_id );
-                $base_country = \edd_get_setting('base_country', '');
-		$data = [
+                protected function generate_return_policy(): array {
+		$id = $this->context->canonical . '#/schema/return-policy/' . \esc_attr( $this->context->indexable->object_id );
+                                $base_country = \edd_get_option('base_country', '');
+		$return_policy = [
 			'@type'             => 'MerchantReturnPolicy',
 			'@id'               => $id,
 			'applicableCountry' => $base_country,
 		];
                 
-                $download = \edd_get_download( $this->context->object_id );
- 
+                $download = \edd_get_download( $this->context->indexable->object_id );
+                if ( $download->refundability === '' ) {
+                    if ( WP_DEBUG === true ) {
+                        \error_log(
+                            \sprintf('<!-- %s (%s::%s) -->%s',
+                                '\EDD_Download model cache bug workaround.',
+                                __CLASS__,
+                                __FUNCTION__,
+                                PHP_EOL,
+                            )
+                        );
+                    }
+                   $download->refundability = null;
+                }
+                
+
                 $refundability = $download->get_refundability();
                 if ( $refundability === 'nonrefundable' ) {
-                    $data['returnPolicyCategory'] = 'https://schema.org/MerchantReturnNotPermitted';
+                    $return_policy['returnPolicyCategory'] = 'https://schema.org/MerchantReturnNotPermitted';
                 } else {
                     $return_window = $download->get_refund_window();
                     if ( empty( $return_window ) ) {
@@ -89,6 +116,6 @@ class ReturnPolicy extends Abstract_Schema_Piece {
                     }
                 }
 
-		return $data;
+		return $return_policy;
 	}
 }
