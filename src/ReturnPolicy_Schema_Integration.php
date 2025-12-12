@@ -84,7 +84,7 @@ final class ReturnPolicy_Schema_Integration {
      * @param array        $offer   Structured data for a variable price offer.
      * @param EDD_Download $download Download object.
      */
-    public function extend_offer_with_return_policy( $offer_pieces, $download ) {
+    public function extend_variable_offer_with_return_policy( $offer_pieces, $download ) {
         $context = \YoastSEO()->meta->for_current_page();
                 
         if ( ! $this->has_custom_refunds( $download, $context ) ) {
