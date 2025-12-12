@@ -9,7 +9,7 @@ final class ReturnPolicy_Schema_Integration {
         \add_filter( 'wpseo_schema_graph_pieces', [ $this, 'add_product_return_policy' ], 10, 2 );
         
         \add_filter( 'edd_generate_download_structured_data_offer', [ $this, 'extend_offer_with_return_policy' ], 10, 2 );
-        \add_filter( 'edd_generate_download_structured_data_variable_price_offer', [ $this, 'extend_variable_offer_with_return_policy' ], 10, 2 );
+        \add_filter( 'edd_generate_download_structured_data_variable_price_offer', [ $this, 'extend_offer_with_return_policy' ], 10, 2 );
 	
     }
     
