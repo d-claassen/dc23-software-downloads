@@ -324,7 +324,8 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'no return days in NotPermitted ReturnPolicy piece',
 		);
 	}
-		public function test_should_have_custom_unlimited_window_policy(): void {
+	
+	public function test_should_have_custom_unlimited_window_policy(): void {
 		$post_id = self::factory()->post->create(
 			array(
 				'title'        => 'WebPage with estimated reading time',
@@ -375,6 +376,83 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'no specific return days window'
 		);
 	}
+	
+		public function test_should_have_variable_custom_unlimited_window_policy(): void {
+		$post_id = self::factory()->post->create(
+			array(
+				'title'        => 'WebPage with estimated reading time',
+				'post_content' => $this->get_post_content(),
+				'post_type'    => 'download',
+			)
+		);
+		
+		\update_post_meta(
+			$post_id,
+			'edd_variable_prices',
+			[
+				['index'=>0,'price'=>'9.99','name'=>'lite'],
+				['index'=>1,'price'=>'14.99','name'=>'mid'],
+				['index'=>2,'price'=>'19.99','name'=>'top'],
+			] );
+		\update_post_meta( $post_id, '_variable_pricing', true );
+		
+		\update_post_meta( $post_id, '_edd_refundability', 'refundable' );
+		\update_post_meta( $post_id, '_edd_refund_window', '0' );
+		
+		// Update object to persist meta value to indexable.
+		self::factory()->post->update_object( $post_id, [] );
+
+		$this->go_to( \get_permalink( $post_id ) );
+
+		$yoast_schema = $this->get_yoast_schema_output();
+		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
+
+		$edd_schema = $this->get_edd_schema_output();
+		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+	
+		$organization_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'Organization' );
+		$returnpolicy_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'MerchantReturnPolicy' );
+		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
+
+		$this->assertIsList( $product_piece['offers'] );
+		$this->assertCount( 3, $product_piece['offers'] );
+
+		$this->assertArrayHasKey(
+			'hasMerchantReturnPolicy',
+			$product_piece['offers'][0],
+			'ReturnPolicy piece in product offer'
+		);
+		$this->assertSame(
+			$product_piece['offers'][0]['hasMerchantReturnPolicy']['@id'],
+			$returnpolicy_piece['@id'],
+			'Product ReturnPolicy refers to custom ReturnPolicy',
+		);
+		
+		$this->assertArrayHasKey(
+			'hasMerchantReturnPolicy',
+			$product_piece['offers'][1],
+			'ReturnPolicy piece in product offer'
+		);
+		$this->assertSame(
+			$product_piece['offers'][1]['hasMerchantReturnPolicy']['@id'],
+			$returnpolicy_piece['@id'],
+			'Product ReturnPolicy refers to custom ReturnPolicy',
+		);
+		
+				$this->assertArrayHasKey(
+			'hasMerchantReturnPolicy',
+			$product_piece['offers'][2],
+			'ReturnPolicy piece in product offer'
+		);
+		$this->assertSame(
+			$product_piece['offers'][2]['hasMerchantReturnPolicy']['@id'],
+			$returnpolicy_piece['@id'],
+			'Product ReturnPolicy refers to custom ReturnPolicy',
+		);
+	}
+	
 	private function get_yoast_schema_output(): string {
 		return $this->get_schema_output( 'wpseo_head' );
 	}
@@ -391,7 +469,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 		ob_end_clean();
 
 		if ( $debug_wpseo_head ) {
-			print $wpseo_head;
+			print $wpseo_head . PHP_EOL;
 		}
 
 		$dom = new \DOMDocument();

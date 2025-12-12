@@ -9,6 +9,7 @@ final class ReturnPolicy_Schema_Integration {
         \add_filter( 'wpseo_schema_graph_pieces', [ $this, 'add_product_return_policy' ], 10, 2 );
         
         \add_filter( 'edd_generate_download_structured_data_offer', [ $this, 'extend_offer_with_return_policy' ], 10, 2 );
+        \add_filter( 'edd_generate_download_structured_data_variable_price_offer', [ $this, 'extend_offer_with_return_policy' ], 10, 2 );
 	
     }
     
@@ -76,7 +77,30 @@ final class ReturnPolicy_Schema_Integration {
         
         return $offer_piece;
     }
-    
+    	
+    /**
+	 * Filter the structured data for a variably price offer.
+     *
+     * @param array        $offer   Structured data for a variable price offer.
+     * @param EDD_Download $download Download object.
+     */
+    public function extend_variable_offer_with_return_policy( $offer_pieces, $download ) {
+        $context = \YoastSEO()->meta->for_current_page();
+                
+        if ( ! $this->has_custom_refunds( $download, $context ) ) {
+            return $offer_piece;
+        }
+
+        $returnPolicyId = $context->canonical . '#/schema/return-policy/' . $download->ID;
+        foreach( $offer_pieces as $key => $offer_piece ) {
+            $offer_pieces[$key]['hasMerchantReturnPolicy'] = [
+                '@id' => $returnPolicyId,
+            ];
+        }
+
+        return $offer_pieces;
+    }
+
     private function has_custom_refunds( \EDD_Download $download, $context ): bool {
         if ( $download->refundability === '' ) {
             if ( WP_DEBUG === true ) {
