@@ -386,7 +386,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			)
 		);
 		
-		\update_post_meta( $post_id, '_edd_prices', ['9.99', '14.99', '19.99'] );
+		\update_post_meta( $post_id, 'edd_variable_prices', ['9.99', '14.99', '19.99'] );
 		\update_post_meta( $post_id, '_variable_pricing', true );
 		
 		\update_post_meta( $post_id, '_edd_refundability', 'refundable' );
