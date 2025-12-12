@@ -459,7 +459,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 		ob_end_clean();
 
 		if ( $debug_wpseo_head ) {
-			print $wpseo_head;
+			print $wpseo_head . PHP_EOL;
 		}
 
 		$dom = new \DOMDocument();
