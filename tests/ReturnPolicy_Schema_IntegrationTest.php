@@ -409,6 +409,9 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$returnpolicy_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'MerchantReturnPolicy' );
 		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
+		$this->assertIsList( $product_piece['offers'] );
+		$this->assertCount( 3, $product_piece['offers'] );
+
 		$this->assertArrayHasKey(
 			'hasMerchantReturnPolicy',
 			$product_piece['offers'][0],
