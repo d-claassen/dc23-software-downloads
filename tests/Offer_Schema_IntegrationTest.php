@@ -20,7 +20,7 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 		\YoastSEO()->helpers->options->set( 'company_or_person', 'person' );
 		\YoastSEO()->helpers->options->set( 'company_or_person_user_id', $this->user_id );
 		
-		// \EDD\Settings\Setting::update( 'base_country', 'NL' );
+		\EDD\Settings\Setting::update( 'base_country', 'NL' );
 	}
 
 	// override wordpress function thats incompatible
