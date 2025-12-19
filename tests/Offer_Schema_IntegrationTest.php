@@ -90,7 +90,7 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$post_id,
 			'edd_variable_prices',
 			[
-				['index'=>0,'price'=>'9.99','name'=>'lite'],
+				['index'=>0,'amount'=>'9.99','name'=>'lite'],
 				['index'=>1,'price'=>'14.99','name'=>'mid'],
 				['index'=>2,'price'=>'19.99','name'=>'top'],
 			] );
