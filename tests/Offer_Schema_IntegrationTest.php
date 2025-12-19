@@ -62,17 +62,18 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
         $product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
         $offer_piece   = $product_piece['offers'];
 
-		$this->assertSame( 
-            'UnitPriceSpecification',
-			$offer_piece['price']['@type'],
+		$this->assertSame(
+			'UnitPriceSpecification',
+			$offer_piece['priceSpecification']['@type'],
 			'offer price piece should be typed UnitPriceSpecification'
 		);
 		$this->assertSame(
 			'0.00',
-			$offer_piece['price']['price'],
-			'Webpage action should be to buy'
+			$offer_piece['priceSpecification']['price'],
+			'price on price specification'
 		);
 
+		$this->assertArrayNotHasKey( 'price', $offer_piece, 'offer should not have price itself' );
 		$this->assertArrayNotHasKey( 'priceCurrency', $offer_piece, 'offer should not have currency itself' );
 	}
 	
