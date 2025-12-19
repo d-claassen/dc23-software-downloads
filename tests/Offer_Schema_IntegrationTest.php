@@ -22,6 +22,13 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 		
 		\EDD\Settings\Setting::update( 'base_country', 'NL' );
 	}
+	
+	public function tearDown(): void {
+		\remove_filter( 'edd_generate_download_structured_data_offer', [ $this, 'fake_sale_price_specification' ] );
+		\remove_filter( 'edd_generate_download_structured_data_variable_price_offer', [ $this, 'fake_sale_price_specification' ] );
+		
+		parent::tearDown();
+	}
 
 	// override wordpress function thats incompatible
 	// with phpunit 10.
@@ -52,6 +59,10 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 	}
 	
 	public function test_should_ignore_upgraded_offer_price(): void {
+		// Register conflicting behavior on higher priority.
+		\add_filter( 'edd_generate_download_structured_data_offer', [ $this, 'fake_sale_price_specification' ], 5, 2 );
+		\add_filter( 'edd_generate_download_structured_data_variable_price_offer', [ $this, 'fake_sale_price_specification' ], 5, 2 );
+
 		$post_id = self::factory()->post->create(
 			array(
 				'title'        => 'Software downloads',
