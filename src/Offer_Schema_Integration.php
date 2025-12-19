@@ -16,8 +16,16 @@ final class Offer_Schema_Integration {
      * @param EDD_Download                $download    Download object.
      */
     public function upgrade_price_to_price_specification( $offer_piece, $download ) {
-        if ( ! is_array( $offer_piece ) || ! isset( $offer_piece['price'] ) || ! is_scalar( $offer_piece['price'] ) ) {
+        if ( ! is_array( $offer_piece ) ) {
             return $offer_piece;
+        }
+        
+        if ( ! isset( $offer_piece['price'] ) || isset( $offer_piece['priceSpecification'] ) ) {
+            return $offer_piece;
+        }
+        
+        if ! is_scalar( $offer_piece['price'] ) {
+            return;
         }
 
         $offer_piece['priceSpecification'] = [
