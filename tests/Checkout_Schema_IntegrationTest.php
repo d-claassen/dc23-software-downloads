@@ -123,7 +123,7 @@ class Checkout_Schema_IntegrationTest extends \WP_UnitTestCase {
 		return $this->get_schema_output( 'wp_footer' );
 	}
 
-	private function get_schema_output( string $action, bool $debug_wpseo_head = true ): string {
+	private function get_schema_output( string $action, bool $debug_wpseo_head = false ): string {
 
 		ob_start();
 		do_action( $action );
