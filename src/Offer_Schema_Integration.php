@@ -26,12 +26,12 @@ final class Offer_Schema_Integration {
             'priceCurrency' => $offer_piece['priceCurrency'],
             // 'valueAddedTaxIncluded' => true,
         ];
-        /*
+
         unset(
             $offer_piece['price'],
             $offer_piece['priceCurrency'],
         );
-        */
+
         return $offer_piece;
     }
 }
