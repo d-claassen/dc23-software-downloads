@@ -91,8 +91,8 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'edd_variable_prices',
 			[
 				['index'=>0,'amount'=>'9.99','name'=>'lite'],
-				['index'=>1,'price'=>'14.99','name'=>'mid'],
-				['index'=>2,'price'=>'19.99','name'=>'top'],
+				['index'=>1,'amount'=>'14.99','name'=>'mid'],
+				['index'=>2,'amount'=>'19.99','name'=>'top'],
 			] );
 		\update_post_meta( $post_id, '_variable_pricing', true );
 		
