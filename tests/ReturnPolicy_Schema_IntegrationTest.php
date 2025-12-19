@@ -390,9 +390,9 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$post_id,
 			'edd_variable_prices',
 			[
-				['index'=>0,'price'=>'9.99','name'=>'lite'],
-				['index'=>1,'price'=>'14.99','name'=>'mid'],
-				['index'=>2,'price'=>'19.99','name'=>'top'],
+				['index'=>0,'amount'=>'9.99','name'=>'lite'],
+				['index'=>1,'amount'=>'14.99','name'=>'mid'],
+				['index'=>2,'amount'=>'19.99','name'=>'top'],
 			] );
 		\update_post_meta( $post_id, '_variable_pricing', true );
 		
@@ -461,7 +461,7 @@ class ReturnPolicy_Schema_IntegrationTest extends \WP_UnitTestCase {
 		return $this->get_schema_output( 'wp_footer' );
 	}
 
-	private function get_schema_output( string $action, bool $debug_wpseo_head = true ): string {
+	private function get_schema_output( string $action, bool $debug_wpseo_head = false ): string {
 
 		ob_start();
 		do_action( $action );
