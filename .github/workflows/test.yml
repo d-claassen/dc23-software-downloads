@@ -90,7 +90,7 @@ jobs:
         run: npm run wp-env run -- --env-cwd='wp-content/plugins/dc23-software-downloads' tests-wordpress composer test -- -- --coverage-text --display-errors --display-warnings
 
       - name: 'Archive test artifacts'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v6
         if: ${{ failure() && steps.tests.conclusion == 'failure' }}
         with:
           name: 'tests-wp${{ matrix.wp_version }}-php${{ matrix.php_version }}-${{ matrix.dependencies_version }}'
