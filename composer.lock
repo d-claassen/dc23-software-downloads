@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "2c65c5a3eb8fc966594ca83e3b81e77d",
+    "content-hash": "6c23986e05b09cb4eb4f4e7fe76a3fa6",
     "packages": [],
     "packages-dev": [
         {
@@ -3636,15 +3636,15 @@
         },
         {
             "name": "wpackagist-plugin/easy-digital-downloads",
-            "version": "3.6.0",
+            "version": "3.6.3",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/easy-digital-downloads/",
-                "reference": "tags/3.6.0"
+                "reference": "tags/3.6.3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/easy-digital-downloads.3.6.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/easy-digital-downloads.3.6.3.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -4024,8 +4024,8 @@
     },
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
-    "platform-dev": [],
+    "platform": {},
+    "platform-dev": {},
     "platform-overrides": {
         "php": "8.2.14"
     },
