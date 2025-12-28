@@ -20,7 +20,7 @@
 		"brain/monkey": "^2.6",
 		"yoast/wordpress-seo": "26.5",
 		"yoast/wordpress-seo-premium": "26.5",
-		"wpackagist-plugin/easy-digital-downloads": ">=3.5,<=3.6",
+		"wpackagist-plugin/easy-digital-downloads": ">=3.5,<=3.7",
 		"antecedent/patchwork": "^2.1.28",
 		"brain/faker": "dev-master",
 		"phpstan/phpstan": "^1.12",
