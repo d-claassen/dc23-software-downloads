@@ -18,7 +18,7 @@
 		"yoast/yoastcs": "^3.2",
 		"phpunit/phpunit": "^10.5.45",
 		"brain/monkey": "^2.6",
-		"yoast/wordpress-seo": "26.5",
+		"yoast/wordpress-seo": "26.6",
 		"yoast/wordpress-seo-premium": "26.5",
 		"wpackagist-plugin/easy-digital-downloads": ">=3.5,<=3.7",
 		"antecedent/patchwork": "^2.1.28",
