@@ -34,7 +34,7 @@ final class Offer_Schema_Integration {
             'priceCurrency' => $offer_piece['priceCurrency'],
         ];
         
-        if ( \edd_enable_taxes() ) {
+        if ( \edd_use_taxes() ) {
             $offer_piece['priceSpecification']['valueAddedTaxIncluded'] = \edd_prices_include_tax();
         }
 
