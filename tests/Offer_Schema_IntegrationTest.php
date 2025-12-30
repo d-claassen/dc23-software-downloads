@@ -320,8 +320,8 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
 
 		// $webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'ItemPage' );
-  $product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
-  $offer_piece   = $product_piece['offers'];
+		$product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
+		$offer_piece   = $product_piece['offers'];
 
 		$this->assertArrayNotHasKey(
 			'valueAddedTaxIncluded',
@@ -329,6 +329,7 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'price spec should not have VAT info'
 		);
 	}
+
 	private function get_yoast_schema_output(): string {
 		return $this->get_schema_output( 'wpseo_head' );
 	}
