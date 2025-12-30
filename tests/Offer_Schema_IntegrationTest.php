@@ -246,12 +246,89 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$offer_piece['priceSpecification'],
 			'price spec should have VAT info'
 		);
-		$this->assertTrue(
+		$this->assertSame(
+			'true',
 			$offer_piece['priceSpecification']['valueAddedTaxIncluded'],
 			'VAT from settings'
 		);
 	}
 
+	public function test_should_add_vat_exclusion_to_pricespecification(): void {
+		$post_id = self::factory()->post->create(
+			array(
+				'title'        => 'Software downloads',
+				'post_content' => $this->get_post_content(),
+				'post_type'    => 'download',
+			)
+		);
+
+		\EDD\Settings\Setting::update( 'enable_taxes', 'true' );
+		\EDD\Settings\Setting::update( 'prices_include_tax', 'no' );
+
+		// Update object to persist meta value to indexable.
+		self::factory()->post->update_object( $post_id, [] );
+
+		$this->go_to( \get_permalink( $post_id ) );
+
+		// $yoast_schema = $this->get_yoast_schema_output();
+		// $this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		// $yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
+
+		$edd_schema = $this->get_edd_schema_output();
+		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+
+		// $webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'ItemPage' );
+  $product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
+  $offer_piece   = $product_piece['offers'];
+
+		$this->assertArrayHasKey(
+			'valueAddedTaxIncluded',
+			$offer_piece['priceSpecification'],
+			'price spec should have VAT info'
+		);
+		$this->assertSame(
+			'false',
+			$offer_piece['priceSpecification']['valueAddedTaxIncluded'],
+			'VAT from settings'
+		);
+	}
+	public function test_should_skip_non_taxable_for_vat_to_pricespecification(): void {
+		$post_id = self::factory()->post->create(
+			array(
+				'title'        => 'Software downloads',
+				'post_content' => $this->get_post_content(),
+				'post_type'    => 'download',
+			)
+		);
+
+		\EDD\Settings\Setting::update( 'enable_taxes', 'true' );
+		\EDD\Settings\Setting::update( 'prices_include_tax', 'yes' );
+		\update_post_meta( $post_id, '_nontaxable', true );
+
+		// Update object to persist meta value to indexable.
+		self::factory()->post->update_object( $post_id, [] );
+
+		$this->go_to( \get_permalink( $post_id ) );
+
+		// $yoast_schema = $this->get_yoast_schema_output();
+		// $this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		// $yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
+
+		$edd_schema = $this->get_edd_schema_output();
+		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+
+		// $webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'ItemPage' );
+  $product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
+  $offer_piece   = $product_piece['offers'];
+
+		$this->assertArrayNotHasKey(
+			'valueAddedTaxIncluded',
+			$offer_piece['priceSpecification'],
+			'price spec should not have VAT info'
+		);
+	}
 	private function get_yoast_schema_output(): string {
 		return $this->get_schema_output( 'wpseo_head' );
 	}
