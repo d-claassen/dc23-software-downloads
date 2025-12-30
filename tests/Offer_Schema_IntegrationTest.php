@@ -240,6 +240,11 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
   $product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
   $offer_piece   = $product_piece['offers'];
 
+		$this->assertArrayHasKey(
+			'valueAddedTaxIncluded',
+			$offer_piece['priceSpecification'],
+			'price spec should have VAT info'
+		);
 		$this->assertTrue(
 			$offer_piece['priceSpecification']['valueAddedTaxIncluded'],
 			'VAT from settings'
