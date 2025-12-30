@@ -222,6 +222,7 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 		);
 
 		\EDD\Settings\Setting::update( 'enable_taxes', 'true' );
+		\EDD\Settings\Setting::update( 'prices_include_tax', 'yes' );
 
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [] );
