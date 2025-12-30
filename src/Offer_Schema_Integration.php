@@ -30,10 +30,17 @@ final class Offer_Schema_Integration {
 
         $offer_piece['priceSpecification'] = [
             '@type'         => 'UnitPriceSpecification',
-            'price'        => $offer_piece['price'],
+            'price'         => $offer_piece['price'],
             'priceCurrency' => $offer_piece['priceCurrency'],
-            // 'valueAddedTaxIncluded' => true,
         ];
+        
+        if ( \edd_use_taxes() && ! \edd_download_is_tax_exclusive( $download->ID ) ) {
+            /**
+             * Textual boolean refers to schema data type Boolean.
+             * @see https://schema.org/Boolean
+             */
+            $offer_piece['priceSpecification']['valueAddedTaxIncluded'] = ( \edd_prices_include_tax() ) ? 'true' : 'false';
+        }
 
         unset(
             $offer_piece['price'],
