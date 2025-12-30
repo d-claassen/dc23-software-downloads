@@ -130,6 +130,7 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$offer_piece['priceSpecification']['price'],
 			'price on price specification'
 		);
+		$this->assertArrayNotHasKey( 'valueAddedTaxIncluded', $offer_piece['priceSpecification'], 'price spec should not have VAT info by default' );
 
 		$this->assertArrayNotHasKey( 'price', $offer_piece, 'offer should not have price itself' );
 		$this->assertArrayNotHasKey( 'priceCurrency', $offer_piece, 'offer should not have currency itself' );
@@ -184,7 +185,8 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'9.99',
 			'PriceSpecification has variant price',
 		);
-		
+		$this->assertArrayNotHasKey( 'valueAddedTaxIncluded', $product_piece['offers'][0]['priceSpecification'], 'price spec should not have VAT info by default' );
+
 		$this->assertArrayHasKey(
 			'priceSpecification',
 			$product_piece['offers'][1],
@@ -195,6 +197,7 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'14.99',
 			'PriceSpecification has variant price',
 		);
+		$this->assertArrayNotHasKey( 'valueAddedTaxIncluded', $product_piece['offers'][0]['priceSpecification'], 'price spec should not have VAT info by default' );
 
 		$this->assertArrayHasKey(
 			'priceSpecification',
@@ -206,6 +209,7 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 			'19.99',
 			'PriceSpecification has variant price',
 		);
+		$this->assertArrayNotHasKey( 'valueAddedTaxIncluded', $product_piece['offers'][0]['priceSpecification'], 'price spec should not have VAT info by default' );
 	}
 	
 	private function get_yoast_schema_output(): string {
