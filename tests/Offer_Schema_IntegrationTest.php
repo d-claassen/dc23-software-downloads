@@ -211,7 +211,39 @@ class Offer_Schema_IntegrationTest extends \WP_UnitTestCase {
 		);
 		$this->assertArrayNotHasKey( 'valueAddedTaxIncluded', $product_piece['offers'][0]['priceSpecification'], 'price spec should not have VAT info by default' );
 	}
-	
+
+	public function test_should_add_vat_inclusion_to_pricespecification(): void {
+		$post_id = self::factory()->post->create(
+			array(
+				'title'        => 'Software downloads',
+				'post_content' => $this->get_post_content(),
+				'post_type'    => 'download',
+			)
+		);
+
+		// Update object to persist meta value to indexable.
+		self::factory()->post->update_object( $post_id, [] );
+
+		$this->go_to( \get_permalink( $post_id ) );
+
+		// $yoast_schema = $this->get_yoast_schema_output();
+		// $this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		// $yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
+
+		$edd_schema = $this->get_edd_schema_output();
+		$this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+		$edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+
+		// $webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'ItemPage' );
+  $product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
+  $offer_piece   = $product_piece['offers'];
+
+		$this->assertTrue(
+			$offer_piece['priceSpecification']['valueAddedTaxIncluded'],
+			'VAT from settings'
+		);
+	}
+
 	private function get_yoast_schema_output(): string {
 		return $this->get_schema_output( 'wpseo_head' );
 	}
