@@ -35,7 +35,7 @@ final class Offer_Schema_Integration {
         ];
         
         if ( \edd_enable_taxes() ) {
-            $offer_piece['priceSpecification']['valueAddedTaxIncluded'] = false;
+            $offer_piece['priceSpecification']['valueAddedTaxIncluded'] = \edd_prices_include_tax();
         }
 
         unset(
