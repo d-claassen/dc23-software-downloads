@@ -30,10 +30,13 @@ final class Offer_Schema_Integration {
 
         $offer_piece['priceSpecification'] = [
             '@type'         => 'UnitPriceSpecification',
-            'price'        => $offer_piece['price'],
+            'price'         => $offer_piece['price'],
             'priceCurrency' => $offer_piece['priceCurrency'],
-            // 'valueAddedTaxIncluded' => true,
         ];
+        
+        if ( \edd_enable_taxes() ) {
+            $offer_piece['priceSpecification']['valueAddedTaxIncluded'] = false;
+        }
 
         unset(
             $offer_piece['price'],
