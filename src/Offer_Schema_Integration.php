@@ -35,7 +35,7 @@ final class Offer_Schema_Integration {
         ];
         
         if ( \edd_use_taxes() && ! \edd_download_is_tax_exclusive( $download->ID ) ) {
-            $offer_piece['priceSpecification']['valueAddedTaxIncluded'] = \edd_prices_include_tax();
+            $offer_piece['priceSpecification']['valueAddedTaxIncluded'] = (bool) \edd_prices_include_tax();
         }
 
         unset(
