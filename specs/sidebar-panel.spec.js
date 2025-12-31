@@ -37,8 +37,6 @@ test.describe( 'Sidebar panel', () => {
 			
 			const panelButton = page.getByRole( 'button', { name: 'Software Downloads' } );
 			await expect( panelButton ).toBeVisible();
-
-			await panelButton.click();
 		} );
 
 		test( 'invisible for regular posts', async ( {
@@ -77,4 +75,22 @@ test.describe( 'Sidebar panel', () => {
 			}
 		);
 	} );
+	
+	test.describe('panel fields', function() {
+		test( 'it shows for `software type`', async ( {
+			page,
+			admin,
+			editor,
+		} ) => {
+			await admin.createNewPost( {
+				title: 'Download',
+				postType: 'download',
+				status: 'publish',
+			} );
+			await editor.openDocumentSettingsSidebar();
+			// open panel.
+			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+
+		} );
+	});
 } );
