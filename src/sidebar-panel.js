@@ -35,7 +35,6 @@ export const SidebarPanel = () => {
 	const { postId, postType } = useSelect( ( select ) => {
 		const { getCurrentPostId, getCurrentPostType } =
 			select( 'core/editor' );
-		// const { getEntityRecords } = select( 'core' );
 
 		return {
 			postId: getCurrentPostId(),
@@ -43,6 +42,24 @@ export const SidebarPanel = () => {
 		};
 	}, [] );
 
+	if ( 'download' !== postType ) {
+		return null;
+	}
+
+	return (
+		<PluginDocumentSettingPanel
+			name="dc23-software-downloads"
+			title="Software Downloads"
+		>
+			<SidebarContent
+				postId={ postId }
+				postType={ postType }
+			/>
+		</PluginDocumentSettingPanel>
+	);
+};
+
+function SidebarContent( { postId, postType } ) {
 	const [ meta, updateMeta ] = useEntityProp(
 		'postType',
 		postType,
@@ -51,25 +68,14 @@ export const SidebarPanel = () => {
 	);
 
 	const oldMeta = useMemo( () => {
-		// console.log( 'memoize meta' );
 		return meta;
 	}, [ postType, postId ] );
-
-	if ( 'download' !== postType ) {
-		return null;
-	}
-
+	
 	console.log( { meta } );
-
+	
 	return (
-		<PluginDocumentSettingPanel
-			name="dc23-software-downloads"
-			title="Software Downloads"
-		>
-			<VStack spacing={ 1 }>
-				
-
-			</VStack>
-		</PluginDocumentSettingPanel>
+		<VStack spacing={ 1 }>
+			
+		</VStack>
 	);
-};
+}
