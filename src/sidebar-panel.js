@@ -88,6 +88,7 @@ function SidebarContent( { postId, postType } ) {
 		<VStack spacing={ 1 }>
 			<SelectControl
 		  __next40pxDefaultSize
+				__nextHasNoMarginBottom
 		  label="Software type"
 		  labelPosition="top"
 		  onChange={(value) => {
