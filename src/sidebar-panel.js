@@ -45,11 +45,8 @@ export const SidebarPanel = () => {
 	}, [] );
 
 	if ( 'download' !== postType ) {
-		console.log( 'no panel', { postId, postType } );
 		return null;
 	}
-
-	console.log( 'yes panel', { postId, postType } );
 
 	return (
 		<PluginDocumentSettingPanel
@@ -65,8 +62,6 @@ export const SidebarPanel = () => {
 };
 
 function SidebarContent( { postId, postType } ) {
-	console.log( 'content panel', { postId, postType } );
-	
 	const [ meta, updateMeta ] = useEntityProp(
 		'postType',
 		postType,
@@ -78,7 +73,7 @@ function SidebarContent( { postId, postType } ) {
 		_SoftwareType = '',
 	} = meta;
 
-	console.log( 'meta panel', meta );
+	console.log( 'meta panel', {meta: JSON.stringify(meta)} );
 
 	const oldMeta = useMemo( () => {
 		return meta;
