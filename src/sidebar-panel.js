@@ -87,7 +87,7 @@ function SidebarContent( { postId, postType } ) {
 		  label="Software type"
 		  labelPosition="top"
 		  onChange={(value) => {
-					updateMeta({_SoftwareType: value, ...meta});
+					updateMeta({ ...meta, _SoftwareType: value });
 				}}
 		  options={[
 		    {
