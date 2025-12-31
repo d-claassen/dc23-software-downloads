@@ -40,3 +40,39 @@ if ( ! function_exists( 'dc23_software_downloads_setup' ) ) :
 	}
 endif;
 add_action( 'init', 'dc23_software_downloads_setup' );
+
+/**
+ * Load the admin script.
+ */
+function load_custom_wp_admin_scripts() {
+
+	// Automatically load imported dependencies and assets version.
+	$asset_file = include plugin_dir_path( __FILE__ ) . '/build/index.asset.php';
+
+	// Load the required WordPress packages.
+	foreach ( $asset_file['dependencies'] as $style ) {
+		wp_enqueue_script( $style );
+	}
+
+	// Load our app.js.
+	wp_register_script(
+		'dc23-software-downloads',
+		plugins_url( 'build/index.js', __FILE__ ),
+		$asset_file['dependencies'],
+		$asset_file['version'],
+		true
+	);
+	wp_enqueue_script( 'dc23-tea-extended' );
+
+	// Load our style.css.
+	/* wp_register_style(
+		'dc23-tea-extended',
+		plugins_url( 'build/style-index.css', __FILE__ ),
+		[],
+		$asset_file['version']
+	);
+	wp_enqueue_style( 'dc23-tea-extended' );
+    */
+}
+
+add_action( 'enqueue_block_editor_assets', 'load_custom_wp_admin_scripts' );
