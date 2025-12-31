@@ -98,7 +98,7 @@ test.describe( 'Sidebar panel', () => {
 			
 			await editor.openDocumentSettingsSidebar();
 			// open panel.
-			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+			// await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 
 			await expect(
 				page.getByLabel( 'Software type' )
