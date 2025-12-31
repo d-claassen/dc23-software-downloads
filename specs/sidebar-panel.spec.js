@@ -102,7 +102,7 @@ test.describe( 'Sidebar panel', () => {
 
 			await expect(
 				page.getByLabel( 'Software type' )
-			).toHaveSelected( 'Web application' );
+			).toHaveValue( 'WebApplication' );
 		} );
 	});
 } );
