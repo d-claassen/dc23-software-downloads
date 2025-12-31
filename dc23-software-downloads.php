@@ -62,7 +62,7 @@ function load_custom_wp_admin_scripts() {
 		$asset_file['version'],
 		true
 	);
-	wp_enqueue_script( 'dc23-tea-extended' );
+	wp_enqueue_script( 'dc23-software-downloads' );
 
 	// Load our style.css.
 	/* wp_register_style(
