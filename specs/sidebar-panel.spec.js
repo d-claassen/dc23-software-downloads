@@ -34,9 +34,11 @@ test.describe( 'Sidebar panel', () => {
 				status: 'publish',
 			} );
 			await editor.openDocumentSettingsSidebar();
-			await expect(
-				page.getByRole( 'button', { name: 'Software Downloads' } )
-			).toBeVisible();
+			
+			const panelButton = page.getByRole( 'button', { name: 'Software Downloads' } );
+			await expect( panelButton ).toBeVisible();
+
+			await panelButton.click();
 		} );
 
 		test( 'invisible for regular posts', async ( {
