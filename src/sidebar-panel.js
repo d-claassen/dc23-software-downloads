@@ -55,7 +55,7 @@ export const SidebarPanel = () => {
 		return meta;
 	}, [ postType, postId ] );
 
-	if ( 'downloads' !== postType ) {
+	if ( 'download' !== postType ) {
 		return null;
 	}
 
