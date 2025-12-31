@@ -92,6 +92,17 @@ test.describe( 'Sidebar panel', () => {
 			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 
 			await page.getByLabel( 'Software type' ).select( 'Web application' );
+			
+			await editor.saveDraft();
+			await page.reload();
+			
+			await editor.openDocumentSettingsSidebar();
+			// open panel.
+			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+
+			await expect(
+				page.getByLabel( 'Software type' )
+			).toHaveSelected( 'Web application' );
 		} );
 	});
 } );
