@@ -74,7 +74,7 @@ function SidebarContent( { postId, postType } ) {
 	);
 	
 	const {
-		_SoftwareType,
+		_SoftwareType = '',
 	} = meta;
 
 	console.log( 'meta panel', { postId, postType, meta } );
@@ -88,7 +88,36 @@ function SidebarContent( { postId, postType } ) {
 	
 	return (
 		<VStack spacing={ 1 }>
-			
+			<SelectControl
+		  __next40pxDefaultSize
+		  label="Software type"
+		  labelPosition="top"
+		  onChange={(value) => {
+					updateMeta({_SoftwareType: value, ...meta});
+				}}
+		  options={[
+		    {
+		      disabled: true,
+		      label: 'Select an Option',
+		      value: ''
+		    },
+		    {
+		      label: 'Software application',
+		      value: 'SoftwareApplication'
+		    },
+		    {
+		      label: 'Mobile application',
+		      value: 'MobileApplication'
+		    },
+		    {
+		      label: 'Web application',
+		      value: 'WebApplication'
+		    }
+		  ]}
+		  size="default"
+				value={_SoftwareType}
+		  variant="default"
+			/>
 		</VStack>
 	);
 }
