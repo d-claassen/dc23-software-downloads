@@ -31,31 +31,6 @@ const { PluginDocumentSettingPanel } = require( '@wordpress/editor' );
  */
 // import './style.scss';
 
-function SidebarContent( { postId, postType } ) {
-	console.log( 'content panel', { postId, postType } );
-	
-	const [ meta, updateMeta ] = useEntityProp(
-		'postType',
-		postType,
-		'meta',
-		postId
-	);
-
-	console.log( 'meta panel', { postId, postType, meta } );
-
-	const oldMeta = useMemo( () => {
-		return meta;
-	}, [ postType, postId ] );
-	
-
-	console.log( 'memo meta panel', { postId, postType, meta, oldMeta } );
-	
-	return (
-		<VStack spacing={ 1 }>
-			
-		</VStack>
-	);
-}
 
 export const SidebarPanel = () => {
 	const { postId, postType } = useSelect( ( select ) => {
@@ -88,4 +63,33 @@ export const SidebarPanel = () => {
 	);
 };
 
+function SidebarContent( { postId, postType } ) {
+	console.log( 'content panel', { postId, postType } );
+	
+	const [ meta, updateMeta ] = useEntityProp(
+		'postType',
+		postType,
+		'meta',
+		postId
+	);
+	
+	const {
+		_SoftwareType,
+	} = meta;
+
+	console.log( 'meta panel', { postId, postType, meta } );
+
+	const oldMeta = useMemo( () => {
+		return meta;
+	}, [ postType, postId ] );
+	
+
+	console.log( 'memo meta panel', { postId, postType, meta, oldMeta } );
+	
+	return (
+		<VStack spacing={ 1 }>
+			
+		</VStack>
+	);
+}
 
