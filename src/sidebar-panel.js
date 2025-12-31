@@ -5,6 +5,7 @@ import {
 	Button,
 	FormToggle,
 	FormTokenField,
+	SelectControl,
 	TextControl,
 	__experimentalToolsPanel as ToolsPanel,
 	__experimentalToolsPanelItem as ToolsPanelItem,
@@ -77,14 +78,11 @@ function SidebarContent( { postId, postType } ) {
 		_SoftwareType = '',
 	} = meta;
 
-	console.log( 'meta panel', { postId, postType, meta } );
+	console.log( 'meta panel', meta );
 
 	const oldMeta = useMemo( () => {
 		return meta;
 	}, [ postType, postId ] );
-	
-
-	console.log( 'memo meta panel', { postId, postType, meta, oldMeta } );
 	
 	return (
 		<VStack spacing={ 1 }>
