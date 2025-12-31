@@ -76,3 +76,40 @@ function load_custom_wp_admin_scripts() {
 }
 
 add_action( 'enqueue_block_editor_assets', 'load_custom_wp_admin_scripts' );
+
+/**
+ * Custom auth_callback for register_meta extending tribe_events.
+ *
+ * @param bool $allowed
+ * @param string $meta_key
+ * @param int $post_id
+ *
+ * @return bool
+ */
+function register_custom_download_meta_auth_callback( $allowed, $meta_key, $post_id ) {
+	$post          = get_post( $post_id );
+	$post_type_obj = get_post_type_object( $post->post_type );
+
+	return current_user_can( $post_type_obj->cap->edit_post, $post_id );
+}
+
+function register_custom_download_meta() {
+	register_meta(
+		'post',
+		'_SoftwareType',
+		[
+			'object_subtype' => 'download',
+			'type'           => 'string',
+			'single'         => true,
+			'auth_callback'  => 'register_custom_download_meta_auth_callback',
+			'label'          => 'Type of software',
+			'show_in_rest'   => [
+				'schema' => [
+					'type'  => 'string',
+				],
+			],
+		],
+	);
+}
+
+add_action( 'rest_api_init', 'register_custom_download_meta' );
