@@ -16,6 +16,6 @@ import { SidebarPanel } from './sidebar-panel';
  *
  * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
  */
-import './style.scss';
+// import './style.scss';
 
 registerPlugin( 'dc23-software-downloads', { render: SidebarPanel } );
