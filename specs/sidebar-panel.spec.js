@@ -91,7 +91,7 @@ test.describe( 'Sidebar panel', () => {
 			// open panel.
 			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 
-			await page.getByLabel( 'Software type' ).select( 'Web application' );
+			await page.getByLabel( 'Software type' ).selectOption( { label: 'Web application' } );
 			
 			await editor.saveDraft();
 			await page.reload();
