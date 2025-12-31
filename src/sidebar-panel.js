@@ -59,10 +59,6 @@ export const SidebarPanel = () => {
 		return null;
 	}
 
-
-l
-
-
 	return (
 		<PluginDocumentSettingPanel
 			name="dc23-software-downloads"
