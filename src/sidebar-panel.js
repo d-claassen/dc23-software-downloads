@@ -43,8 +43,11 @@ export const SidebarPanel = () => {
 	}, [] );
 
 	if ( 'download' !== postType ) {
+		console.log( 'no panel', { postId, postType } );
 		return null;
 	}
+
+	console.log( 'yes panel', { postId, postType } );
 
 	return (
 		<PluginDocumentSettingPanel
@@ -60,6 +63,8 @@ export const SidebarPanel = () => {
 };
 
 function SidebarContent( { postId, postType } ) {
+	console.log( 'content panel', { postId, postType } );
+	
 	const [ meta, updateMeta ] = useEntityProp(
 		'postType',
 		postType,
@@ -67,11 +72,14 @@ function SidebarContent( { postId, postType } ) {
 		postId
 	);
 
+	console.log( 'meta panel', { postId, postType, meta } );
+
 	const oldMeta = useMemo( () => {
 		return meta;
 	}, [ postType, postId ] );
 	
-	console.log( { meta } );
+
+	console.log( 'memo meta panel', { postId, postType, meta, oldMeta } );
 	
 	return (
 		<VStack spacing={ 1 }>
