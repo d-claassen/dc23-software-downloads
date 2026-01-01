@@ -20,7 +20,7 @@ class SoftwareApp extends Abstract_Schema_Piece {
         }
 
         $download = \edd_get_download( $this->context->indexable->object_id );
-        $software_type = '_SoftwareType';
+        $software_type = \get_post_meta( $download->ID, '_SoftwareType', true );
         if ( ! empty( $software_type ) ) {
             return true;
         }
@@ -48,14 +48,16 @@ class SoftwareApp extends Abstract_Schema_Piece {
 	 *
 	 * @return array<sting, mixed>
 	 */
-    protected function generate_software_app(): array {
-		$id = $this->context->canonical . '#/schema/edd-product/' . \esc_attr( $this->context->indexable->object_id );
+        protected function generate_software_app(): array {
+                $download_id = $this->context->indexable->object_id;
+                $id          = $this->context->canonical . '#/schema/edd-product/' . \esc_attr( $download_id );
 
-        $data = [
-			'@type'             => 'SoftwareApplication',
-			'@id'               => $id,
-		];
+                $software_type = \get_post_meta( $download_id, '_SoftwareType', true );
+                $data = [
+                        '@type' => $software_type,
+                        '@id'   => $id,
+                ];
         
-        return $data;
-	}
+                return $data;
+        }
 }
