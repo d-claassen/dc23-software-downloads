@@ -52,21 +52,21 @@ class SoftwareApp_Schema_IntegrationTest extends \WP_UnitTestCase {
 
 		$this->go_to( \get_permalink( $post_id ) );
 
-		// $yoast_schema = $this->get_yoast_schema_output();
-		// $this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
-		// $yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
+		$yoast_schema = $this->get_yoast_schema_output();
+		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
 
         $edd_schema = $this->get_edd_schema_output();
         $this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
         $edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
 
-		// $webpage_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'ItemPage' );
+		$aoftware_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'SoftwareApplication' );
         $product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
-		$this->assertEqualsCanonicalizing( 
-			['Product', 'SoftwareApplication'],
-			$product_piece['@type'],
-			'product piece should be typed additionally with SoftwareApplication'
+		$this->assertSame(
+			$software_piece['@id'],
+			$product_piece['@id'],
+			'product piece should be typed additionally with SoftwareApplication via id'
 		);
 	}
 	
