@@ -9,10 +9,10 @@ final class SoftwareApp_Schema_Integration {
     
     public function software_application_schema( $data, $download ) {
       $software_type = \get_post_meta( $download->ID, '_SoftwareType', true );
-      $data_type = $data['@type'  ];
-      if ( ! in_array( $software_type , (array) $data_type, true ) ( {
-         $data['@type'] = (array) $data['@type' ];
-         $data['@type#'][] = $software_type;
+      $data_type = (array) $data[ '@type' ];
+      if ( ! empty( $software_type ) && ! in_array( $software_type, $data_type, true ) ) {
+         $data['@type'] = $data_type;
+         $data['@type'][] = $software_type;
       }
       
         return $data;
