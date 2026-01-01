@@ -14,7 +14,7 @@ final class SoftwareApp_Schema_Integration {
      *
      * @return list<Abstract_Schema_Piece> The graph pieces.
      */
-    public function add_product_return_policy( $pieces, $context ) {
+    public function add_software_app( $pieces, $context ) {
        $pieces[] = new Generators\Schema\SoftwareApp( $context );
     
        return $pieces;
