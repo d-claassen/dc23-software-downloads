@@ -44,7 +44,9 @@ class SoftwareApp_Schema_IntegrationTest extends \WP_UnitTestCase {
 				'post_type'    => 'download',
 			)
 		);
-
+		
+		\update_post_meta( $post_id, '_SoftwareType', 'SoftwareApplication' );
+		
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [] );
 
