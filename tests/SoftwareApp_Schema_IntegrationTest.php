@@ -60,7 +60,7 @@ class SoftwareApp_Schema_IntegrationTest extends \WP_UnitTestCase {
         $this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
         $edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
 
-		$aoftware_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'SoftwareApplication' );
+		$software_piece  = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'SoftwareApplication' );
         $product_piece = $this->get_piece_by_type( $edd_schema_data, 'Product' );
 
 		$this->assertSame(
