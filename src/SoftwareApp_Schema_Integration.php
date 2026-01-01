@@ -4,18 +4,21 @@ namespace DC23\SoftwareDownloads;
 
 final class SoftwareApp_Schema_Integration {
     public function register(): void {
-        \add_filter( 'edd_generate_download_structured_data', [ $this, 'software_application_schema' ], 10, 2 );
+        \add_filter( 'wpseo_schema_graph_pieces', [ $this, 'add_software_app' ], 10, 2 );
+   }
+    /**
+     * Adds a software app graph piece to the schema collector.
+     *
+     * @param list<Abstract_Schema_Piece> $pieces  The current graph pieces.
+     * @param Meta_Tags_Context           $context The current context.
+     *
+     * @return list<Abstract_Schema_Piece> The graph pieces.
+     */
+    public function add_product_return_policy( $pieces, $context ) {
+       $pieces[] = new Generators\Schema\SoftwareApp( $context );
+    
+       return $pieces;
     }
     
-    public function software_application_schema( $data, $download ) {
-      $software_type = \get_post_meta( $download->ID, '_SoftwareType', true );
-      $data_type = (array) $data[ '@type' ];
-      if ( ! empty( $software_type ) && ! in_array( $software_type, $data_type, true ) ) {
-         $data['@type'] = $data_type;
-         $data['@type'][] = $software_type;
-      }
-      
-        return $data;
-    }
 }
     
