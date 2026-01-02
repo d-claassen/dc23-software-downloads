@@ -72,6 +72,7 @@ function SidebarContent( { postId, postType } ) {
 	const {
 		_SoftwareType = '',
 		_dc23_software_category: softwareCategory = '',
+		_dc23_software_os: softwareOS = '',
 	} = meta;
 
 	console.log( 'meta panel', {meta: JSON.stringify(meta)} );
@@ -119,6 +120,12 @@ function SidebarContent( { postId, postType } ) {
 				}}
 				value={softwareCategory}
 			/>
+			<SoftwareOSControl
+				onChange={(value) => {
+					updateMeta({ ...meta, _dc23_software_os: value });
+				}}
+				value={softwareOS}
+			/>
 		</VStack>
 	);
 }
@@ -160,6 +167,21 @@ function SoftwareCategorySelectControl( { value, onChange } ) {
 						{ label: 'Utilities application', value: 'UtilitiesApplication' },
 						{ label: 'Reference application', value: 'ReferenceApplication' },
 		  ]}
+		  size="default"
+				value={value}
+		  variant="default"
+			/>
+	);
+}
+
+function SoftwareOSControl( { value, onChange } ) {
+	return (
+				<TextControl
+		  __next40pxDefaultSize
+				__nextHasNoMarginBottom
+		  label="Operating system"
+		  labelPosition="top"
+		  onChange={onChange}
 		  size="default"
 				value={value}
 		  variant="default"

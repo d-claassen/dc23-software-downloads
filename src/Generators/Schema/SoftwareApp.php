@@ -54,16 +54,21 @@ class SoftwareApp extends Abstract_Schema_Piece {
 
                 $software_type     = \get_post_meta( $download_id, '_SoftwareType', true );
                 $software_category = \get_post_meta( $download_id, '_dc23_software_category', true );
+                $software_os       = \get_post_meta( $download_id, '_dc23_software_os', true );
 
                 $data = [
                         '@type' => $software_type,
                         '@id'   => $id,
                 ];
-                
+
                 if ( ! empty( $software_category ) ) {
                         $data['applicationCategory'] = $software_category;
                 }
-        
+
+                if ( ! empty( $software_os ) ) {
+                        $data['operatingSystem'] = $software_os;
+                }
+
                 return $data;
         }
 }

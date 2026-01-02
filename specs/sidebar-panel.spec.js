@@ -132,5 +132,33 @@ test.describe( 'Sidebar panel', () => {
 				page.getByLabel( 'Software category' )
 			).toHaveValue( 'LifestyleApplication' );
 		} );
+		
+				test( 'it shows for `operating system`', async ( {
+			page,
+			admin,
+			editor,
+		} ) => {
+			await admin.createNewPost( {
+				title: 'Download',
+				postType: 'download',
+				status: 'publish',
+			} );
+			await editor.openDocumentSettingsSidebar();
+			// open panel.
+			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+
+			await page.getByLabel( 'Operating system' ).type( 'Android' );
+			
+			await editor.saveDraft();
+			await page.reload();
+			
+			await editor.openDocumentSettingsSidebar();
+			// open panel.
+			// await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+
+			await expect(
+				page.getByLabel( 'Operating system' )
+			).toHaveValue( 'Android' );
+		} );
 	});
 } );
