@@ -133,7 +133,7 @@ test.describe( 'Sidebar panel', () => {
 			).toHaveValue( 'LifestyleApplication' );
 		} );
 		
-				test( 'it shows for `application category`', async ( {
+				test( 'it shows for `operating system`', async ( {
 			page,
 			admin,
 			editor,
