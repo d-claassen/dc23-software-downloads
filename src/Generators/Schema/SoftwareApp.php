@@ -64,6 +64,11 @@ class SoftwareApp extends Abstract_Schema_Piece {
                 if ( ! empty( $software_category ) ) {
                         $data['applicationCategory'] = $software_category;
                 }
+                
+                if ( $software_category === 'GameApplication' ) {
+                        $data['@type'] = (array) $data['@type'];
+                        $data['@type'][] = 'VideoGame';
+                }
 
                 if ( ! empty( $software_os ) ) {
                         $data['operatingSystem'] = $software_os;

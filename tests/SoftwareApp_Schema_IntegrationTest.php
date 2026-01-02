@@ -111,6 +111,46 @@ class SoftwareApp_Schema_IntegrationTest extends \WP_UnitTestCase {
 		);
 	}
 	
+	public function test_should_co_type_download_as_videogame(): void {
+		$post_id = self::factory()->post->create(
+			array(
+				'title'        => 'Software download',
+				'post_content' => $this->get_post_content(),
+				'post_type'    => 'download',
+			)
+		);
+		
+		\update_post_meta( $post_id, '_SoftwareType', 'MobileApplication' );
+		\update_post_meta( $post_id, '_dc23_software_category', 'GameApplication' );
+		\update_post_meta( $post_id, '_dc23_software_os', 'Android' );
+
+		// Update object to persist meta value to indexable.
+		self::factory()->post->update_object( $post_id, [] );
+
+		$this->go_to( \get_permalink( $post_id ) );
+
+		$yoast_schema = $this->get_yoast_schema_output();
+		$this->assertJson( $yoast_schema, 'Yoast schema should be valid JSON' );
+		$yoast_schema_data = \json_decode( $yoast_schema, JSON_OBJECT_AS_ARRAY );
+
+        $edd_schema = $this->get_edd_schema_output();
+        $this->assertJson( $edd_schema, 'EDD schema should be valid JSON' );
+        $edd_schema_data = \json_decode( $edd_schema, JSON_OBJECT_AS_ARRAY );
+
+		$software_piece = $this->get_piece_by_type( $yoast_schema_data['@graph'], 'MobileApplication' );
+		$product_piece  = $this->get_piece_by_type( $edd_schema_data, 'Product' );
+
+		$this->assertSame(
+			'GameApplication',
+			$software_piece['applicationCategory'],
+			'product piece should be categorized'
+		);
+		$this->assertEqualsCanonicalizing(
+			['MobileApplication', 'VideoGame'],
+			$software_piece['@type'],
+			'product piece should be typed additionally with VideoGame'
+		);
+	}
 
 	private function get_yoast_schema_output(): string {
 		return $this->get_schema_output( 'wpseo_head' );
