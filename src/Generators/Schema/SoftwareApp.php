@@ -52,11 +52,17 @@ class SoftwareApp extends Abstract_Schema_Piece {
                 $download_id = $this->context->indexable->object_id;
                 $id          = $this->context->canonical . '#/schema/edd-product/' . \esc_attr( $download_id );
 
-                $software_type = \get_post_meta( $download_id, '_SoftwareType', true );
+                $software_type     = \get_post_meta( $download_id, '_SoftwareType', true );
+                $software_category = \get_post_meta( $download_id, '_dc23_software_category', true );
+
                 $data = [
                         '@type' => $software_type,
                         '@id'   => $id,
                 ];
+                
+                if ( ! empty( $software_category ) ) {
+                        $data['applicationCategory'] = $software_category;
+                }
         
                 return $data;
         }
