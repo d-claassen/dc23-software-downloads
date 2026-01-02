@@ -145,7 +145,7 @@ class SoftwareApp_Schema_IntegrationTest extends \WP_UnitTestCase {
 			$software_piece['applicationCategory'],
 			'product piece should be categorized'
 		);
-		$this->assertEqualsCanonicalized(
+		$this->assertEqualsCanonicalizing(
 			['MobileApplication', 'VideoGame'],
 			$software_piece['@type'],
 			'product piece should be typed additionally with VideoGame'
