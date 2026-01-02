@@ -129,7 +129,7 @@ test.describe( 'Sidebar panel', () => {
 			// await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 
 			await expect(
-				page.getByLabel( 'Software type' )
+				page.getByLabel( 'Software category' )
 			).toHaveValue( 'LifestyleApplication' );
 		} );
 	});
