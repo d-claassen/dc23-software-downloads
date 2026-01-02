@@ -50,7 +50,7 @@ add_filter( 'edd_download_supports', function($supports) {
 /**
  * Load the admin script.
  */
-function load_custom_wp_admin_scripts() {
+function dc23_software_wp_admin_scripts() {
 
 	// Automatically load imported dependencies and assets version.
 	$asset_file = include plugin_dir_path( __FILE__ ) . '/build/index.asset.php';
@@ -81,7 +81,7 @@ function load_custom_wp_admin_scripts() {
     */
 }
 
-add_action( 'enqueue_block_editor_assets', 'load_custom_wp_admin_scripts' );
+add_action( 'enqueue_block_editor_assets', 'dc23_software_wp_admin_scripts' );
 
 /**
  * Custom auth_callback for register_meta extending tribe_events.
@@ -92,14 +92,14 @@ add_action( 'enqueue_block_editor_assets', 'load_custom_wp_admin_scripts' );
  *
  * @return bool
  */
-function register_custom_download_meta_auth_callback( $allowed, $meta_key, $post_id ) {
+function dc23_software_download_meta_auth_callback( $allowed, $meta_key, $post_id ) {
 	$post          = get_post( $post_id );
 	$post_type_obj = get_post_type_object( $post->post_type );
 
 	return current_user_can( $post_type_obj->cap->edit_post, $post_id );
 }
 
-function register_custom_download_meta() {
+function dc23_software_download_meta() {
 	register_meta(
 		'post',
 		'_SoftwareType',
@@ -107,7 +107,7 @@ function register_custom_download_meta() {
 			'object_subtype' => 'download',
 			'type'           => 'string',
 			'single'         => true,
-			'auth_callback'  => 'register_custom_download_meta_auth_callback',
+			'auth_callback'  => 'dc23_software_download_meta_auth_callback',
 			'label'          => 'Type of software',
 			'show_in_rest'   => [
 				'schema' => [
@@ -124,7 +124,7 @@ function register_custom_download_meta() {
 			'object_subtype' => 'download',
 			'type'           => 'string',
 			'single'         => true,
-			'auth_callback'  => 'register_custom_download_meta_auth_callback',
+			'auth_callback'  => 'dc23_software_download_meta_auth_callback',
 			'label'          => 'Application category of software',
 			'show_in_rest'   => [
 				'schema' => [
@@ -141,7 +141,7 @@ function register_custom_download_meta() {
 			'object_subtype' => 'download',
 			'type'           => 'string',
 			'single'         => true,
-			'auth_callback'  => 'register_custom_download_meta_auth_callback',
+			'auth_callback'  => 'dc23_software_download_meta_auth_callback',
 			'label'          => 'Operating system of software',
 			'show_in_rest'   => [
 				'schema' => [
@@ -152,4 +152,4 @@ function register_custom_download_meta() {
 	);
 }
 
-add_action( 'rest_api_init', 'register_custom_download_meta' );
+add_action( 'rest_api_init', 'dc23_software_download_meta' );

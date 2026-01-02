@@ -75,8 +75,6 @@ function SidebarContent( { postId, postType } ) {
 		_dc23_software_os: softwareOS = '',
 	} = meta;
 
-	console.log( 'meta panel', {meta: JSON.stringify(meta)} );
-
 	const oldMeta = useMemo( () => {
 		return meta;
 	}, [ postType, postId ] );
