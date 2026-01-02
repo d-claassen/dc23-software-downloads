@@ -104,5 +104,33 @@ test.describe( 'Sidebar panel', () => {
 				page.getByLabel( 'Software type' )
 			).toHaveValue( 'WebApplication' );
 		} );
+		
+		test( 'it shows for `application category`', async ( {
+			page,
+			admin,
+			editor,
+		} ) => {
+			await admin.createNewPost( {
+				title: 'Download',
+				postType: 'download',
+				status: 'publish',
+			} );
+			await editor.openDocumentSettingsSidebar();
+			// open panel.
+			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+
+			await page.getByLabel( 'Software category' ).selectOption( { label: 'Lifestyle application' } );
+			
+			await editor.saveDraft();
+			await page.reload();
+			
+			await editor.openDocumentSettingsSidebar();
+			// open panel.
+			// await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+
+			await expect(
+				page.getByLabel( 'Software category' )
+			).toHaveValue( 'LifestyleApplication' );
+		} );
 	});
 } );

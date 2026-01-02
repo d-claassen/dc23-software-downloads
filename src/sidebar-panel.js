@@ -71,6 +71,7 @@ function SidebarContent( { postId, postType } ) {
 	
 	const {
 		_SoftwareType = '',
+		_dc23_software_category: softwareCategory = '',
 	} = meta;
 
 	console.log( 'meta panel', {meta: JSON.stringify(meta)} );
@@ -112,7 +113,57 @@ function SidebarContent( { postId, postType } ) {
 				value={_SoftwareType}
 		  variant="default"
 			/>
+			<SoftwareCategorySelectControl
+				onChange={(value) => {
+					updateMeta({ ...meta, _dc23_software_category: value });
+				}}
+				value={softwareCategory}
+			/>
 		</VStack>
+	);
+}
+
+function SoftwareCategorySelectControl( { value, onChange } ) {
+	return (
+				<SelectControl
+		  __next40pxDefaultSize
+				__nextHasNoMarginBottom
+		  label="Software category"
+		  labelPosition="top"
+		  onChange={onChange}
+		  options={[
+		    {
+		      disabled: true,
+		      label: 'Select an Option',
+		      value: ''
+		    },
+		    { label: 'Game application', value: 'GameApplication' },
+						{ label: 'Social networking application', value: 'SocialNetworkingApplication' },
+						{ label: 'Travel application', value: 'TravelApplication' },
+						{ label: 'Shopping application', value: 'ShoppingApplication' },
+						{ label: 'Sports application', value: 'SportsApplication' },
+						{ label: 'Lifestyle application', value: 'LifestyleApplication' },
+						{ label: 'Business application', value: 'BusinessApplication' },
+						{ label: 'Design application', value: 'DesignApplication' },
+						{ label: 'Developer application', value: 'DeveloperApplication' },
+						{ label: 'Driver application', value: 'DriverApplication' },
+						{ label: 'Educational application', value: 'EducationalApplication' },
+						{ label: 'Health application', value: 'HealthApplication' },
+						{ label: 'Finance application', value: 'FinanceApplication' },
+						{ label: 'Security application', value: 'SecurityApplication' },
+						{ label: 'Browser application', value: 'BrowserApplication' },
+						{ label: 'Communication application', value: 'CommunicationApplication' },
+						{ label: 'Desktop enhancement application', value: 'DesktopEnhancementApplication' },
+						{ label: 'Entertainment application', value: 'EntertainmentApplication' },
+						{ label: 'Multimedia application', value: 'MultimediaApplication' },
+						{ label: 'Home application', value: 'HomeApplication' },
+						{ label: 'Utilities application', value: 'UtilitiesApplication' },
+						{ label: 'Reference application', value: 'ReferenceApplication' },
+		  ]}
+		  size="default"
+				value={value}
+		  variant="default"
+			/>
 	);
 }
 

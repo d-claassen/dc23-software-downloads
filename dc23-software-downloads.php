@@ -116,6 +116,23 @@ function register_custom_download_meta() {
 			],
 		],
 	);
+        
+        register_meta(
+		'post',
+		'_dc23_software_category',
+		[
+			'object_subtype' => 'download',
+			'type'           => 'string',
+			'single'         => true,
+			'auth_callback'  => 'register_custom_download_meta_auth_callback',
+			'label'          => 'Application category of software',
+			'show_in_rest'   => [
+				'schema' => [
+					'type'  => 'string',
+				],
+			],
+		],
+	);
 }
 
 add_action( 'rest_api_init', 'register_custom_download_meta' );
