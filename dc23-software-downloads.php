@@ -133,6 +133,23 @@ function register_custom_download_meta() {
 			],
 		],
 	);
+        
+        register_meta(
+		'post',
+		'_dc23_software_os',
+		[
+			'object_subtype' => 'download',
+			'type'           => 'string',
+			'single'         => true,
+			'auth_callback'  => 'register_custom_download_meta_auth_callback',
+			'label'          => 'Operating system of software',
+			'show_in_rest'   => [
+				'schema' => [
+					'type'  => 'string',
+				],
+			],
+		],
+	);
 }
 
 add_action( 'rest_api_init', 'register_custom_download_meta' );
