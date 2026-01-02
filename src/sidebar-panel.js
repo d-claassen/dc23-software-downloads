@@ -71,7 +71,7 @@ function SidebarContent( { postId, postType } ) {
 	
 	const {
 		_SoftwareType = '',
-		_dc23_software_category: softwareCategory,
+		_dc23_software_category: softwareCategory = '',
 	} = meta;
 
 	console.log( 'meta panel', {meta: JSON.stringify(meta)} );
