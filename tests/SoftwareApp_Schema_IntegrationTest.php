@@ -81,6 +81,7 @@ class SoftwareApp_Schema_IntegrationTest extends \WP_UnitTestCase {
 		
 		\update_post_meta( $post_id, '_SoftwareType', 'MobileApplication' );
 		\update_post_meta( $post_id, '_dc23_software_category', 'LifestyleApplication' );
+		\update_post_meta( $post_id, '_dc23_software_os', 'Android' );
 
 		// Update object to persist meta value to indexable.
 		self::factory()->post->update_object( $post_id, [] );
@@ -101,6 +102,11 @@ class SoftwareApp_Schema_IntegrationTest extends \WP_UnitTestCase {
 		$this->assertSame(
 			'LifestyleApplication',
 			$software_piece['applicationCategory'],
+			'product piece should be categorized'
+		);
+		$this->assertSame(
+			'Android',
+			$software_piece['operatingSystem'],
 			'product piece should be categorized'
 		);
 	}
