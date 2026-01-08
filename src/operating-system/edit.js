@@ -1,23 +1,11 @@
 /**
- * Retrieves the translation of text.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-i18n/
- */
-import { __ } from '@wordpress/i18n';
-
-/**
- * React hook that is used to mark the block wrapper element.
- * It provides all the necessary props like the class name.
- *
- * @see https://developer.wordpress.org/block-editor/reference-guides/packages/packages-block-editor/#useblockprops
+ * WordPress dependencies.
  */
 import { useBlockProps } from '@wordpress/block-editor';
+import { useEntityProp } from '@wordpress/core-data';
 
 /**
- * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
- * Those files can contain any CSS code that gets applied to the editor.
- *
- * @see https://www.npmjs.com/package/@wordpress/scripts#using-css
+ * Internal dependencies.
  */
 import './editor.scss';
 
@@ -25,14 +13,44 @@ import './editor.scss';
  * The edit function describes the structure of your block in the context of the
  * editor. This represents what the editor will render when the block is used.
  *
+ * @param {Object} props
+ * @param {Object} props.context
+ * @param {string} props.context.postType
+ * @param {number} props.context.postId
  * @see https://developer.wordpress.org/block-editor/reference-guides/block-api/block-edit-save/#edit
  *
  * @return {Element} Element to render.
  */
-export default function Edit() {
+function Content( { context: { postType, postId } } ) {
+	const [ meta ] = useEntityProp( 'postType', postType, 'meta', postId );
+
+	const os = meta?._dc23_software_os;
+
 	return (
-		<p { ...useBlockProps() }>
-			{ __( 'Operating system – hello from the editor!', 'operating-system' ) }
-		</p>
+		<div { ...useBlockProps() }>
+            { os }
+		</div>
+	);
+}
+
+function Placeholder() {
+	return (
+		<div { ...useBlockProps() }>
+            Windows
+		</div>
+	);
+}
+
+export default function Edit( { context } ) {
+	const { postType, postId } = context;
+
+	return (
+		<>
+			{ postId && postType ? (
+				<Content context={ context } />
+			) : (
+				<Placeholder />
+			) }
+		</>
 	);
 }
