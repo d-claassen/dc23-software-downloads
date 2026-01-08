@@ -38,7 +38,7 @@ test.describe( 'Block "Operating system"', () => {
 				postType: 'download',
 				status: 'publish',
 		} );
-		editor.insertBlock('dc23-software-downloads/opeeatibg-system');
+		editor.insertBlock({name: 'dc23-software-downloads/operating-system'});
 
 		// When the value is set in sidebar
 			await editor.openDocumentSettingsSidebar();
