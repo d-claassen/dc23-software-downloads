@@ -22,9 +22,9 @@ test.describe( 'Block "Operating system"', () => {
 		await requestUtils.deleteAllPages();
 	} );
 	
-    test.todo('it shows the default value');
-    test.todo('it shows immediately when loaded');
-    test.todo('it shows a placeholder in the site editor');
+    test.skip('it shows the default value');
+    test.skip('it shows immediately when loaded');
+    test.skip('it shows a placeholder in the site editor');
     
 	test( 'it shows the set `operating system`', async ( {
 		page,
