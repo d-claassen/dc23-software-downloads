@@ -23,7 +23,7 @@ test.describe( 'Block "Operating system"', () => {
 	} );
 	
 	test.skip('it shows the default value');
- test.skip('it shows a placeholder in the site editor');
+	test.skip('it shows a placeholder in the site editor');
 
 	test('it shows immediately when loaded', async ( {
 		page,
@@ -78,7 +78,7 @@ test.describe( 'Block "Operating system"', () => {
 	test('renders correctly on frontend', async ({ admin, context, editor, page }) => {
 		// Given a post with the block exists.
 		await admin.createNewPost();
-		await editor.insertBlock({ name: 'dc23-portfolio/socials' });
+		await editor.insertBlock({ name: 'dc23-portfolio/operating-system' });
 		await editor.openDocumentSettingsSidebar();
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 		await page.getByLabel( 'Operating system' ).type( 'Android' );
