@@ -23,7 +23,7 @@ test.describe( 'Block "Application category"', () => {
 	} );
 	
 	test.skip('it shows the default value');
-    test.skip('it shows a placeholder in the site editor');
+	test.skip('it shows a placeholder in the site editor');
 
 	test('it shows immediately when loaded', async ( {
 		page,
@@ -48,7 +48,7 @@ test.describe( 'Block "Application category"', () => {
 		// Then the value shows inside editor.
 		await expect(
 			editor.canvas
-		).toHaveValue( 'Health application' );
+		).toContainText( 'Health application' );
 	} );
     
 	test( 'it shows the set `application category`', async ( {
@@ -72,7 +72,7 @@ test.describe( 'Block "Application category"', () => {
 		// Then the value shows inside editor.
 		await expect(
 			editor.canvas
-		).toHaveValue( 'Tavel application' );
+		).toContainText( 'Tavel application' );
 	} );
 	
 	test('renders correctly on frontend', async ({ admin, context, editor, page }) => {
