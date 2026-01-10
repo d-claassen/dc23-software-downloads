@@ -3,6 +3,8 @@
  */
 const { test, expect } = require( '@wordpress/e2e-test-utils-playwright' );
 
+const noop = () => {};
+
 test.describe( 'Block "Operating system"', () => {
 	let consoleLogs = [];
 	
