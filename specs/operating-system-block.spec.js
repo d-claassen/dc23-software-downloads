@@ -84,7 +84,7 @@ test.describe( 'Block "Operating system"', () => {
 			postType: 'download',
 			status: 'publish',
 		} );
-		await editor.insertBlock({ name: 'dc23-portfolio/operating-system' });
+		await editor.insertBlock({ name: 'dc23-software-downloads/operating-system' });
 		await editor.openDocumentSettingsSidebar();
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 		await page.getByLabel( 'Operating system' ).type( 'Android' );
