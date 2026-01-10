@@ -22,7 +22,9 @@ test.describe( 'Block "Operating system"', () => {
 		await requestUtils.deleteAllPages();
 	} );
 	
-    test.skip('it shows the default value');
+	test.skip('it shows the default value');
+ test.skip('it shows a placeholder in the site editor');
+
 	test('it shows immediately when loaded', async ( {
 		page,
 		admin,
@@ -48,10 +50,6 @@ test.describe( 'Block "Operating system"', () => {
 			editor.canvas
 		).toHaveValue( 'Android' );
 	} );
-	
-					
-					);
-    test.skip('it shows a placeholder in the site editor');
     
 	test( 'it shows the set `operating system`', async ( {
 		page,
