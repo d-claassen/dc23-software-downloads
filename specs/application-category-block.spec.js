@@ -40,7 +40,7 @@ test.describe( 'Block "Application category"', () => {
 		} );
 		await editor.openDocumentSettingsSidebar();
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
-		await page.getByLabel( 'Application category' ).selectValue( 'HealthApplication' );
+		await page.getByLabel( 'Application category' ).selectOption( 'HealthApplication' );
 		await editor.saveDraft();
 		
 		// When the block is added on a later visit.
@@ -69,7 +69,7 @@ test.describe( 'Block "Application category"', () => {
 		// When the value is set in sidebar
 		await editor.openDocumentSettingsSidebar();
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
-		await page.getByLabel( 'Application category' ).selectValue( 'TavelApplication' );
+		await page.getByLabel( 'Application category' ).selectOption( 'TavelApplication' );
 
 		// Then the value shows inside editor.
 		await expect(
@@ -83,7 +83,7 @@ test.describe( 'Block "Application category"', () => {
 		await editor.insertBlock({ name: 'dc23-portfolio/application-category' });
 		await editor.openDocumentSettingsSidebar();
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
-		await page.getByLabel( 'Application category' ).selectValue( 'FinanceApplication' );
+		await page.getByLabel( 'Application category' ).selectOption( 'FinanceApplication' );
 		
 		// When the post is published on the frontend.
 		await editor.publishPost();
