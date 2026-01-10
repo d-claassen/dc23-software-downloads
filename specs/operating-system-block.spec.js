@@ -23,7 +23,34 @@ test.describe( 'Block "Operating system"', () => {
 	} );
 	
     test.skip('it shows the default value');
-    test.skip('it shows immediately when loaded');
+	test('it shows immediately when loaded', async ( {
+		page,
+		admin,
+		editor,
+	} ) => {
+		// Given a saved post with the value.
+		await admin.createNewPost( {
+			title: 'Download',
+			postType: 'download',
+			status: 'publish',
+		} );
+		await editor.openDocumentSettingsSidebar();
+		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		await page.getByLabel( 'Operating system' ).type( 'Android' );
+		await editor.saveDraft();
+		
+		// When the block is added on a later visit.
+		await page.reload();
+		await editor.insertBlock({name: 'dc23-software-downloads/operating-system'});
+
+		// Then the value shows inside editor.
+		await expect(
+			editor.canvas
+		).toHaveValue( 'Android' );
+	} );
+	
+					
+					);
     test.skip('it shows a placeholder in the site editor');
     
 	test( 'it shows the set `operating system`', async ( {
