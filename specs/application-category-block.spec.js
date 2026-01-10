@@ -49,7 +49,7 @@ test.describe( 'Block "Application category"', () => {
 
 		// Then the value shows inside editor.
 		await expect(
-			editor.canvas
+			editor.canvas.locator('[data-type="dc23-software-downloads/application-category"]')
 		).toContainText( 'Health application' );
 	} );
     
