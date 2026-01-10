@@ -79,7 +79,11 @@ test.describe( 'Block "Application category"', () => {
 	
 	test('renders correctly on frontend', async ({ admin, context, editor, page }) => {
 		// Given a post with the block exists.
-		await admin.createNewPost();
+		await admin.createNewPost( {
+			title: 'Download',
+			postType: 'download',
+			status: 'publish',
+		} );
 		await editor.insertBlock({ name: 'dc23-portfolio/application-category' });
 		await editor.openDocumentSettingsSidebar();
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
