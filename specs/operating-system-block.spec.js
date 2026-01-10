@@ -50,7 +50,7 @@ test.describe( 'Block "Operating system"', () => {
 		// Then the value shows inside editor.
 		await expect(
 			editor.canvas
-		).toHaveValue( 'Android' );
+		).toContainText( 'Android' );
 	} );
     
 	test( 'it shows the set `operating system`', async ( {
@@ -74,7 +74,7 @@ test.describe( 'Block "Operating system"', () => {
 		// Then the value shows inside editor.
 		await expect(
 			editor.canvas
-		).toHaveValue( 'Android' );
+		).toContainText( 'Android' );
 	} );
 	
 	test('renders correctly on frontend', async ({ admin, context, editor, page }) => {
