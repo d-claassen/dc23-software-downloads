@@ -49,7 +49,7 @@ test.describe( 'Block "Operating system"', () => {
 
 		// Then the value shows inside editor.
 		await expect(
-			editor.canvas
+			editor.canvas.locator('[data-type="dc23-software-downloads/operating-system"]')
 		).toContainText( 'Android' );
 	} );
     
@@ -73,7 +73,7 @@ test.describe( 'Block "Operating system"', () => {
 
 		// Then the value shows inside editor.
 		await expect(
-			editor.canvas
+			editor.canvas.locator('[data-type="dc23-software-downloads/operating-system"]')
 		).toContainText( 'Android' );
 	} );
 	
