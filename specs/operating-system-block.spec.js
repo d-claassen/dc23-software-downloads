@@ -22,8 +22,8 @@ test.describe( 'Block "Operating system"', () => {
 		await requestUtils.deleteAllPages();
 	} );
 	
-	test.skip('it shows the default value');
-	test.skip('it shows a placeholder in the site editor');
+	test.skip('it shows the default value', noop);
+	test.skip('it shows a placeholder in the site editor', noop);
 
 	test('it shows immediately when loaded', async ( {
 		page,
