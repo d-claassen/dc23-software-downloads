@@ -84,7 +84,7 @@ test.describe( 'Block "Application category"', () => {
 			postType: 'download',
 			status: 'publish',
 		} );
-		await editor.insertBlock({ name: 'dc23-portfolio/application-category' });
+		await editor.insertBlock({ name: 'dc23-software-downloads/application-category' });
 		await editor.openDocumentSettingsSidebar();
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 		await page.getByLabel( 'Application category' ).selectOption( { label: 'Finance application' } );
