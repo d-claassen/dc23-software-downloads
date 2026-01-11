@@ -75,7 +75,7 @@ test.describe( 'Block "Operating system"', () => {
 				.click();
 		
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
-		await page.getByLabel( 'Operating system' ).type( 'Android' );
+		await page.getByRole( 'textbox', { name: 'Operating system' } ).type( 'Android' );
 
 		// Then the value shows inside editor.
 		await expect(
@@ -99,7 +99,7 @@ test.describe( 'Block "Operating system"', () => {
 
 		await editor.openDocumentSettingsSidebar();
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
-		await page.getByLabel( 'Operating system' ).type( 'Android' );
+		await page.getByRole( 'textbox', { name: 'Operating system' } ).type( 'Android' );
 		
 		// When the post is published on the frontend.
 		await editor.publishPost();
