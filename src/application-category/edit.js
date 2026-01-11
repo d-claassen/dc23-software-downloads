@@ -45,7 +45,10 @@ function Content( { context: { postType, postId } } ) {
 	const [ meta ] = useEntityProp( 'postType', postType, 'meta', postId );
 
 	const category = meta?._dc23_software_category;
-	const label    = CATEGORIES.filter( ({value}) => value === category )?.label;
+	const match    = CATEGORIES.filter( ({value}) => value === category );
+	const label    = match[0]?.label;
+
+	console.log({category,match,label});
 
 	return (
 		<div { ...useBlockProps() }>
