@@ -28,7 +28,9 @@ if ( ! function_exists( 'dc23_software_downloads_setup' ) ) :
 	 * Sets up plugin and registers support for various WordPress features.
 	 */
 	function dc23_software_downloads_setup(): void {
-        // register_block_type( __DIR__ . '/build/software-downloads' );
+        register_block_type( __DIR__ . '/build/application-category' );
+	register_block_type( __DIR__ . '/build/operating-system' );
+
         
         ( new \DC23\SoftwareDownloads\Checkout_Schema_Integration() )->register();
         ( new \DC23\SoftwareDownloads\Offer_Schema_Integration() )->register();
