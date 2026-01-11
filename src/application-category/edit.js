@@ -57,7 +57,7 @@ function Content( { context: { postType, postId } } ) {
 function Placeholder() {
 	return (
 		<div { ...useBlockProps() }>
-            Windows
+            Application category
 		</div>
 	);
 }
