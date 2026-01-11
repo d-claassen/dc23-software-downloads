@@ -5,7 +5,7 @@ const { test, expect } = require( '@wordpress/e2e-test-utils-playwright' );
 
 const noop = () => {};
 
-test.describe( 'Block "Operating system"', () => {
+test.describe( 'Block "Application category"', () => {
 	let consoleLogs = [];
 	
 	test.beforeEach(async ({ page }) => {
@@ -39,21 +39,26 @@ test.describe( 'Block "Operating system"', () => {
 			status: 'publish',
 		} );
 		await editor.openDocumentSettingsSidebar();
-		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
-		await page.getByLabel( 'Operating system' ).type( 'Android' );
+		//await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+		// Open section if needed
+		if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+			await sectionButton.click();
+		}
+		await page.getByLabel( 'Software category' ).selectOption( { label: 'Health application' } );
 		await editor.saveDraft();
 		
 		// When the block is added on a later visit.
 		await page.reload();
-		await editor.insertBlock({name: 'dc23-software-downloads/operating-system'});
+		await editor.insertBlock({name: 'dc23-software-downloads/application-category'});
 
 		// Then the value shows inside editor.
 		await expect(
-			editor.canvas.locator('[data-type="dc23-software-downloads/operating-system"]')
-		).toContainText( 'Android' );
+			editor.canvas.locator('[data-type="dc23-software-downloads/application-category"]')
+		).toContainText( 'Health application' );
 	} );
     
-	test( 'it shows the set `operating system`', async ( {
+	test( 'it shows the set `application category`', async ( {
 		page,
 		admin,
 		editor,
@@ -64,23 +69,28 @@ test.describe( 'Block "Operating system"', () => {
 			postType: 'download',
 			status: 'publish',
 		} );
-		editor.insertBlock({name: 'dc23-software-downloads/operating-system'});
+		editor.insertBlock({name: 'dc23-software-downloads/application-category'});
 
 		// When the value is set in sidebar
 		await editor.openDocumentSettingsSidebar();
-		
+
 			page
 				.getByRole( 'region', { name: 'Editor settings' } )
 				.getByRole( 'tab', { selected: false } )
 				.click();
 		
-		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
-		await page.getByRole( 'textbox', { name: 'Operating system' } ).type( 'Android' );
+		//await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+		// Open section if needed
+		if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+			await sectionButton.click();
+		}
+		await page.getByLabel( 'Software category' ).selectOption( { label: 'Travel application' } );
 
 		// Then the value shows inside editor.
 		await expect(
-			editor.canvas.locator('[data-type="dc23-software-downloads/operating-system"]')
-		).toContainText( 'Android' );
+			editor.canvas.locator('[data-type="dc23-software-downloads/application-category"]')
+		).toContainText( 'Travel application' );
 	} );
 	
 	test('renders correctly on frontend', async ({ admin, context, editor, page }) => {
@@ -90,17 +100,22 @@ test.describe( 'Block "Operating system"', () => {
 			postType: 'download',
 			status: 'publish',
 		} );
-		await editor.insertBlock({ name: 'dc23-software-downloads/operating-system' });
+		await editor.insertBlock({ name: 'dc23-software-downloads/application-category' });
+		await editor.openDocumentSettingsSidebar();
 
 			page
 				.getByRole( 'region', { name: 'Editor settings' } )
 				.getByRole( 'tab', { selected: false } )
 				.click();
-
-		await editor.openDocumentSettingsSidebar();
-		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
-		await page.getByRole( 'textbox', { name: 'Operating system' } ).type( 'Android' );
 		
+		// await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+		// Open section if needed
+		if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+			await sectionButton.click();
+		}
+		await page.getByLabel( 'Software category' ).selectOption( { label: 'Finance application' } );
+
 		// When the post is published on the frontend.
 		await editor.publishPost();
 
@@ -112,6 +127,6 @@ test.describe( 'Block "Operating system"', () => {
 		const postPage = newPage || page;
 	
 		// Then the value shows on the frontend page.
-		await expect(postPage.locator('body')).toContainText('Android');
+		await expect(postPage.locator('body')).toContainText('Finance application');
 	});
 } );
