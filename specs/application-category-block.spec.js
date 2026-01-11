@@ -94,6 +94,12 @@ test.describe( 'Block "Application category"', () => {
 		} );
 		await editor.insertBlock({ name: 'dc23-software-downloads/application-category' });
 		await editor.openDocumentSettingsSidebar();
+
+			page
+				.getByRole( 'region', { name: 'Editor settings' } )
+				.getByRole( 'tab', { selected: false } )
+				.click();
+		
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 		await page.getByLabel( 'Software category' ).selectOption( { label: 'Finance application' } );
 		
