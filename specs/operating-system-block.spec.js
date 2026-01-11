@@ -112,6 +112,6 @@ test.describe( 'Block "Operating system"', () => {
 		const postPage = newPage || page;
 	
 		// Then the value shows on the frontend page.
-		await expect(postPage).toContainText('Android');
+		await expect(postPage.locator('body')).toContainText('Android');
 	});
 } );
