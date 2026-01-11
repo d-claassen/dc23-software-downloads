@@ -68,6 +68,14 @@ test.describe( 'Block "Application category"', () => {
 
 		// When the value is set in sidebar
 		await editor.openDocumentSettingsSidebar();
+		
+
+			page
+				.getByRole( 'region', { name: 'Editor settings' } )
+				.getByRole( 'tab', { selected: false } )
+				.click();
+
+		
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 		await page.getByLabel( 'Software category' ).selectOption( { label: 'Travel application' } );
 
