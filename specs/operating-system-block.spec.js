@@ -106,7 +106,7 @@ test.describe( 'Block "Operating system"', () => {
 
 		const [newPage] = await Promise.all([
 			context.waitForEvent('page', {timeout: 1500}).catch(() => null),
-			page.getByText('View Post').first().click(),
+			page.getByText('View Download').first().click(),
 		]);
 		// Fallback for pre-WP6.9
 		const postPage = newPage || page;
