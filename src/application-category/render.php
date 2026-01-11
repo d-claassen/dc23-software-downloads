@@ -25,7 +25,7 @@ $categories = [
 ];
 
 $category_id = get_post_meta( $block->context['postId'], '_dc23_software_category', true );
-$category    = $categories[ $category_id ] ?? 'm;
+$category    = $categories[ $category_id ] ?? '';
 ?>
 <div <?php echo get_block_wrapper_attributes(); ?>>
 	<?php echo esc_html( $category ); ?>
