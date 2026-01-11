@@ -68,6 +68,12 @@ test.describe( 'Block "Operating system"', () => {
 
 		// When the value is set in sidebar
 		await editor.openDocumentSettingsSidebar();
+		
+			page
+				.getByRole( 'region', { name: 'Editor settings' } )
+				.getByRole( 'tab', { selected: false } )
+				.click();
+		
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 		await page.getByLabel( 'Operating system' ).type( 'Android' );
 
@@ -85,6 +91,12 @@ test.describe( 'Block "Operating system"', () => {
 			status: 'publish',
 		} );
 		await editor.insertBlock({ name: 'dc23-software-downloads/operating-system' });
+
+			page
+				.getByRole( 'region', { name: 'Editor settings' } )
+				.getByRole( 'tab', { selected: false } )
+				.click();
+
 		await editor.openDocumentSettingsSidebar();
 		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
 		await page.getByLabel( 'Operating system' ).type( 'Android' );
