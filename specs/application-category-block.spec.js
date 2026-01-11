@@ -39,7 +39,14 @@ test.describe( 'Block "Application category"', () => {
 			status: 'publish',
 		} );
 		await editor.openDocumentSettingsSidebar();
-		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		//await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		
+		const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+		// Open section if needed
+		if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+			await sectionButton.click();
+		}
+		
 		await page.getByLabel( 'Software category' ).selectOption( { label: 'Health application' } );
 		await editor.saveDraft();
 		
@@ -68,15 +75,18 @@ test.describe( 'Block "Application category"', () => {
 
 		// When the value is set in sidebar
 		await editor.openDocumentSettingsSidebar();
-		
 
 			page
 				.getByRole( 'region', { name: 'Editor settings' } )
 				.getByRole( 'tab', { selected: false } )
 				.click();
-
 		
-		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		//await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+		// Open section if needed
+		if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+			await sectionButton.click();
+		}
 		await page.getByLabel( 'Software category' ).selectOption( { label: 'Travel application' } );
 
 		// Then the value shows inside editor.
@@ -100,7 +110,12 @@ test.describe( 'Block "Application category"', () => {
 				.getByRole( 'tab', { selected: false } )
 				.click();
 		
-		await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		//await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+		// Open section if needed
+		if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+			await sectionButton.click();
+		}
 		await page.getByLabel( 'Software category' ).selectOption( { label: 'Finance application' } );
 		
 		// When the post is published on the frontend.
