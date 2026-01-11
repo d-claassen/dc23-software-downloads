@@ -114,6 +114,6 @@ test.describe( 'Block "Application category"', () => {
 		const postPage = newPage || page;
 	
 		// Then the value shows on the frontend page.
-		await expect(postPage).toContainText('Finance application');
+		await expect(postPage.locator('body')).toContainText('Finance application');
 	});
 } );
