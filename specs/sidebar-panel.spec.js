@@ -89,7 +89,11 @@ test.describe( 'Sidebar panel', () => {
 			} );
 			await editor.openDocumentSettingsSidebar();
 			// open panel.
-			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+			// Open section if needed
+			if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+				await sectionButton.click();
+			}
 
 			await page.getByLabel( 'Software type' ).selectOption( { label: 'Web application' } );
 			
@@ -117,7 +121,11 @@ test.describe( 'Sidebar panel', () => {
 			} );
 			await editor.openDocumentSettingsSidebar();
 			// open panel.
-			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+			const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+			// Open section if needed
+			if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+				await sectionButton.click();
+			}
 
 			await page.getByLabel( 'Software category' ).selectOption( { label: 'Lifestyle application' } );
 			
@@ -145,7 +153,11 @@ test.describe( 'Sidebar panel', () => {
 			} );
 			await editor.openDocumentSettingsSidebar();
 			// open panel.
-			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+			const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+			// Open section if needed
+			if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+				await sectionButton.click();
+			}
 
 			await page.getByLabel( 'Operating system' ).type( 'Android' );
 			
