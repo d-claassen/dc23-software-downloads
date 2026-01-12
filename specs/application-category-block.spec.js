@@ -4,6 +4,7 @@
 const { test, expect } = require( '@wordpress/e2e-test-utils-playwright' );
 
 const noop = () => {};
+const DEBUG_MODE = false;
 
 test.describe( 'Block "Application category"', () => {
 	let consoleLogs = [];
@@ -14,7 +15,7 @@ test.describe( 'Block "Application category"', () => {
 	});
 	
 	test.afterEach(async ({ page }) => {
-		if (consoleLogs.length > 0) {
+		if (DEBUG_MODE && consoleLogs.length > 0) {
 			console.log('Page logs:', consoleLogs);
 		}
 		page.removeAllListeners('console');
