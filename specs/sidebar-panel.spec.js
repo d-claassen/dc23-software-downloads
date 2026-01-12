@@ -3,6 +3,8 @@
  */
 const { test, expect } = require( '@wordpress/e2e-test-utils-playwright' );
 
+const DEBUG_MODE = false;
+
 test.describe( 'Sidebar panel', () => {
 	let consoleLogs = [];
 	
@@ -12,7 +14,7 @@ test.describe( 'Sidebar panel', () => {
 	});
 	
 	test.afterEach(async ({ page }) => {
-		if (consoleLogs.length > 0) {
+		if (DEBUG_MODE && consoleLogs.length > 0) {
 			console.log('Page logs:', consoleLogs);
 		}
 		page.removeAllListeners('console');
@@ -89,7 +91,11 @@ test.describe( 'Sidebar panel', () => {
 			} );
 			await editor.openDocumentSettingsSidebar();
 			// open panel.
-			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+		const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+			// Open section if needed
+			if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+				await sectionButton.click();
+			}
 
 			await page.getByLabel( 'Software type' ).selectOption( { label: 'Web application' } );
 			
@@ -117,7 +123,11 @@ test.describe( 'Sidebar panel', () => {
 			} );
 			await editor.openDocumentSettingsSidebar();
 			// open panel.
-			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+			const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+			// Open section if needed
+			if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+				await sectionButton.click();
+			}
 
 			await page.getByLabel( 'Software category' ).selectOption( { label: 'Lifestyle application' } );
 			
@@ -145,7 +155,11 @@ test.describe( 'Sidebar panel', () => {
 			} );
 			await editor.openDocumentSettingsSidebar();
 			// open panel.
-			await page.getByRole( 'button', { name: 'Software Downloads' } ).click();
+			const sectionButton = await page.getByRole( 'button', { name: 'Software Downloads' } );
+			// Open section if needed
+			if ( ( await sectionButton.getAttribute( 'aria-expanded' ) ) === 'false' ) {
+				await sectionButton.click();
+			}
 
 			await page.getByLabel( 'Operating system' ).type( 'Android' );
 			
