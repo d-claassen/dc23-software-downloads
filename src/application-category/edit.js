@@ -48,8 +48,6 @@ function Content( { context: { postType, postId } } ) {
 	const match    = CATEGORIES.find( ({value}) => value === category );
 	const label    = match?.label;
 
-	console.log({category,match,label});
-
 	return (
 		<div { ...useBlockProps() }>
 			{ label }
