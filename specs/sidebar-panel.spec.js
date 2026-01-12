@@ -3,6 +3,8 @@
  */
 const { test, expect } = require( '@wordpress/e2e-test-utils-playwright' );
 
+const DEBUG_MODE = false;
+
 test.describe( 'Sidebar panel', () => {
 	let consoleLogs = [];
 	
@@ -12,7 +14,7 @@ test.describe( 'Sidebar panel', () => {
 	});
 	
 	test.afterEach(async ({ page }) => {
-		if (consoleLogs.length > 0) {
+		if (DEBUG_MODE && consoleLogs.length > 0) {
 			console.log('Page logs:', consoleLogs);
 		}
 		page.removeAllListeners('console');
