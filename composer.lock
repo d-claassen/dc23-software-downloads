@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "949d55efd9bfc56c34fa5a00fc3feecd",
+    "content-hash": "94be7ece2f1cbd4c5d5133d48ba098a9",
     "packages": [],
     "packages-dev": [
         {
@@ -3717,22 +3717,22 @@
         },
         {
             "name": "yoast/wordpress-seo",
-            "version": "26.7",
+            "version": "26.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Yoast-dist/wordpress-seo.git",
-                "reference": "e69a8c3cd962b2322fa8ff353d34b5ab780fcd88"
+                "reference": "ae95f2ce47b3dcc67feaf47527791ec60ca71757"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Yoast-dist/wordpress-seo/zipball/e69a8c3cd962b2322fa8ff353d34b5ab780fcd88",
-                "reference": "e69a8c3cd962b2322fa8ff353d34b5ab780fcd88",
+                "url": "https://api.github.com/repos/Yoast-dist/wordpress-seo/zipball/ae95f2ce47b3dcc67feaf47527791ec60ca71757",
+                "reference": "ae95f2ce47b3dcc67feaf47527791ec60ca71757",
                 "shasum": ""
             },
             "require": {
                 "composer/installers": "^1.12 || ^2.0",
                 "ext-filter": "*",
-                "php": "^7.4| ^8.0"
+                "php": "^7.4 || ^8.0"
             },
             "require-dev": {
                 "guzzlehttp/guzzle": "7.10.0",
@@ -3793,7 +3793,7 @@
                 "source": "https://github.com/Yoast/wordpress-seo",
                 "wiki": "https://github.com/Yoast/wordpress-seo/wiki"
             },
-            "time": "2026-01-07T09:31:45+00:00"
+            "time": "2026-01-20T09:20:02+00:00"
         },
         {
             "name": "yoast/wordpress-seo-premium",
