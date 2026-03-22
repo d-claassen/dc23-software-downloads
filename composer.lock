@@ -3637,15 +3637,15 @@
         },
         {
             "name": "wpackagist-plugin/easy-digital-downloads",
-            "version": "3.6.5",
+            "version": "3.6.6.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/easy-digital-downloads/",
-                "reference": "tags/3.6.5"
+                "reference": "tags/3.6.6.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/easy-digital-downloads.3.6.5.zip"
+                "url": "https://downloads.wordpress.org/plugin/easy-digital-downloads.3.6.6.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
@@ -4029,5 +4029,5 @@
     "platform-overrides": {
         "php": "8.2.14"
     },
-    "plugin-api-version": "2.6.0"
+    "plugin-api-version": "2.9.0"
 }
