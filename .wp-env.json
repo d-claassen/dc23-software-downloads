@@ -5,6 +5,7 @@
     "./vendor/wpackagist/easy-digital-downloads",
     "./vendor/yoast/wordpress-seo",
     ".",
-    "./vendor/yoast/wordpress-seo-premium"
+    "./vendor/yoast/wordpress-seo-premium",
+    "./vendor/wpackagist/dc23-excessive-schema"
   ]
 }

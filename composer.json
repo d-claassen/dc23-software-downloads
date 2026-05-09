@@ -18,6 +18,7 @@
 		"yoast/yoastcs": "^3.2",
 		"phpunit/phpunit": "^10.5.45",
 		"brain/monkey": "^2.6",
+		"dennis/dc23-excessive-schema": "^0.4.0",
 		"yoast/wordpress-seo": "26.9",
 		"yoast/wordpress-seo-premium": "26.5",
 		"wpackagist-plugin/easy-digital-downloads": ">=3.5,<=3.7",
@@ -30,6 +31,10 @@
 		"yoast/phpunit-polyfills": "^2.0"
 	},
 	"repositories": {
+        "dc23-excessive-schema": {
+            "type": "vcs",
+            "url": "https://github.com/d-claassen/dc23-excessive-schema"
+        },
 		"wpackagist": {
 			"type": "composer",
 			"url": "https://wpackagist.org",
