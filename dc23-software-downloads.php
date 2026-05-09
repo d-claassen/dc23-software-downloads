@@ -31,7 +31,8 @@ if ( ! function_exists( 'dc23_software_downloads_setup' ) ) :
         register_block_type( __DIR__ . '/build/application-category' );
 	register_block_type( __DIR__ . '/build/operating-system' );
 
-        
+        ( new \DC23\SoftwareDownloads\Integrations\Product_Schema_Adapter() )->register();
+
         ( new \DC23\SoftwareDownloads\Checkout_Schema_Integration() )->register();
         ( new \DC23\SoftwareDownloads\Offer_Schema_Integration() )->register();
         ( new \DC23\SoftwareDownloads\Person_Schema_Integration() )->register();
