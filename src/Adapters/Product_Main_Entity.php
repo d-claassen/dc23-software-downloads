@@ -80,7 +80,8 @@ final class Product_Main_Entity implements Main_Entity {
 			return $data;
 		}
 
-		$indexable = \YoastSEO()->meta->for_post( (int) $download->id )->context->indexable;
+		$download_id = (int) $download->ID;
+		$indexable = \YoastSEO()->meta->for_post( $download_id )->context->indexable;
 		if ( $indexable === null ) {
 			return $data;
 		}
