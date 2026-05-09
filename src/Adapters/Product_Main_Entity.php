@@ -70,17 +70,17 @@ final class Product_Main_Entity implements Main_Entity {
 	 * to run its @id rewrite first. Resolves the post ID to an indexable
 	 * because EDD's filter signature passes only the ID.
 	 *
-	 * @param array $data        EDD's structured data.
-	 * @param int   $download_id The download post ID.
+	 * @param array         $data     EDD's structured data.
+	 * @param \EDD_Download $download The download post.
 	 *
 	 * @return array
 	 */
-	public function enrich( $data, $download_id ) {
+	public function enrich( $data, $download ) {
 		if ( ! is_array( $data ) ) {
 			return $data;
 		}
 
-		$indexable = \YoastSEO()->meta->for_post( (int) $download_id )->context->indexable;
+		$indexable = \YoastSEO()->meta->for_post( (int) $download->id )->context->indexable;
 		if ( $indexable === null ) {
 			return $data;
 		}
