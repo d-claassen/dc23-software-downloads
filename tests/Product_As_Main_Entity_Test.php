@@ -10,7 +10,7 @@ declare( strict_types=1 );
 namespace DC23\SoftwareDownloads\Tests;
 
 use DC23\SoftwareDownloads\Adapters\Product_Main_Entity;
-use DC23\ExcessiveSchema\Registries\Main_Entity_Registry;
+// use DC23\ExcessiveSchema\Registries\Main_Entity_Registry;
 use WP_UnitTestCase;
 
 use function DC23\ExcessiveSchema\dc23_schema_get_main_entity;
