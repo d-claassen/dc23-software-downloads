@@ -6,6 +6,6 @@
     "./vendor/yoast/wordpress-seo",
     ".",
     "./vendor/yoast/wordpress-seo-premium",
-    "./vendor/wpackagist/dc23-excessive-schema",
+    "./vendor/wpackagist/dc23-excessive-schema"
   ]
 }
