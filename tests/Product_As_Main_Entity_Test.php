@@ -66,8 +66,8 @@ final class Product_As_Main_Entity_Test extends WP_UnitTestCase {
 		add_filter(
 			'dc23_schema_main_entity',
 			static function ( array $data, $indexable ) use ( &$captured_indexable ): array {
-				$captured_indexable     = $indexable;
-				$data['_test_marker'] = true;
+				$captured_indexable   = $indexable;
+				$data['_test_marker'] = 'True';
 				return $data;
 			},
 			10,
@@ -84,8 +84,9 @@ final class Product_As_Main_Entity_Test extends WP_UnitTestCase {
 		$product = $this->get_product_schema( $post_id );
 
 		// Verify Product schema has the marker.
-		$this->assertTrue(
-			$product['_test_marker'] ?? false,
+		$this->assertSame(
+		'True',
+			$product['_test_marker'] ?? 'False',
 			'dc23_schema_main_entity should fire when an edd product schema filter is applied.'
 		);
 		$this->assertNotNull( $captured_indexable, 'Indexable should be passed to the filter.' );
