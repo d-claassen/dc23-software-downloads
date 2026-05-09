@@ -96,11 +96,11 @@ final class Product_As_Main_Entity_Test extends WP_UnitTestCase {
 	// Helpers
 	// -------------------------------------------------------------------------
 
-	private function get_schema( int $post_id, bool $debug = false ): array {
+	private function get_schema( int $post_id, bool $debug = false, string $section = 'wpseo_head' ): array {
 		$this->go_to( get_permalink( $post_id ) );
 
 		ob_start();
-		do_action( 'wpseo_head' );
+		do_action( $section );
 		$output = ob_get_clean();
 
 		preg_match( '/<script type="application\/ld\+json"[^>]*>(.*?)<\/script>/s', $output, $matches );
@@ -113,9 +113,9 @@ final class Product_As_Main_Entity_Test extends WP_UnitTestCase {
 	}
 
 	private function get_product_schema( int $post_id, bool $debug = false ): ?array {
-		$schema = $this->get_schema( $post_id, $debug );
+		$schema = $this->get_schema( $post_id, $debug, 'wp_footer' );
 
-		foreach ( $schema['@graph'] ?? [] as $piece ) {
+		foreach ( $schema ?? [] as $piece ) {
 			if ( isset( $piece['@type'] ) && $piece['@type'] === 'Product' ) {
 				return $piece;
 			}
