@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "e69ef1ecd3468a8b43e93b6529030024",
+    "content-hash": "973099ea3bd3e8fa8b58daeb68fff609",
     "packages": [],
     "packages-dev": [
         {
@@ -396,16 +396,16 @@
         },
         {
             "name": "dealerdirect/phpcodesniffer-composer-installer",
-            "version": "v1.2.0",
+            "version": "v1.2.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/PHPCSStandards/composer-installer.git",
-                "reference": "845eb62303d2ca9b289ef216356568ccc075ffd1"
+                "reference": "963f0c67bffde0eac41b56be71ac0e8ba132f0bd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/845eb62303d2ca9b289ef216356568ccc075ffd1",
-                "reference": "845eb62303d2ca9b289ef216356568ccc075ffd1",
+                "url": "https://api.github.com/repos/PHPCSStandards/composer-installer/zipball/963f0c67bffde0eac41b56be71ac0e8ba132f0bd",
+                "reference": "963f0c67bffde0eac41b56be71ac0e8ba132f0bd",
                 "shasum": ""
             },
             "require": {
@@ -488,7 +488,68 @@
                     "type": "thanks_dev"
                 }
             ],
-            "time": "2025-11-11T04:32:07+00:00"
+            "time": "2026-05-06T08:26:05+00:00"
+        },
+        {
+            "name": "dennis/dc23-excessive-schema",
+            "version": "v0.4.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/d-claassen/dc23-excessive-schema.git",
+                "reference": "550ca5b624d96f02e244e2bf4946b8e29f018e85"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/d-claassen/dc23-excessive-schema/zipball/550ca5b624d96f02e244e2bf4946b8e29f018e85",
+                "reference": "550ca5b624d96f02e244e2bf4946b8e29f018e85",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=8.2"
+            },
+            "require-dev": {
+                "composer/installers": "^2.0",
+                "phpunit/phpunit": "^11.5",
+                "wpackagist-plugin/wordpress-seo": ">=24.0,<=27.6",
+                "yoast/phpunit-polyfills": "^4.0",
+                "yoast/yoastcs": "^3.1"
+            },
+            "type": "wordpress-plugin",
+            "extra": {
+                "installer-paths": {
+                    "vendor/wpackagist/{$name}/": [
+                        "type:wordpress-plugin"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "lib/functions.php"
+                ],
+                "psr-4": {
+                    "DC23\\ExcessiveSchema\\": "lib/"
+                }
+            },
+            "scripts": {
+                "phplint": [
+                    "@php ./vendor/bin/parallel-lint . -e php --show-deprecated --exclude vendor --exclude .git"
+                ],
+                "phpcs": [
+                    "@php ./vendor/bin/phpcs --runtime-set ignore_warnings_on_exit 1"
+                ],
+                "test": [
+                    "@php ./vendor/bin/phpunit --process-isolation"
+                ]
+            },
+            "license": [
+                "GPL-2.0-or-later"
+            ],
+            "description": "Template-level schema enrichment for WordPress Query Loop blocks",
+            "support": {
+                "source": "https://github.com/d-claassen/dc23-excessive-schema/tree/v0.4.1",
+                "issues": "https://github.com/d-claassen/dc23-excessive-schema/issues"
+            },
+            "time": "2026-05-08T05:58:01+00:00"
         },
         {
             "name": "fakerphp/faker",
