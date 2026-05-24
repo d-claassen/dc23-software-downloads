@@ -3702,15 +3702,15 @@
         },
         {
             "name": "wpackagist-plugin/easy-digital-downloads",
-            "version": "3.6.7",
+            "version": "3.6.8",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/easy-digital-downloads/",
-                "reference": "tags/3.6.7"
+                "reference": "tags/3.6.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/easy-digital-downloads.3.6.7.zip"
+                "url": "https://downloads.wordpress.org/plugin/easy-digital-downloads.3.6.8.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
