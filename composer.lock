@@ -492,16 +492,16 @@
         },
         {
             "name": "dennis/dc23-excessive-schema",
-            "version": "v0.4.6",
+            "version": "v0.4.7",
             "source": {
                 "type": "git",
                 "url": "https://github.com/d-claassen/dc23-excessive-schema.git",
-                "reference": "1a486514eb269e52f684a53977b4cd12fe1b4d23"
+                "reference": "780153c56f6afb2fdade29169faa549415259ddd"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/d-claassen/dc23-excessive-schema/zipball/1a486514eb269e52f684a53977b4cd12fe1b4d23",
-                "reference": "1a486514eb269e52f684a53977b4cd12fe1b4d23",
+                "url": "https://api.github.com/repos/d-claassen/dc23-excessive-schema/zipball/780153c56f6afb2fdade29169faa549415259ddd",
+                "reference": "780153c56f6afb2fdade29169faa549415259ddd",
                 "shasum": ""
             },
             "require": {
@@ -546,10 +546,10 @@
             ],
             "description": "Template-level schema enrichment for WordPress Query Loop blocks",
             "support": {
-                "source": "https://github.com/d-claassen/dc23-excessive-schema/tree/v0.4.6",
+                "source": "https://github.com/d-claassen/dc23-excessive-schema/tree/v0.4.7",
                 "issues": "https://github.com/d-claassen/dc23-excessive-schema/issues"
             },
-            "time": "2026-07-01T21:17:06+00:00"
+            "time": "2026-07-03T23:50:06+00:00"
         },
         {
             "name": "fakerphp/faker",
