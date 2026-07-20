@@ -492,16 +492,16 @@
         },
         {
             "name": "dennis/dc23-excessive-schema",
-            "version": "v0.4.7",
+            "version": "v0.4.8",
             "source": {
                 "type": "git",
                 "url": "https://github.com/d-claassen/dc23-excessive-schema.git",
-                "reference": "780153c56f6afb2fdade29169faa549415259ddd"
+                "reference": "4338d397dc3f75b58448ec73475cdf96a4efa7ba"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/d-claassen/dc23-excessive-schema/zipball/780153c56f6afb2fdade29169faa549415259ddd",
-                "reference": "780153c56f6afb2fdade29169faa549415259ddd",
+                "url": "https://api.github.com/repos/d-claassen/dc23-excessive-schema/zipball/4338d397dc3f75b58448ec73475cdf96a4efa7ba",
+                "reference": "4338d397dc3f75b58448ec73475cdf96a4efa7ba",
                 "shasum": ""
             },
             "require": {
@@ -510,7 +510,7 @@
             "require-dev": {
                 "composer/installers": "^2.0",
                 "phpunit/phpunit": "^11.5",
-                "wpackagist-plugin/wordpress-seo": ">=24.0,<=27.10",
+                "wpackagist-plugin/wordpress-seo": ">=24.0,<=28.1",
                 "yoast/phpunit-polyfills": "^4.0",
                 "yoast/yoastcs": "^3.1"
             },
@@ -546,10 +546,10 @@
             ],
             "description": "Template-level schema enrichment for WordPress Query Loop blocks",
             "support": {
-                "source": "https://github.com/d-claassen/dc23-excessive-schema/tree/v0.4.7",
+                "source": "https://github.com/d-claassen/dc23-excessive-schema/tree/v0.4.8",
                 "issues": "https://github.com/d-claassen/dc23-excessive-schema/issues"
             },
-            "time": "2026-07-03T23:50:06+00:00"
+            "time": "2026-07-15T20:10:27+00:00"
         },
         {
             "name": "fakerphp/faker",
