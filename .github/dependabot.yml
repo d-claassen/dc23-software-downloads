@@ -51,5 +51,6 @@ updates:
           - "phpcompatibility/*"
           - "squizlabs/*"
           - "slevomat/*"
+          - "automattic/vipwpcs"
           - "dealerdirect/phpcodesniffer-composer-installer"
           
