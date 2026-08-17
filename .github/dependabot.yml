@@ -36,6 +36,7 @@ updates:
       unit-tests:
         patterns:
           - "phpunit/*"
+          - "sebastian/*"
           - "php-stubs/*"
           - "brain/*"
           - "antecedent/*"
