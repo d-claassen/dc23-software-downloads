@@ -37,6 +37,8 @@ updates:
         patterns:
           - "phpunit/*"
           - "sebastian/*"
+          - "myclabs/deep-copy"
+          - "phar-io/*"
           - "php-stubs/*"
           - "brain/*"
           - "antecedent/*"
