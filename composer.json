@@ -21,7 +21,7 @@
 		"dennis/dc23-excessive-schema": "^0.4.0",
 		"yoast/wordpress-seo": "26.9",
 		"yoast/wordpress-seo-premium": "26.5",
-		"wpackagist-plugin/easy-digital-downloads": ">=3.5,<=3.7",
+		"wpackagist-plugin/easy-digital-downloads": ">=3.5,<=3.8",
 		"antecedent/patchwork": "^2.1.28",
 		"brain/faker": "dev-master",
 		"phpstan/phpstan": "^1.12",
