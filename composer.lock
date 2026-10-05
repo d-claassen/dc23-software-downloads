@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "973099ea3bd3e8fa8b58daeb68fff609",
+    "content-hash": "724f596327ec50489437b337add2d73b",
     "packages": [],
     "packages-dev": [
         {
@@ -3704,15 +3704,15 @@
         },
         {
             "name": "wpackagist-plugin/easy-digital-downloads",
-            "version": "3.7.0",
+            "version": "3.7.1",
             "source": {
                 "type": "svn",
                 "url": "https://plugins.svn.wordpress.org/easy-digital-downloads/",
-                "reference": "tags/3.7.0"
+                "reference": "tags/3.7.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://downloads.wordpress.org/plugin/easy-digital-downloads.3.7.0.zip"
+                "url": "https://downloads.wordpress.org/plugin/easy-digital-downloads.3.7.1.zip"
             },
             "require": {
                 "composer/installers": "^1.0 || ^2.0"
