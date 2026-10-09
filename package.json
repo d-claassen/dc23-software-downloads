@@ -20,7 +20,8 @@
 	"main": "build/index.js",
 	"devDependencies": {
 		"@wordpress/env": "^11.16.0",
-		"@wordpress/scripts": "^34.1.0"
+		"@wordpress/scripts": "^36.0.0",
+		"jest": "^30"
 	},
 	"scripts": {
 		"build": "wp-scripts build  --webpack-copy-php",
@@ -34,7 +35,7 @@
 		"packages-update": "wp-scripts packages-update",
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start",
-		"test:unit": "wp-scripts test-unit-js",
+		"test:unit": "wp-scripts test-unit-jest",
 		"test:e2e": "wp-scripts test-playwright",
 		"version": "node ./scripts/update-version.js $npm_package_version && git add dc23-software-downloads.php readme.txt",
 		"wp-env": "wp-env"
