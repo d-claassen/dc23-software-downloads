@@ -1,0 +1,80 @@
+<?php
+
+namespace DC23\SoftwareDownloads;
+
+use Yoast\WP\SEO\Presenters\Abstract_Presenter;
+
+final class Product_Opengraph_Integration {
+
+	public function register(): void {
+		add_filter( 'wpseo_opengraph_type', [ $this, 'download_type_product' ] );
+		add_filter( 'wpseo_frontend_presenters', [ $this, 'opengraph_product_presenters' ], 10, 2 );
+	}
+
+	/**
+	 * Return 'product' when current post is an EDD download.
+	 *
+	 * @param string $type
+	 *
+	 * @return string
+	 */
+	public function download_type_product( $type ) {
+		if ( is_singular( 'download' ) ) {
+			return 'product';
+		}
+
+		return $type;
+	}
+
+	/*
+	 * Update OpenGraph presenters to describe downloads as a product.
+	 *
+	 * @param array<array-key, Abstract_Presenter> $presenters
+	 * @param Meta_Tags_Context                    $context
+	 * 
+	 * @return array<array-key, Abstract_Presenter>
+	 */
+	public function opengraph_product_presenters( $presenters, $context ) {
+		if ( ! is_array( $presenters ) ) {
+			return $presenters;
+		}
+
+		if ( ! is_singular( 'download' ) ) {
+			return $presenters;
+		}
+		
+		// Return false if a download object could not be retrieved.
+		$download = edd_get_download( $context->indexable->object_id );
+		if ( ! $download instanceof \EDD_Download ) {
+			return false;
+		}
+			
+		// Remove OpenGraph article metatag presenters.
+		foreach ( $presenters as $key => $presenter ) {
+			if (
+				$presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Publisher_Presenter
+				|| $presenter instanceof \Yoast\WP\SEO\Presenters\Open_Graph\Article_Author_Presenter
+			) {
+				unset( $presenters[ $key ] );
+			}
+		}
+	
+		// Replicating EDDs "Structured_Data" approach.
+		$presenters[] = new Presenters\OpenGraph\Product_Brand( get_bloginfo( 'name' ) );
+
+		if ( ! $download->has_variable_prices() ) {
+			$presenters[] = new Presenters\OpenGraph\Product_Price_Amount( $download->get_price() );
+			$presenters[] = new Presenters\OpenGraph\Product_Price_Currency( \edd_get_currency() );
+		}
+		
+		$presenters[] = new Presenters\OpenGraph\OpenGraph_Availability( false, true );
+		$presenters[] = new Presenters\OpenGraph\Product_Availability( false, true );
+						
+		$presenters[] = new Presenters\OpenGraph\Product_Retailer_Item_ID(
+			$download->get_sku() !== '-' ? $download->get_sku() : $download->ID,
+		);
+		$presenters[] = new Presenters\OpenGraph\Product_Condition();
+
+		return $presenters;
+	}
+}
